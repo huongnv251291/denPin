@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">ငါသည်သင်တို့ကိုအကောင်းဆုံးအခမဲ့လျှောက်လွှာပေးရန်အလွန်ခဲယဉ်းအလုပ်လုပ်ကိုင်နေတဲ့ပရိုဂရမ်မာဖြစ်၏။ သင့်ရဲ့ 5-ကြယ်ပြန်လည်သုံးသပ်အားလုံးပိုက်ဆံထက်ပိုမိုကျိုးနပ်သည်။ ငါ့ကိုအားပေးဖို့ကို Google Play စတစ်ကောင်းတဲ့သုံးသပ်ချက်ကိုရေးပါ!</string>
+    <string name="dialog_rate_title3">5 ကြယ်တို့သည် ငါ့ကို အဆင့်သတ်မှတ်ရန်</string>
+    <string name="dialog_rate_dislike3">က မကြိုက်</string>
+    <string name="dialog_rate_nothanks3">ရပါတယ်ကျေးဇူးပါ</string>
+    <string name="dialog_rate_fivestar3">5 ကြယ်တို့သည် !</string>
+    <string name="rate_dislike3">ငါပြောင်းလဲပစ်ရန်သင့်တယ်သောအရာကိုသိပါစေ..</string>
+    <string name="title_fb_mail3">လျှောက်လွှာနှင့် ပတ်သက်. တုံ့ပြန်ချက်</string>
+    <string name="no_email_client_toast3">အဘယ်သူမျှမကိုအီးမေးလ် client ကို install လုပ်ပြီးရှိပါတယ်</string>
+</resources>

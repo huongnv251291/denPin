@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Jeg er en programmerer jobber veldig hardt for å gi deg de beste gratis programmet. Dine 5-stjerners anmeldelse er verdt mer enn alle pengene. Vennligst skrive en fin anmeldelse i Google Play for å oppmuntre meg!</string>
+    <string name="dialog_rate_title3">Rangere meg 5 stjerner</string>
+    <string name="dialog_rate_dislike3">Misliker det</string>
+    <string name="dialog_rate_nothanks3">Nei takk</string>
+    <string name="dialog_rate_fivestar3">5 stjerner !</string>
+    <string name="rate_dislike3">La meg vite hva jeg skal endre..</string>
+    <string name="title_fb_mail3">Tilbakemelding om søknad</string>
+    <string name="no_email_client_toast3">Det er ingen e-postklient installert</string>
+</resources>

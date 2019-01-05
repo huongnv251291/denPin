@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">मैं एक प्रोग्रामर आप सबसे अच्छा नि: शुल्क आवेदन देने के लिए बहुत कड़ी मेहनत कर रहा हूं। अपने 5 स्टार समीक्षा सारे पैसे से ज्यादा कीमती है। कृपया गूगल में एक अच्छी समीक्षा के लिए मुझे प्रोत्साहित करने के लिए खेलने के बारे में!</string>
+    <string name="dialog_rate_title3">मुझे दर 5 स्टार</string>
+    <string name="dialog_rate_dislike3">यह नापसंद है</string>
+    <string name="dialog_rate_nothanks3">जी नहीं, धन्यवाद</string>
+    <string name="dialog_rate_fivestar3">5 सितारे!</string>
+    <string name="rate_dislike3">मुझे पता है कि मैं बदलना चाहिए..</string>
+    <string name="title_fb_mail3">आवेदन के बारे में प्रतिक्रिया</string>
+    <string name="no_email_client_toast3">वहाँ कोई ईमेल क्लाइंट स्थापित है</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Sunt un programator de lucru foarte greu pentru a vă oferi cea mai bună aplicație gratuită. Revizuirea dvs. de 5 stele valorează mai mult decât toți banii. Vă rugăm să scrie un comentariu frumos în Google Play pentru a mă încuraja!</string>
+    <string name="dialog_rate_title3">Da-mi nota 5 stele</string>
+    <string name="dialog_rate_dislike3">Displace</string>
+    <string name="dialog_rate_nothanks3">Nu multumesc</string>
+    <string name="dialog_rate_fivestar3">5 stele !</string>
+    <string name="rate_dislike3">Lasă-mă să știu ce ar trebui să se schimbe..</string>
+    <string name="title_fb_mail3">Feedback despre aplicație</string>
+    <string name="no_email_client_toast3">Nu există nici un client de e-mail instalat</string>
+</resources>

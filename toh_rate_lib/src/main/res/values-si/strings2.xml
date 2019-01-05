@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">මම ඔබ හොඳම නිදහස් අයදුම් දෙන්න ඉතා වෙහෙස මහන්සි වී වැඩ ක්රමලේඛකයෙක් වෙමි. ඔබගේ 5-තරු සමාලෝචන සියලු මුදල් වඩා වටී. මට දිරි ගැන්වීම සඳහා Google Play තුළ ලස්සන සමාලෝචන ලියන්න!</string>
+    <string name="dialog_rate_title3">තරු 5 මට අගයන්න</string>
+    <string name="dialog_rate_dislike3">එය අකමැති</string>
+    <string name="dialog_rate_nothanks3">නැ ස්තුතියි</string>
+    <string name="dialog_rate_fivestar3">තරු 5 !</string>
+    <string name="rate_dislike3">මට වෙනස් කිරීමට කළ යුතු දේ දැන ගනිමු..</string>
+    <string name="title_fb_mail3">අයදුම් ගැන ප්රතිපෝෂණ</string>
+    <string name="no_email_client_toast3">කිසිදු ඊ-තැපැල් ස්ථාපිත ග්රාහකයක් ඇත</string>
+</resources>

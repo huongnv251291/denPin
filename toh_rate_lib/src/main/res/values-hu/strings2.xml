@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Programozó vagyok nagyon keményen dolgozik, hogy ön a legjobb ingyenes alkalmazás. Az 5-csillagos értékelést többet ér, mint az összes pénzt. Kérjük, írjon egy szép beszámolót a Google Play, hogy ösztönözze meg!</string>
+    <string name="dialog_rate_title3">Szavazz rám 5 csillagos</string>
+    <string name="dialog_rate_dislike3">Nem tetszik ez</string>
+    <string name="dialog_rate_nothanks3">Nem, köszönöm</string>
+    <string name="dialog_rate_fivestar3">5 csillag !</string>
+    <string name="rate_dislike3">Hadd tudja, mit kell változtatni..</string>
+    <string name="title_fb_mail3">Visszajelzést alkalmazás</string>
+    <string name="no_email_client_toast3">Nincs telepített levelezőprogram</string>
+</resources>

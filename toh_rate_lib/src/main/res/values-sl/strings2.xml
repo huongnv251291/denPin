@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Sem programer zelo prizadevamo, da bi vam najboljše brezplačne aplikacije. Vaša ocena 5 zvezdicami je vreden več kot vsega denarja. Pišite lepo pregled v Google Play, da me spodbujajo!</string>
+    <string name="dialog_rate_title3">Ocenite me 5 zvezdic</string>
+    <string name="dialog_rate_dislike3">Ga ne marajo</string>
+    <string name="dialog_rate_nothanks3">Ne hvala</string>
+    <string name="dialog_rate_fivestar3">5 zvezdic !</string>
+    <string name="rate_dislike3">Dovolite mi, da vem, kaj sem morala spremeniti..</string>
+    <string name="title_fb_mail3">Povratne informacije o uporabi</string>
+    <string name="no_email_client_toast3">Ni e-poštni odjemalec nameščen</string>
+</resources>

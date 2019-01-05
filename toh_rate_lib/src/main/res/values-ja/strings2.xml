@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">私はあなたに最高の無料アプリケーションを提供するために非常に懸命に働いているプログラマーです。あなたの5つ星のレビューは、すべてのお金よりも価値があります。私を奨励するためにGoogle Playで良いレビューを書いてください！</string>
+    <string name="dialog_rate_title3">私に5つ星を評価</string>
+    <string name="dialog_rate_dislike3">それを嫌います</string>
+    <string name="dialog_rate_nothanks3">結構です</string>
+    <string name="dialog_rate_fivestar3">5つ星！</string>
+    <string name="rate_dislike3">何を変えなければならないか教えてください。</string>
+    <string name="title_fb_mail3">アプリケーションに関するフィードバック</string>
+    <string name="no_email_client_toast3">メールクライアントがインストールされていません</string>
+</resources>

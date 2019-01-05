@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Би програмист танд хамгийн шилдэг үнэгүй програм өгөх нь маш шаргуу ажиллаж байна. Таны 5 одтой хянах бүх мөнгөнөөс илүү үнэ цэнэтэй юм. Google-д сайхан хянах намайг дэмжих Play бичнэ үү!</string>
+    <string name="dialog_rate_title3">Надад 5 од үнэлэх</string>
+    <string name="dialog_rate_dislike3">Энэ дургүй</string>
+    <string name="dialog_rate_nothanks3">Үгүй ээ, баярлалаа</string>
+    <string name="dialog_rate_fivestar3">5 од !</string>
+    <string name="rate_dislike3">Намайг юу би өөрчлөх ёстой мэдэх болтугай..</string>
+    <string name="title_fb_mail3">Програмын тухай санал хүсэлт</string>
+    <string name="no_email_client_toast3">Суулгасан ямар ч и-мэйл үйлчлүүлэгч байдаг</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">I am a Unicode ozikhandlayo ukuze akunike best khulula application. Your ukubuyekeza 5-star kubaluleke ngaphezu kwayo yonke imali. Sicela ubhale isibuyekezo nice Google Play bazongikhuthaza!</string>
+    <string name="dialog_rate_title3">Linganisela kimi 5 izinkanyezi</string>
+    <string name="dialog_rate_dislike3">Enyanya it</string>
+    <string name="dialog_rate_nothanks3">Cha ngiyabonga</string>
+    <string name="dialog_rate_fivestar3">5 izinkanyezi !</string>
+    <string name="rate_dislike3">Ngivumele ngazi lokho kufanele ukuba ngikhulume ukushintsha..</string>
+    <string name="title_fb_mail3">Impendulo mayelana nesicelo</string>
+    <string name="no_email_client_toast3">Akukho iklayenti imeyili efakwe</string>
+</resources>

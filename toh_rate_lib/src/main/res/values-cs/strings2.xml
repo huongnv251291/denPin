@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Jsem programátor pracuje velmi tvrdě, aby vám ty nejlepší bezplatnou aplikaci. Váš 5-hvězdičkový recenze je cennější než všechny peníze. Prosím, napište pěkný přezkoumání v Google Play, aby mě podporovat!</string>
+    <string name="dialog_rate_title3">Hodnotit mi 5 hvězdiček</string>
+    <string name="dialog_rate_dislike3">Nelíbí se mi</string>
+    <string name="dialog_rate_nothanks3">Ne, díky</string>
+    <string name="dialog_rate_fivestar3">5 hvězdiček!</string>
+    <string name="rate_dislike3">Nech mě, co bych měl změnit vědět..</string>
+    <string name="title_fb_mail3">Připomínka k aplikaci</string>
+    <string name="no_email_client_toast3">Neexistuje žádný e-mailový klient nainstalován</string>
+</resources>

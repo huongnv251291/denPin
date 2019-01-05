@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Tôi là một lập trình viên làm việc rất chăm chỉ để cung cấp cho bạn các ứng dụng miễn phí tốt nhất. Đánh giá 5 sao của bạn đáng giá hơn tất cả tiền bạc. Hãy viết đánh giá tốt trong Google Play để khuyến khích tôi!</string>
+    <string name="dialog_rate_title3">Đánh giá cho tôi 5 sao</string>
+    <string name="dialog_rate_dislike3">Không thích nó</string>
+    <string name="dialog_rate_nothanks3">Không, cám ơn</string>
+    <string name="dialog_rate_fivestar3">5 sao!</string>
+    <string name="rate_dislike3">Hãy cho tôi biết những gì tôi nên thay đổi..</string>
+    <string name="title_fb_mail3">Phản hồi về ứng dụng</string>
+    <string name="no_email_client_toast3">Không có ứng dụng email được cài đặt</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Я программист, работающий очень трудно дать вам самое лучшее бесплатное приложение. Ваш 5-звездочный обзор стоит больше, чем все деньги. Пожалуйста, напишите хороший обзор в Google Play, чтобы поощрить меня!</string>
+    <string name="dialog_rate_title3">Оценить мне 5 звезд</string>
+    <string name="dialog_rate_dislike3">Больше не нравится это</string>
+    <string name="dialog_rate_nothanks3">Нет, спасибо</string>
+    <string name="dialog_rate_fivestar3">5 звезд!</string>
+    <string name="rate_dislike3">Дайте мне знать, что я должен изменить..</string>
+    <string name="title_fb_mail3">Обратная связь о приложении</string>
+    <string name="no_email_client_toast3">Там не установлен клиент электронной почты</string>
+</resources>

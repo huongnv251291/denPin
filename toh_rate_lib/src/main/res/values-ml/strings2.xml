@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">ഞാൻ നിങ്ങളെ മികച്ച സ്വതന്ത്ര അപ്ലിക്കേഷൻ നൽകാൻ വളരെ കഠിനമായി പരിശ്രമിക്കുകയാണ് കാര്യപരിപാടി. നിങ്ങളുടെ 5 നക്ഷത്ര അവലോകനം പണം അധികം രൂപയുടെ. എന്നെ പ്രോത്സാഹിപ്പിക്കാൻ Google പ്ലേ ഒരു ആശംസകള് അവലോകനം എഴുതുക!</string>
+    <string name="dialog_rate_title3">എന്നെ 5 നക്ഷത്രങ്ങൾ റേറ്റുചെയ്യുക</string>
+    <string name="dialog_rate_dislike3">ഡിസ്ലൈക്കുചെയ്യുന്നു</string>
+    <string name="dialog_rate_nothanks3">വേണ്ട, നന്ദി</string>
+    <string name="dialog_rate_fivestar3">5 നക്ഷത്രങ്ങൾ !</string>
+    <string name="rate_dislike3">ഞാൻ മാറ്റാൻ ചെയ്യണം അറിയിക്കൂ..</string>
+    <string name="title_fb_mail3">ആപ്ലിക്കേഷൻ പ്രതികരണം</string>
+    <string name="no_email_client_toast3">ഇമെയിൽ ക്ലയന്റ് ഇൻസ്റ്റോൾ ഉണ്ട്</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Είμαι ένας προγραμματιστής που εργάζεται πολύ σκληρά για να σας δώσει την καλύτερη δωρεάν εφαρμογή. κριτική 5 αστέρων σας αξίζει περισσότερο από όλα τα χρήματα. Παρακαλούμε γράψτε ένα ωραίο επανεξέταση στο Google Play για να με ενθαρρύνει!</string>
+    <string name="dialog_rate_title3">Βαθμολογήστε με 5 αστέρια</string>
+    <string name="dialog_rate_dislike3">Αρέσει αυτό</string>
+    <string name="dialog_rate_nothanks3">Όχι ευχαριστώ</string>
+    <string name="dialog_rate_fivestar3">5 αστέρια !</string>
+    <string name="rate_dislike3">Επιτρέψτε μου να ξέρω τι πρέπει να αλλάξει..</string>
+    <string name="title_fb_mail3">Ανατροφοδότηση σχετικά με την εφαρμογή</string>
+    <string name="no_email_client_toast3">Δεν υπάρχει e-mail client εγκατεστημένο</string>
+</resources>

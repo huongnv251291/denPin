@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">أنا مبرمج يعملون بجد لتعطيك أفضل التطبيق المجاني. رأيك 5 نجوم يستحق أكثر من كل المال. يرجى كتابة مراجعة لطيفة في جوجل تلعب لتشجيع لي!</string>
+    <string name="dialog_rate_title3">معدل لي 5 نجوم</string>
+    <string name="dialog_rate_dislike3">لا يروق لك</string>
+    <string name="dialog_rate_nothanks3">لا شكرا</string>
+    <string name="dialog_rate_fivestar3">5 نجوم!</string>
+    <string name="rate_dislike3">اسمحوا لي أن أعرف ما ينبغي تغيير..</string>
+    <string name="title_fb_mail3">ملاحظات حول تطبيق</string>
+    <string name="no_email_client_toast3">لا يوجد عميل بريد إلكتروني مثبت</string>
+</resources>

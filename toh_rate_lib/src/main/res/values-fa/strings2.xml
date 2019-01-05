@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">من یک برنامه نویس بسیار سخت کار به شما بهترین نرم افزار رایگان را دارم. بررسی 5 ستاره خود را به ارزش بیش از همه پول است. لطفا یک بررسی خوب در گوگل بازی برای تشویق من ارسال.</string>
+    <string name="dialog_rate_title3">من رای 5 ستاره</string>
+    <string name="dialog_rate_dislike3">دوست نداشتن آن</string>
+    <string name="dialog_rate_nothanks3">نه ممنون</string>
+    <string name="dialog_rate_fivestar3">5 ستاره!</string>
+    <string name="rate_dislike3">اجازه دهید من می دانم آنچه که من باید به تغییر..</string>
+    <string name="title_fb_mail3">بازخورد در مورد برنامه</string>
+    <string name="no_email_client_toast3">است نرم افزار ایمیل نصب وجود دارد</string>
+</resources>

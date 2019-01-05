@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Я праграміст, які працуе вельмі цяжка даць вам самае лепшае бясплатнае прыкладанне. Ваш 5-зоркавы агляд каштуе больш, чым усе грошы. Калі ласка, напішыце добры агляд у Google Play, каб заахвоціць мяне!</string>
+    <string name="dialog_rate_title3">Ацаніць мне 5 зорак</string>
+    <string name="dialog_rate_dislike3">Больш не падабаецца гэта</string>
+    <string name="dialog_rate_nothanks3">Не, дзякуй</string>
+    <string name="dialog_rate_fivestar3">5 зорак!</string>
+    <string name="rate_dislike3">Дайце мне ведаць, што я павінен змяніць..</string>
+    <string name="title_fb_mail3">Зваротная сувязь аб дадатку</string>
+    <string name="no_email_client_toast3">Там не усталяваны кліент электроннай пошты</string>
+</resources>

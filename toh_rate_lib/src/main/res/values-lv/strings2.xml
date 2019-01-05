@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Esmu programmētājs cītīgi strādā, lai dotu jums labāko bezmaksas pieteikumu. Jūsu 5-zvaigžņu pārskats ir vērts vairāk nekā visa nauda. Lūdzu rakstiet jauka pārskats Google Play, lai mudinātu mani!</string>
+    <string name="dialog_rate_title3">Novērtēt man 5 zvaigznes</string>
+    <string name="dialog_rate_dislike3">Nepatīk tas</string>
+    <string name="dialog_rate_nothanks3">Nē paldies</string>
+    <string name="dialog_rate_fivestar3">5 zvaigznes !</string>
+    <string name="rate_dislike3">Ļaujiet man zināt, ko man vajadzētu mainīt..</string>
+    <string name="title_fb_mail3">Atsauksmes par pieteikumu</string>
+    <string name="no_email_client_toast3">Nav e-pasta klients uzstādīta</string>
+</resources>

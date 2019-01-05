@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">I am programu kazi ngumu sana kukupa bora bure maombi. Yako nyota 5 mapitio ni ya thamani zaidi kuliko pesa zote. Tafadhali kuandika mapitio nzuri katika Google kucheza kuhamasisha me!</string>
+    <string name="dialog_rate_title3">Kiwango cha me nyota 5</string>
+    <string name="dialog_rate_dislike3">Watachukia</string>
+    <string name="dialog_rate_nothanks3">Hakuna, shukrani</string>
+    <string name="dialog_rate_fivestar3">nyota 5!</string>
+    <string name="rate_dislike3">Napenda kujua nini mimi lazima kubadili..</string>
+    <string name="title_fb_mail3">Maoni kuhusu maombi</string>
+    <string name="no_email_client_toast3">Hakuna mteja email imewekwa</string>
+</resources>

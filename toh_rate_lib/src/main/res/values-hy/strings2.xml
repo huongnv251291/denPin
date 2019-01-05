@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Ես ծրագրավորող աշխատել շատ դժվար է տալ ձեզ լավագույն ազատ դիմումը: Ձեր 5-աստղանի վերանայում արժե ավելի քան ամբողջ գումար. Խնդրում եմ, գրեք մի գեղեցիկ վերանայում է Google Play է խրախուսել ինձ!</string>
+    <string name="dialog_rate_title3">Գնահատեք իմ 5 աստղ</string>
+    <string name="dialog_rate_dislike3">Չհավանել այն</string>
+    <string name="dialog_rate_nothanks3">Ոչ, շնորհակալություն</string>
+    <string name="dialog_rate_fivestar3">5 աստղերի.</string>
+    <string name="rate_dislike3">Թույլ տվեք իմանալ, թե ինչ պետք է փոխել...</string>
+    <string name="title_fb_mail3">Հետադարձ մասին դիմումը</string>
+    <string name="no_email_client_toast3">Չկա ոչ մի էլ հաճախորդ տեղադրվել</string>
+</resources>

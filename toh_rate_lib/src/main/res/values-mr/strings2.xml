@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">मी एक प्रोग्रामर आपण सर्वोत्तम मोफत अनुप्रयोग देणे फार कठीण काम आहे. आपल्या 5-तारा पुनरावलोकन सर्व पैसे पेक्षा जास्त आहे. कृपया Google मध्ये एक छान पुनरावलोकन मला प्रोत्साहित करण्यासाठी प्ले लिहा!</string>
+    <string name="dialog_rate_title3">मला 5 तारे रेट</string>
+    <string name="dialog_rate_dislike3">हे आवडले नाही</string>
+    <string name="dialog_rate_nothanks3">नको धन्यवाद</string>
+    <string name="dialog_rate_fivestar3">5 तारे !</string>
+    <string name="rate_dislike3">मला काय मी बदल नये कळू द्या..</string>
+    <string name="title_fb_mail3">अनुप्रयोग विषयी फीडबॅक</string>
+    <string name="no_email_client_toast3">विना ईमेल क्लाएंट आहे</string>
+</resources>

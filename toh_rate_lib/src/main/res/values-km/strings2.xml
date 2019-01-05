@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">ខ្ញុំជាអ្នកសរសេរកម្មវិធីធ្វើការយ៉ាងលំបាកក្នុងការផ្តល់ឱ្យអ្នកនូវកម្មវិធីឥតគិតថ្លៃល្អបំផុត។ ការពិនិត្យលំដាប់ផ្កាយ 5 របស់អ្នកគឺមានតម្លៃជាងប្រាក់ទាំងអស់។ សូមសរសេរការពិនិត្យស្រស់ស្អាតនៅក្នុង Google Play ដើម្បីលើកទឹកចិត្តដល់ខ្ញុំ!</string>
+    <string name="dialog_rate_title3">Rating ខ្ញុំ ផ្កាយ 5</string>
+    <string name="dialog_rate_dislike3">មិនចូលចិត្តវា</string>
+    <string name="dialog_rate_nothanks3">អត់អី​ទេ​អរគុណ​ហើយ</string>
+    <string name="dialog_rate_fivestar3">5 តារា !</string>
+    <string name="rate_dislike3">អនុញ្ញាតឱ្យខ្ញុំដឹងនូវអ្វីដែលខ្ញុំនឹងត្រូវផ្លាស់ប្តូរ..</string>
+    <string name="title_fb_mail3">មតិអ្នកប្រើអំពីកម្មវិធី</string>
+    <string name="no_email_client_toast3">មិនមានម៉ាស៊ីនភ្ញៀវអ៊ីមែលដែលបានដំឡើងគឺ</string>
+</resources>

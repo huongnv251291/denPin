@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">నేను ఒక ప్రోగ్రామర్ మీరు ఉత్తమ ఉచిత అప్లికేషన్ ఇవ్వాలని చాలా కృషి చేస్తున్నాను. మీ 5 నక్షత్రాల సమీక్షను అన్ని డబ్బు కంటే ఎక్కువగా ఉంటుంది. దయచేసి వ్రాయండి Google లో ఒక nice సమీక్ష నన్ను ప్రోత్సహించడానికి ఆడండి!</string>
+    <string name="dialog_rate_title3">నాకు రేటు 5 నక్షత్రాలు</string>
+    <string name="dialog_rate_dislike3">నచ్చలేదా</string>
+    <string name="dialog_rate_nothanks3">వద్దు, ధన్యవాదాలు</string>
+    <string name="dialog_rate_fivestar3">5 నక్షత్రాలు!</string>
+    <string name="rate_dislike3">నాకు ఏమి నేను తప్పక తెలియజేయండి..</string>
+    <string name="title_fb_mail3">అప్లికేషన్ గురించి అభిప్రాయం</string>
+    <string name="no_email_client_toast3">ప్రతిష్ఠాపించిన ఇమెయిల్ క్లయింట్ ఉంది</string>
+</resources>

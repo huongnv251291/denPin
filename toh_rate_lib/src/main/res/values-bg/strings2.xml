@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Аз съм програмист работи много усилено, за да ви даде най-доброто безплатно приложение. Кои са 5-звезден преглед е на стойност повече от всички пари. Моля, пишете хубав преглед в Google Play, за да ме насърчи!</string>
+    <string name="dialog_rate_title3">Оцени ме 5 звезди</string>
+    <string name="dialog_rate_dislike3">Не харесвам това</string>
+    <string name="dialog_rate_nothanks3">Не благодаря</string>
+    <string name="dialog_rate_fivestar3">5 звезди !</string>
+    <string name="rate_dislike3">Нека да знаят какво трябва да се промени..</string>
+    <string name="title_fb_mail3">Обратна връзка за приложение</string>
+    <string name="no_email_client_toast3">Не е имейл клиент, инсталиран</string>
+</resources>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_lable_ac">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="white_dark">#6E85A5</color>
+    <color name="white_white_gray">#bfbfbf</color>
+    <color name="white_gray">#dfdfdf</color>
+    <color name="black_gray">#7f040005</color>
+    <color name="transfer">#00000000</color>
+    <color name="dark_gray">#696969</color>
+    <color name="light_gray">#d3d3d3</color>
+    <color name="light_blue">#0b7fb9</color>
+    <color name="dark_orange">#ff8c00</color>
+    <color name="menu_transpearent">#5000</color>
+    <color name="transparent_app">#7f7f7f7f</color>
+    <color name="gray">#ff959595</color>
+    <color name="border_color">#ffdddddd</color>
+    <color name="blur_blue">#ff006eff</color>
+    <color name="actionbar_text">#ffffffff</color>
+    <color name="color_preloader_start">#ffffffff</color>
+    <color name="color_preloader_center">#ffffffff</color>
+    <color name="color_preloader_end">#ff0099cc</color>
+    <color name="graybackground">#ffbdbdbd</color>
+    <color name="dark_slate_gray">#ff2f4f4f</color>
+    <color name="gray_2">#ffafafaf</color>
+    <color name="gray_1">#ffc0c0c0</color>
+    <color name="black">#ff000000</color>
+    <color name="orange">#fffab359</color>
+    <color name="vang">#FFFF00</color>
+    <color name="green_clicked">#ff18d7e5</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="fuchsia">#FF00FF</color>
+    <color name="red">#FF0000</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="olive">#808000</color>
+    <color name="purple">#800080</color>
+    <color name="maroon">#800000</color>
+    <color name="aqua">#00FFFF</color>
+    <color name="lime">#00FF00</color>
+    <color name="teal">#008080</color>
+    <color name="green">#008000</color>
+    <color name="blue">#0000FF</color>
+    <color name="navy">#000080</color>
+    <color name="my_white">#DCDCDC</color>
+    
+    <color name="header_bg">#4960bb</color>
+    <color name="color_bkg_popup">#BF959595</color>
+</resources>

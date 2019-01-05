@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Ek is \'n programmeerder werk baie hard om die beste gratis program gee. Jou 5-ster sien is meer as al die geld werd. Skryf asseblief \'n mooi oorsig in Google Play vir my aan te moedig!</string>
+    <string name="dialog_rate_title3">Gradeer my 5 sterre</string>
+    <string name="dialog_rate_dislike3">Laaik dit</string>
+    <string name="dialog_rate_nothanks3">Nee dankie</string>
+    <string name="dialog_rate_fivestar3">5 sterre !</string>
+    <string name="rate_dislike3">Laat my weet wat ek moet verander..</string>
+    <string name="title_fb_mail3">Terugvoer oor aansoek</string>
+    <string name="no_email_client_toast3">Daar is geen e-pos kliënt geïnstalleer</string>
+</resources>

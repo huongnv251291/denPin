@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Naiz programatzailea oso gogor lan egiten duzu doako aplikazioa onena emateko. Zure 5 izar merezi diru guztia baino gehiago da. Mesedez, idatzi Google polita berrikuspena Play me sustatu nahi!</string>
+    <string name="dialog_rate_title3">Baloratzeko me 5 stars</string>
+    <string name="dialog_rate_dislike3">Dislike da</string>
+    <string name="dialog_rate_nothanks3">Ez eskerrik asko</string>
+    <string name="dialog_rate_fivestar3">5 stars !</string>
+    <string name="rate_dislike3">Dezagun zer aldatu behar dut ni ezagutu..</string>
+    <string name="title_fb_mail3">Aplikazio buruzko iradokizunak</string>
+    <string name="no_email_client_toast3">Ez dago instalatutako posta elektroniko bezeroa da</string>
+</resources>

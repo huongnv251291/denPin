@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">ನಾನು ಒಂದು ಪ್ರೋಗ್ರಾಮರ್ ನೀವು ಅತ್ಯುತ್ತಮ ಉಚಿತ ಅಪ್ಲಿಕೇಶನ್ ನೀಡಲು ತುಂಬಾ ಹಾರ್ಡ್ ಕೆಲಸ ನಾನು. ನಿಮ್ಮ 5 ಸ್ಟಾರ್ ವಿಮರ್ಶೆ ಎಲ್ಲಾ ಹಣ ಹೆಚ್ಚು ಯೋಗ್ಯವಾಗಿದೆ. ಬರೆಯಲು ಮಾಡಿ ಗೂಗಲ್ ಒಂದು ಸಂತೋಷವನ್ನು ವಿಮರ್ಶೆ ನನಗೆ ಪ್ರೋತ್ಸಾಹಿಸಲು ಪ್ಲೇ!</string>
+    <string name="dialog_rate_title3">ನನಗೆ 5 ನಕ್ಷತ್ರಗಳ ರೇಟ್</string>
+    <string name="dialog_rate_dislike3">ಇಷ್ಟಪಡದಿರಿ</string>
+    <string name="dialog_rate_nothanks3">ಬೇಡ ಧನ್ಯವಾದಗಳು</string>
+    <string name="dialog_rate_fivestar3">5 ನಕ್ಷತ್ರಗಳು!</string>
+    <string name="rate_dislike3">ನನಗೆ ನಾನು ಬದಲಾಯಿಸಲು ಮಾಡಬೇಕು ತಿಳಿಸಿ..</string>
+    <string name="title_fb_mail3">ಅಪ್ಲಿಕೇಶನ್ ಬಗ್ಗೆ ಪ್ರತಿಕ್ರಿಯೆ</string>
+    <string name="no_email_client_toast3">ಯಾವುದೇ ಸ್ಥಾಪಿಸಿದ ಇಮೇಲ್ ಕ್ಲೈಂಟ್ ಇಲ್ಲ</string>
+</resources>

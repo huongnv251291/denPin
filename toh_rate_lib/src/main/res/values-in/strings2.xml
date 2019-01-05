@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Saya programmer bekerja sangat keras untuk memberikan yang terbaik aplikasi gratis. Anda review bintang 5 bernilai lebih dari semua uang. Silakan menulis review bagus di Google Play untuk mendorong saya!</string>
+    <string name="dialog_rate_title3">Beri saya 5</string>
+    <string name="dialog_rate_dislike3">Benci</string>
+    <string name="dialog_rate_nothanks3">Tidak, terima kasih</string>
+    <string name="dialog_rate_fivestar3">5 !</string>
+    <string name="rate_dislike3">Biarkan aku tahu apa yang saya harus mengubah..</string>
+    <string name="title_fb_mail3">Umpan balik tentang aplikasi</string>
+    <string name="no_email_client_toast3">Tidak ada klien email dipasang</string>
+</resources>

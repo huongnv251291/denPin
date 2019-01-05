@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Esu programuotojas dirba labai sunkiai, kad turėtumėte geriausią nemokamą taikymą. Jūsų 5 žvaigždučių apžvalga yra verta daugiau nei visų pinigų. Prašome parašyti gražus peržiūra "Google Play" skatinti mane!</string>
+    <string name="dialog_rate_title3">Įvertinti man 5 žvaigždutes</string>
+    <string name="dialog_rate_dislike3">Nepatinka ji</string>
+    <string name="dialog_rate_nothanks3">Ne, ačiū</string>
+    <string name="dialog_rate_fivestar3">5 žvaigždutės !</string>
+    <string name="rate_dislike3">Leiskite man žinoti, ką turėčiau pakeisti..</string>
+    <string name="title_fb_mail3">Atsiliepimai apie paraišką</string>
+    <string name="no_email_client_toast3">Nėra elektroninio pašto klientas įdiegtas</string>
+</resources>

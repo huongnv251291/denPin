@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Olen ohjelmoija kovasti töitä antaa sinulle parhaan ilmainen sovellus. Your 5-tähden tarkastelu on arvokkaampi kuin kaikki rahat. Kirjoita mukava tarkastelun Google Play kannustaa minua!</string>
+    <string name="dialog_rate_title3">Arvioi minulle 5 tähteä</string>
+    <string name="dialog_rate_dislike3">Vastenmielistä</string>
+    <string name="dialog_rate_nothanks3">Ei kiitos</string>
+    <string name="dialog_rate_fivestar3">5 tähteä !</string>
+    <string name="rate_dislike3">Haluan tietää, mitä pitäisi muuttaa..</string>
+    <string name="title_fb_mail3">Palautetta sovellus</string>
+    <string name="no_email_client_toast3">Ei ole sähköpostiohjelma asennettuna</string>
+</resources>

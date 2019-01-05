@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Ég er forritari að vinna mjög erfitt að gefa þér bestu ókeypis forrit. Þinn 5-stjörnu endurskoðun er meira en öllum peningum virði. Vinsamlega skrifaðu ágætur endurskoðun í Google Play til að hvetja mig!</string>
+    <string name="dialog_rate_title3">Gefa mér 5 stjörnur</string>
+    <string name="dialog_rate_dislike3">Mislíka það</string>
+    <string name="dialog_rate_nothanks3">Nei takk</string>
+    <string name="dialog_rate_fivestar3">5 stjörnur !</string>
+    <string name="rate_dislike3">Láttu mig vita hvað ég ætti að breyta..</string>
+    <string name="title_fb_mail3">Athugasemdir um beitingu</string>
+    <string name="no_email_client_toast3">Það er engin póstforrit uppsett</string>
+</resources>

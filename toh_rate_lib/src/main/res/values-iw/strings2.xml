@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">אני מתכנת עובדים קשה מאוד כדי לתת לך את היישום הטוב ביותר חינם. ביקורת 5 הכוכבים שלך שווה יותר מכל הכסף. אנא כתוב חוות דעת מהנה ב Google Play לעודד אותי!</string>
+    <string name="dialog_rate_title3">דרג אותי 5 כוכבים</string>
+    <string name="dialog_rate_dislike3">לא מוצא חן בעיניך</string>
+    <string name="dialog_rate_nothanks3">לא תודה</string>
+    <string name="dialog_rate_fivestar3">5 כוכבים !</string>
+    <string name="rate_dislike3">תודיע לי מה אני צריך לשנות..</string>
+    <string name="title_fb_mail3">משוב על יישום</string>
+    <string name="no_email_client_toast3">אין לקוח הדוא"ל מותקן</string>
+</resources>

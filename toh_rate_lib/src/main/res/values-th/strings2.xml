@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">ฉันเป็นโปรแกรมเมอร์ทำงานอย่างหนักเพื่อให้คุณมีโปรแกรมฟรีที่ดีที่สุด รีวิวระดับ 5 ดาวของคุณมีค่ามากกว่าเงินทั้งหมด โปรดเขียนรีวิวมีความสุขใน Google Play เพื่อส่งเสริมให้ฉัน!</string>
+    <string name="dialog_rate_title3">อัตราฉัน 5 ดาว</string>
+    <string name="dialog_rate_dislike3">ไม่ชอบก็ตาม</string>
+    <string name="dialog_rate_nothanks3">ไม่เป็นไรขอบคุณ</string>
+    <string name="dialog_rate_fivestar3">5 ดาว!</string>
+    <string name="rate_dislike3">ให้ฉันรู้ว่าสิ่งที่ฉันควรจะเปลี่ยน..</string>
+    <string name="title_fb_mail3">ความคิดเห็นเกี่ยวกับการประยุกต์ใช้</string>
+    <string name="no_email_client_toast3">ไม่มีไคลเอนต์อีเมลที่ติดตั้ง</string>
+</resources>

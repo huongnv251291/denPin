@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Mən bir proqramçı ən yaxşı pulsuz proqram vermək çox çətindir çalışıram. Sizin 5-star nəzərdən bütün pul daha çox dəyər. Google bir gözəl baxış məni təşviq etmək üçün pulsuz yazın!</string>
+    <string name="dialog_rate_title3">Mənə 5 ulduz dərəcəsi</string>
+    <string name="dialog_rate_dislike3">Onu deyə</string>
+    <string name="dialog_rate_nothanks3">Xeyr, təşəkkürlər</string>
+    <string name="dialog_rate_fivestar3">5 ulduz!</string>
+    <string name="rate_dislike3">Mənə nə dəyişdirmək üçün olmalıdır bildirin..</string>
+    <string name="title_fb_mail3">Tətbiqi haqqında Əlaqə</string>
+    <string name="no_email_client_toast3">Yüklü heç bir e-poçt müştəri var</string>
+</resources>

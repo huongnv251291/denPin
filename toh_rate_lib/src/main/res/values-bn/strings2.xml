@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">আমি একজন প্রোগ্রামার আপনি শ্রেষ্ঠ বিনামূল্যে অ্যাপ্লিকেশন দিতে কঠোর পরিশ্রম করছি. আপনার 5 তারকা পর্যালোচনা সব টাকা চেয়েও বেশি. দয়া করে Google এর মধ্যে একটা চমৎকার পর্যালোচনা আমাকে উৎসাহিত করার জন্য খেলুন লিখুন!</string>
+    <string name="dialog_rate_title3">আমার হার 5 তারার</string>
+    <string name="dialog_rate_dislike3">তা অপছন্দ</string>
+    <string name="dialog_rate_nothanks3">না ধন্যবাদ</string>
+    <string name="dialog_rate_fivestar3">5 তারা!</string>
+    <string name="rate_dislike3">আমাকে কি আমি পরিবর্তন করুক..</string>
+    <string name="title_fb_mail3">আবেদন সম্পর্কে প্রতিক্রিয়া</string>
+    <string name="no_email_client_toast3">কোন ই-মেইল ক্লায়েন্ট ইনস্টল হয়</string>
+</resources>

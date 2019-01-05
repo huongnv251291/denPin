@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">我是一个程序员，非常努力地给你最好的免费应用程序。您的5星级的评论是值得的比所有的钱。请在Google Play中撰写精彩评论，鼓励我！</string>
+    <string name="dialog_rate_title3">我的评价5星</string>
+    <string name="dialog_rate_dislike3">不喜欢</string>
+    <string name="dialog_rate_nothanks3">不用了，谢谢</string>
+    <string name="dialog_rate_fivestar3">5星！</string>
+    <string name="rate_dislike3">让我知道我应该改变什么。</string>
+    <string name="title_fb_mail3">关于应用程序的反馈</string>
+    <string name="no_email_client_toast3">没有安装电子邮件客户端</string>
+</resources>

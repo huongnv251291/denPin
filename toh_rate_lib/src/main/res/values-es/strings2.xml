@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Soy un programador que trabaja muy duro para darle la mejor aplicación libre. Su revisión de 5 estrellas vale más que todo el dinero. ¡Por favor, escribe una buena crítica en Google Play para animarme!</string>
+    <string name="dialog_rate_title3">Vótame 5 estrellas</string>
+    <string name="dialog_rate_dislike3">No me gusta que</string>
+    <string name="dialog_rate_nothanks3">No, gracias</string>
+    <string name="dialog_rate_fivestar3">¡5 estrellas!</string>
+    <string name="rate_dislike3">Déjame saber lo que debo cambiar..</string>
+    <string name="title_fb_mail3">Comentarios sobre la aplicación</string>
+    <string name="no_email_client_toast3">No hay un cliente de correo electrónico instalado</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Ben size en iyi ücretsiz başvuruyu sunmak için çok çalışmakta olan bir programcı am. 5 yıldızlı gözden geçirmeniz tüm ödemelerden daha değerlidir. Beni teşvik etmek için lütfen Google Play\'de güzel bir yorum yazın!</string>
+    <string name="dialog_rate_title3">Bana 5 yıldızlı Oranı</string>
+    <string name="dialog_rate_dislike3">Sevmediğim</string>
+    <string name="dialog_rate_nothanks3">Hayır teşekkürler</string>
+    <string name="dialog_rate_fivestar3">5 yıldız!</string>
+    <string name="rate_dislike3">Neyi değiştirmem gerektiğini bana bildirin..</string>
+    <string name="title_fb_mail3">Uygulama hakkında geribildirim</string>
+    <string name="no_email_client_toast3">Hiçbir e-posta istemcisi yüklü değil</string>
+</resources>

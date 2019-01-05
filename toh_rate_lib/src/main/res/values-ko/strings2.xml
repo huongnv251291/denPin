@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">나는 프로그래머로서 당신에게 최고의 무료 응용 프로그램을 제공하기 위해 열심히 노력하고 있습니다. 귀하의 5 성급 리뷰는 모든 돈보다 더 가치가 있습니다. 나를 격려하기 위해 Google Play에서 멋진 리뷰를 작성해주세요.</string>
+    <string name="dialog_rate_title3">나에게 별 5 개 평가</string>
+    <string name="dialog_rate_dislike3">싫어</string>
+    <string name="dialog_rate_nothanks3">괜찮습니다</string>
+    <string name="dialog_rate_fivestar3">별 5 개 !</string>
+    <string name="rate_dislike3">내가 무엇을 바꾸어야하는지 알려줘.</string>
+    <string name="title_fb_mail3">신청에 대한 피드백</string>
+    <string name="no_email_client_toast3">이메일 클라이언트가 설치되어 있지 않습니다.</string>
+</resources>

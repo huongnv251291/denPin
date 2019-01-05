@@ -1,0 +1,192 @@
+package com.tohsoft.lib;
+
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.widget.*;
+import android.view.*;
+import android.widget.RatingBar.OnRatingBarChangeListener;
+
+
+public class RateDialogActivity extends Activity {
+    RatingBar ratingBar;
+    Button btnNever;
+    Button btnRate;
+    Button btnLater;
+
+    String linkGooglePlay;
+    String pakage = "";
+
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
+    boolean isVoted = false;
+    boolean isShowListApps = false;
+    int countRecord = 0;
+
+    public static String PRE_SHARING_CLICKED_MORE_APP = "PRE_SHARING_CLICKED_MORE_APP";
+    public static String PRE_SHARING_CLICKED_VOTE_APP_VALUE = "PRE_SHARING_CLICKED_VOTE_APP_VALUE";
+    public static String PRE_SHARING_COUNT_OPENED = "PRE_SHARING_COUNT_RECORD";
+    public static String IS_ABLE_SHOW_RATE_ACTIVITY = "IS_ABLE_SHOW_RATE_ACTIVITY";
+
+    public static String PRE_SHARING_COUNT_NEWAPPS_OPENED = "PRE_SHARING_COUNT_NEWAPPS_OPENED";
+
+    public static String PRE_SHARING_CLICKED_MORE_APP_VALUE = "PRE_SHARING_CLICKED_MORE_APP_VALUE";
+
+
+    public static String IS_NEW_DIALOG_HIGH_SCORE = "IS_NEW_DIALOG_HIGH_SCORE";
+    public static String NEW_DIALOG_HIGH_SCORE_FBMAILTO = "IS_NEW_DIALOG_HIGH_SCORE_FBMAILTO";
+    public static String NEW_DIALOG_HIGH_SCORE_APPNAME = "IS_NEW_DIALOG_HIGH_SCORE_APPNAME";
+    private boolean isNewDialogHighScore = false;
+
+    Context context;
+
+    @SuppressLint("NewApi")
+    @Override
+    protected void onCreate(Bundle bundle) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
+        super.onCreate(bundle);
+//		setContentView(R.layout.rate_dialog_activity);
+
+        context = this;
+
+        SharedPreferences pref2 = getSharedPreferences(
+                RateDialogActivity.IS_NEW_DIALOG_HIGH_SCORE,
+                MODE_PRIVATE);
+        isNewDialogHighScore = pref2.getBoolean(RateDialogActivity.IS_NEW_DIALOG_HIGH_SCORE, true);
+
+
+        if (isNewDialogHighScore) {
+            setContentView(R.layout.rate_dialog_activity_high_score);
+        } else {
+            //setContentView(R.layout.rate_dialog_activity);
+        }
+
+        pakage = getApplicationContext().getPackageName();
+        linkGooglePlay = "https://play.google.com/store/apps/details?id=" + pakage;
+
+        pref = getApplicationContext().getSharedPreferences(PRE_SHARING_CLICKED_MORE_APP, MODE_PRIVATE);
+        isVoted = pref.getBoolean(PRE_SHARING_CLICKED_VOTE_APP_VALUE, false);
+        isShowListApps = pref.getBoolean(PRE_SHARING_CLICKED_MORE_APP_VALUE, false);
+        editor = pref.edit();
+        countRecord = pref.getInt(PRE_SHARING_COUNT_OPENED, 0);
+
+        ratingBar = (RatingBar) findViewById(R.id.rating_5_stars);
+        btnRate = (Button) findViewById(R.id.btn_rate);
+        btnLater = (Button) findViewById(R.id.btn_later);
+        btnNever = (Button) findViewById(R.id.btn_cancel);
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT >= 11) {
+            setFinishOnTouchOutside(false);
+        }
+        ratingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
+            public void onRatingChanged(RatingBar ratingBar, float rating,
+                                        boolean fromUser) {
+                if (rating > 4) {
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + pakage)));
+                    } catch (android.content.ActivityNotFoundException anfe) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + pakage)));
+                    }
+                    finish();
+                } else {
+                    finish();
+                }
+                AppSelfLib.setCloseWithButton(true);
+                AppSelfLib.setStopped(true);
+            }
+        });
+        btnNever.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                editor.putInt(PRE_SHARING_COUNT_OPENED, 6);
+                editor.apply();
+
+                ///get editor
+                SharedPreferences pref = getSharedPreferences(
+                        RateDialogActivity.IS_NEW_DIALOG_HIGH_SCORE,
+                        RateDialogActivity.MODE_PRIVATE);
+                String fbMailTo = pref.getString(RateDialogActivity.NEW_DIALOG_HIGH_SCORE_FBMAILTO, null);
+                String appname = pref.getString(RateDialogActivity.NEW_DIALOG_HIGH_SCORE_APPNAME, null);
+                String subject = "";
+
+                if (fbMailTo != null) {
+                    if (appname == null) {
+                        subject = getResources().getString(R.string.title_fb_mail3);
+                    } else {
+                        subject = getResources().getString(R.string.title_fb_mail3) + ": " + appname;
+                    }
+                    sendMail(fbMailTo, subject);
+                }
+                AppSelfLib.setCloseWithButton(true);
+                AppSelfLib.setStopped(true);
+                finish();
+            }
+        });
+
+        btnRate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                editor.putInt(PRE_SHARING_COUNT_OPENED, 6);
+                editor.apply();
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + pakage)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + pakage)));
+                }
+                try {
+                    AppSelfLib.setShowRate(context);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                AppSelfLib.setCloseWithButton(true);
+                AppSelfLib.setStopped(true);
+                finish();
+            }
+        });
+        btnLater.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                editor.putBoolean(RateDialogActivity.IS_ABLE_SHOW_RATE_ACTIVITY, false);
+                editor.putInt(PRE_SHARING_COUNT_OPENED, -5);
+                editor.apply();
+                AppSelfLib.setCloseWithButton(true);
+                AppSelfLib.setStopped(true);
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        editor.putBoolean(RateDialogActivity.IS_ABLE_SHOW_RATE_ACTIVITY, false);
+        editor.putInt(PRE_SHARING_COUNT_OPENED, -5);
+        editor.apply();
+
+        AppSelfLib.setCloseWithButton(false);
+        AppSelfLib.setStopped(true);
+
+        super.onBackPressed();
+    }
+
+    public void sendMail(String fbMailTo, String subject) {
+        Intent i = new Intent("android.intent.action.SENDTO");
+        i.setData(Uri.parse("mailto:" + fbMailTo));
+        i.putExtra(Intent.EXTRA_SUBJECT, subject);
+        i.putExtra(Intent.EXTRA_TEXT, "");
+        try {
+            startActivity(Intent.createChooser(i, getResources().getString(R.string.rate_dislike3)));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_email_client_toast3), Toast.LENGTH_SHORT).show();
+        }
+    }
+}

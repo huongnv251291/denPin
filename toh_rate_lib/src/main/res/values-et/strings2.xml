@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Ma olen programmeerija töötab väga raske teile parim tasuta rakendus. Teie 5-tärni läbivaatamine on väärt rohkem kui kogu raha. Palun kirjuta kena vaadata Google Play julgustada mind!</string>
+    <string name="dialog_rate_title3">Hinda mind 5 tärni</string>
+    <string name="dialog_rate_dislike3">Ei meeldi</string>
+    <string name="dialog_rate_nothanks3">Ei aitäh</string>
+    <string name="dialog_rate_fivestar3">5 tärni !</string>
+    <string name="rate_dislike3">Andke teada, mida ma peaks muutma..</string>
+    <string name="title_fb_mail3">Tagasiside rakenduse kohta</string>
+    <string name="no_email_client_toast3">Ei ole e-posti klient paigaldatud</string>
+</resources>

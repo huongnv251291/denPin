@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Jestem programistą pracuje bardzo ciężko, aby dać Ci najlepszą darmową aplikację. Twoja ocena 5-gwiazdkowy hotel jest wart więcej niż wszystkie pieniądze. Proszę napisać ładny przegląd w Google Play, aby zachęcić mnie!</string>
+    <string name="dialog_rate_title3">Oceń mnie 5 gwiazdek</string>
+    <string name="dialog_rate_dislike3">Lubię go</string>
+    <string name="dialog_rate_nothanks3">Nie, dziękuję</string>
+    <string name="dialog_rate_fivestar3">5 gwiazdek !</string>
+    <string name="rate_dislike3">Daj mi znać, co powinienem zmienić..</string>
+    <string name="title_fb_mail3">Feedback aplikacji</string>
+    <string name="no_email_client_toast3">Nie ma zainstalowany klient poczty</string>
+</resources>

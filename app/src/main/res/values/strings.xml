@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">TOH BaseProject</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_ok">OK</string>
+    <string name="action_yes">Yes</string>
+    <string name="action_cancel">Cancel</string>
+
+    <string name="lbl_report">Report problem</string>
+    <string name="lbl_rate_me_five_stars">Rate us 5 stars</string>
+    <string name="lbl_more_apps">More apps</string>
+    <string name="lbl_share">Share</string>
+    <string name="lbl_share_app">Share app</string>
+    <string name="lbl_promotion_ads">Promotion Ads</string>
+    <string name="lbl_version">Version</string>
+    <string name="lbl_report_problem">Report problems for</string>
+    <string name="lbl_exit_app_cb">Never ask again</string>
+
+    <string name="msg_please_wait">Please wait…</string>
+    <string name="msg_exit_app">Do you want to leave app?</string>
+    <string name="msg_alert_storage_permission_denied">Access storage Denied! The application requires access storage to write some data.</string>
+</resources>

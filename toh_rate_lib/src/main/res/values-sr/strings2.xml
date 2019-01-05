@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Ја сам програмер који ради веома напорно да вам дати најбољу бесплатну апликацију. Ваш преглед 5 звездица вреди више од свих новца. Пишите добар преглед у Гоогле Плаи да ме охрабри!</string>
+    <string name="dialog_rate_title3">Рате ме 5 звездица</string>
+    <string name="dialog_rate_dislike3">Не свиђа вам се</string>
+    <string name="dialog_rate_nothanks3">Не хвала</string>
+    <string name="dialog_rate_fivestar3">5 старс!</string>
+    <string name="rate_dislike3">Пусти ме да знам шта треба да се промени..</string>
+    <string name="title_fb_mail3">Повратне информације о апликацији</string>
+    <string name="no_email_client_toast3">Не постоји емаил клијент инсталиран</string>
+</resources>

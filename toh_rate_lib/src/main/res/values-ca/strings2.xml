@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">Sóc un programador que treballa molt dur per donar-li la millor aplicació gratuïta. El seu comentari 5 estrelles val més que tots els diners. Si us plau escrigui un comentari positiu a Google Play per animar-me!</string>
+    <string name="dialog_rate_title3">Vótame 5 estrelles</string>
+    <string name="dialog_rate_dislike3">No m\'agrada que</string>
+    <string name="dialog_rate_nothanks3">No gracies</string>
+    <string name="dialog_rate_fivestar3">5 estrelles !</string>
+    <string name="rate_dislike3">Deixa saber el que ha de canviar..</string>
+    <string name="title_fb_mail3">Feedback d\'aplicació</string>
+    <string name="no_email_client_toast3">No hi ha client de correu electrònic instal·lat</string>
+</resources>

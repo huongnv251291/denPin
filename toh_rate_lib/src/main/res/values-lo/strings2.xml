@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_give_5_start_prompt3">ຂ້າພະເຈົ້າເປັນ programmer ຍາມຢ່າງຫນັກເພື່ອໃຫ້ທ່ານຄໍາຮ້ອງສະຫມັກຟຣີທີ່ດີທີ່ສຸດ. ການທົບທວນຄືນ 5 ດາວຂອງທ່ານແມ່ນຕົກເປັນມູນຄ່າຫຼາຍກ່ວາເງິນທັງຫມົດ. ກະລຸນາຂຽນການທົບທວນຄືນງາມໃນກູໂກຫຼິ້ນການຊຸກຍູ້ໃຫ້ຂ້າພະເຈົ້າ!</string>
+    <string name="dialog_rate_title3">ອັດຕາ ຂ້າພະເຈົ້າ 5 ດາວ</string>
+    <string name="dialog_rate_dislike3">ບໍ່ມັກ ມັນ</string>
+    <string name="dialog_rate_nothanks3">ບໍ່​ຂອບ​ໃຈ</string>
+    <string name="dialog_rate_fivestar3">5 ດາວ!</string>
+    <string name="rate_dislike3">ໃຫ້ຂ້າພະເຈົ້າຮູ້ວ່າສິ່ງທີ່ຂ້າພະເຈົ້າຄວນຈະມີການປ່ຽນແປງ..</string>
+    <string name="title_fb_mail3">ຂໍ້ສະເຫນີແນະກ່ຽວກັບຄໍາຮ້ອງສະຫມັກ</string>
+    <string name="no_email_client_toast3">ບໍ່ມີລູກຄ້າອີເມວການຕິດຕັ້ງແມ່ນ</string>
+</resources>
