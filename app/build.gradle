@@ -56,32 +56,17 @@ android {
             buildConfigField "boolean", "TEST_AD", "Boolean.parseBoolean(\"true\")"
         }
     }
-
-}
-
-configurations.all() {
-    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-        def requested = details.requested
-        if (requested.group == 'com.android.support') {
-            if (!requested.name.startsWith("multidex")) {
-                details.useVersion supportLibsVersion
-            }
-        }
-    }
 }
 
 ext {
-    supportLibsVersion = "28.0.0"
+    androidxVersion = '1.0.2'
     playServicesVersion = "16.0.0"
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.android.support:appcompat-v7:$supportLibsVersion"
-    implementation "com.android.support:cardview-v7:$supportLibsVersion"
-    implementation "com.android.support:design:$supportLibsVersion"
-    implementation "com.android.support:recyclerview-v7:$supportLibsVersion"
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation "androidx.appcompat:appcompat:$androidxVersion"
+    implementation 'androidx.multidex:multidex:2.0.1'
     // Google services
     implementation "com.google.android.gms:play-services-ads:$playServicesVersion"
     // Utility Library
@@ -104,8 +89,8 @@ dependencies {
     // Rx Permission
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5'
     // Bind view Library
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     // Event Bus
     implementation 'org.greenrobot:eventbus:3.1.1'
     // GSon

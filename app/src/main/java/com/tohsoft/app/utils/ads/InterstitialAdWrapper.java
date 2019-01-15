@@ -88,7 +88,7 @@ public class InterstitialAdWrapper implements AdsId {
             }
         };
 
-        if (mAdsPosition >= banners.length) {
+        if (mAdsPosition >= interstitialGift.length) {
             mAdsPosition = 0;
         }
         mInterstitialAd = Advertisements.initInterstitialAd(context.getApplicationContext(), interstitialGift[mAdsPosition], adListener);
