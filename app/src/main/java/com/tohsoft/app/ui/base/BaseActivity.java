@@ -5,8 +5,10 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +40,8 @@ public abstract class BaseActivity<P extends MvpPresenter> extends AppCompatActi
     protected P mPresenter;
 
     protected abstract BasePresenter onRegisterPresenter();
+
+    protected abstract ViewGroup getBottomAdsContainer();
 
     private void initPresenter() {
         try {
@@ -95,20 +99,24 @@ public abstract class BaseActivity<P extends MvpPresenter> extends AppCompatActi
     }
 
     protected void showBannerBottom(ViewGroup container) {
-        if (BuildConfig.SHOW_AD) {
+        if (BuildConfig.SHOW_AD && container != null) {
             if (AdsConstants.bannerBottom == null) {
                 AdsConstants.bannerBottom = new AdViewWrapper();
             }
             AdsConstants.bannerBottom.initBanner(getApplicationContext(), container);
+        } else if (container != null) {
+            container.setVisibility(View.GONE);
         }
     }
 
     public void showBannerEmptyScreen(ViewGroup container) {
-        if (BuildConfig.SHOW_AD) {
+        if (BuildConfig.SHOW_AD && container != null) {
             if (AdsConstants.bannerEmptyScreen == null) {
                 AdsConstants.bannerEmptyScreen = new AdViewWrapper();
             }
             AdsConstants.bannerEmptyScreen.initEmptyAdView(getApplicationContext(), container);
+        } else if (container != null) {
+            container.setVisibility(View.GONE);
         }
     }
 
@@ -192,6 +200,7 @@ public abstract class BaseActivity<P extends MvpPresenter> extends AppCompatActi
     protected void onResume() {
         super.onResume();
         updateLifeCycleForSubViews(LifeCycle.ON_RESUME);
+        showBannerBottom(getBottomAdsContainer());
     }
 
     @Override

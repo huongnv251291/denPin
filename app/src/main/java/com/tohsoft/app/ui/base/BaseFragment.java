@@ -59,10 +59,11 @@ public abstract class BaseFragment<P extends MvpPresenter> extends Fragment impl
 
     protected void showBannerEmptyScreen(ViewGroup container) {
         if (BuildConfig.SHOW_AD) {
-            if (AdsConstants.bannerEmptyScreen == null) {
-                AdsConstants.bannerEmptyScreen = new AdViewWrapper();
+            if (mActivity != null) {
+                mActivity.showBannerEmptyScreen(container);
             }
-            AdsConstants.bannerEmptyScreen.initEmptyAdView(getContext().getApplicationContext(), container);
+        } else if (container != null) {
+            container.setVisibility(View.GONE);
         }
     }
 

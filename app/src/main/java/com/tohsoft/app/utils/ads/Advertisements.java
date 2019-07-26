@@ -40,7 +40,11 @@ public class Advertisements {
                     }
                     ((ViewGroup) adView.getParent()).removeAllViews();
                 }
-                container.setVisibility(View.VISIBLE);
+                if (adView.getVisibility() == View.VISIBLE) {
+                    container.setVisibility(View.VISIBLE);
+                } else {
+                    container.setVisibility(View.GONE);
+                }
                 container.removeAllViews();
                 container.addView(adView);
             } else {

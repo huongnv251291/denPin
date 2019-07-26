@@ -17,7 +17,7 @@
     <string name="lbl_report_problem">Report problems for</string>
     <string name="lbl_exit_app_cb">Never ask again</string>
 
-    <string name="msg_please_wait">Please wait…</string>
     <string name="msg_exit_app">Do you want to leave app?</string>
+    <string name="msg_please_wait">Please wait…</string>
     <string name="msg_alert_storage_permission_denied">Access storage Denied! The application requires access storage to write some data.</string>
 </resources>

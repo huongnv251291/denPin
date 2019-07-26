@@ -21,7 +21,7 @@ public class InterstitialOPAHelper implements AdsId {
     private View mProgressLoading;
 
     private static final int DELAY_SPLASH = 3000; // Splash timeout
-    private static final int DELAY_TRY_LOAD_ADS = 0; // Fake progress timeout
+    private static final int DELAY_TRY_LOAD_ADS = 2000; // Fake progress timeout
     private volatile boolean mIsInterstitialOpenAppShownOnStartup = false;
     private volatile boolean mIsInterstitialOpenAppShownOnQuit = false;
     private volatile boolean mIsStop = false;
@@ -95,8 +95,8 @@ public class InterstitialOPAHelper implements AdsId {
             mProgressLoading.setVisibility(View.VISIBLE);
         }
 
-        long checkInterval = 100;//
-        long counterTimeout = DELAY_SPLASH + DELAY_TRY_LOAD_ADS;
+        long checkInterval = 100;
+        long counterTimeout = DELAY_SPLASH + (mProgressLoading != null ? DELAY_TRY_LOAD_ADS : 0);
         mCounter = new CountDownTimer(counterTimeout, checkInterval) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -148,6 +148,16 @@ public class InterstitialOPAHelper implements AdsId {
             mInterstitialOpenApp.show();
         } else if (mListener != null) {
             mListener.showExitDialog();
+        }
+    }
+
+    public boolean isLoaded() {
+        return mInterstitialOpenApp != null && mInterstitialOpenApp.isLoaded();
+    }
+
+    public void show() {
+        if (mInterstitialOpenApp != null && mInterstitialOpenApp.isLoaded() && !mIsStop) {
+            mInterstitialOpenApp.show();
         }
     }
 
