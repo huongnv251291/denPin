@@ -20,8 +20,8 @@ public class InterstitialOPAHelper implements AdsId {
     private CountDownTimer mCounter;
     private View mProgressLoading;
 
-    private static final int DELAY_SPLASH = 3000; // Splash timeout
-    private static final int DELAY_TRY_LOAD_ADS = 2000; // Fake progress timeout
+    private static final int DELAY_SPLASH = 2000; // Splash timeout
+    private static final int DELAY_TRY_LOAD_ADS = 3000; // Fake progress timeout
     private volatile boolean mIsInterstitialOpenAppShownOnStartup = false;
     private volatile boolean mIsInterstitialOpenAppShownOnQuit = false;
     private volatile boolean mIsStop = false;

@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
      * */
     private void initAds() {
         if (BuildConfig.SHOW_AD) {
+            frSplash.setVisibility(View.VISIBLE);
             // OPA
             mInterstitialOPAHelper = new InterstitialOPAHelper(getContext(), llFakeProgress, this);
             mInterstitialOPAHelper.initInterstitialOpenApp();
@@ -86,6 +87,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
      * */
     @SuppressLint("CheckResult")
     private void checkPermissions() {
+        frSplash.setVisibility(View.GONE);
         // Check permission & request
         new RxPermissions(this)
                 .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
