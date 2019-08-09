@@ -27,6 +27,7 @@ import android.widget.Toast;
 public class AppSelfLib {
 
     private static int stCntOpened = 0;
+    public static String language = "en";
 
     public static boolean showRateActivityOnBack(final Context context,
                                                  int cntOpened, int requestCodeShowRate) {

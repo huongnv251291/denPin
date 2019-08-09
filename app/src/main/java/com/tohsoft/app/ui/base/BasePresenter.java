@@ -2,6 +2,8 @@ package com.tohsoft.app.ui.base;
 
 import android.content.Context;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 /**
  * Created by Phong on 11/9/2016.
  */
@@ -9,9 +11,11 @@ import android.content.Context;
 public abstract class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
     private V mvpView;
     protected Context mContext;
+    protected CompositeDisposable mCompositeDisposable;
 
     public BasePresenter(Context context) {
         this.mContext = context;
+        this.mCompositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -22,6 +26,7 @@ public abstract class BasePresenter<V extends MvpView> implements MvpPresenter<V
     @Override
     public void detachView() {
         mvpView = null;
+        mCompositeDisposable.clear();
     }
 
     public boolean isViewAttached() {

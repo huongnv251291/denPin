@@ -19,4 +19,5 @@
     <color name="black_gray">#9E9FA0</color>
     <color name="bounded_grey">#717075</color>
     <color name="brown">#6C492E</color>
+    <color name="dark">#FF424242</color>
 </resources>

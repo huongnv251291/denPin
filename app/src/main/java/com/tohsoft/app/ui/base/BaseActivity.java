@@ -25,6 +25,7 @@ import com.tohsoft.app.utils.Utils;
 import com.tohsoft.app.utils.ads.AdViewWrapper;
 import com.tohsoft.app.utils.ads.AdsConstants;
 import com.tohsoft.app.utils.ads.InterstitialAdWrapper;
+import com.tohsoft.app.utils.language.LocaleManager;
 import com.utility.DebugLog;
 
 
@@ -76,6 +77,11 @@ public abstract class BaseActivity<P extends MvpPresenter> extends AppCompatActi
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleManager.setLocale(newBase));
     }
 
     @Override

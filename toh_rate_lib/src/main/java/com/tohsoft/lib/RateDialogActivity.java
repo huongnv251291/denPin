@@ -10,6 +10,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.*;
 import android.view.*;
 import android.widget.RatingBar.OnRatingBarChangeListener;
@@ -46,6 +47,11 @@ public class RateDialogActivity extends Activity {
     private boolean isNewDialogHighScore = false;
 
     Context context;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(RateLibLocaleManager.setLocale(newBase, AppSelfLib.language));
+    }
 
     @SuppressLint("NewApi")
     @Override

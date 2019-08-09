@@ -14,16 +14,21 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.tohsoft.app.BaseApplication;
 import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.R;
 import com.tohsoft.app.data.ApplicationModules;
 import com.tohsoft.app.ui.base.BaseActivity;
 import com.tohsoft.app.ui.base.BasePresenter;
+import com.tohsoft.app.ui.settings.SettingsFragment;
 import com.tohsoft.app.utils.ads.AdViewWrapper;
 import com.tohsoft.app.utils.ads.Advertisements;
 import com.tohsoft.app.utils.ads.InterstitialOPAHelper;
+import com.tohsoft.app.utils.language.LocaleManager;
+import com.tohsoft.lib.AppSelfLib;
 import com.utility.DebugLog;
 
 import butterknife.BindView;
@@ -54,6 +59,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppSelfLib.language = LocaleManager.getLocale(getResources()).getLanguage();
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -167,9 +173,19 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BaseApplication.getInstance().clearAllRequest();
+    }
+
+    @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             super.onBackPressed();
+            // Có thể show OPA ở đây khi back về từ 1 Fragment nào đó
+//            if (mInterstitialOPAHelper != null && mInterstitialOPAHelper.isLoaded()) {
+//                mInterstitialOPAHelper.show();
+//            }
             return;
         }
         if (mPresenter != null) {
@@ -177,6 +193,9 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         }
     }
 
-    @OnClick(R.id.fr_splash)
-    public void onFakeClick() {}
+    @OnClick(R.id.btn_settings)
+    public void onSettings() {
+        FragmentUtils.add(getSupportFragmentManager(), SettingsFragment.newInstance(),
+                android.R.id.content, true, R.anim.fade_in, R.anim.fade_out);
+    }
 }

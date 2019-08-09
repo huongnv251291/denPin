@@ -18,19 +18,12 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 
 public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> implements MainMvpPresenter<V> {
-    private final CompositeDisposable mCompositeDisposable;
+
     private final Handler mRateHandler;
 
     MainPresenter(Context context) {
         super(context);
-        mCompositeDisposable = new CompositeDisposable();
         mRateHandler = new Handler();
-    }
-
-    @Override
-    public void detachView() {
-        super.detachView();
-        mCompositeDisposable.clear();
     }
 
     @Override

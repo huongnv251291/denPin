@@ -51,6 +51,12 @@ public class BaseApplication extends MultiDexApplication {
         mCompositeDisposable.add(disposable);
     }
 
+    public void clearAllRequest(){
+        if (mCompositeDisposable != null) {
+            mCompositeDisposable.clear();
+        }
+    }
+
     /*
     * Tự động restart app khi bị crash
     * */
@@ -102,8 +108,6 @@ public class BaseApplication extends MultiDexApplication {
     public void onTerminate() {
         super.onTerminate();
         ApplicationModules.getInstant().onDestroy();
-        if (mCompositeDisposable != null) {
-            mCompositeDisposable.clear();
-        }
+        clearAllRequest();
     }
 }

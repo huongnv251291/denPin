@@ -90,7 +90,7 @@ public class Communicate {
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL_COMPANY});
         intent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.lbl_report_problem) + " " + context.getString(R.string.app_name));
         intent.putExtra(Intent.EXTRA_TEXT, "\n\n---- Device Info ----\n" + UtilsLib.getInfoDevices(context));
-        context.startActivity(Intent.createChooser(intent, context.getString(R.string.lbl_report_problem)));
+        context.startActivity(Intent.createChooser(intent, context.getString(R.string.lbl_report_problem_with)));
     }
 
     public static void shareApps(Context context) {
