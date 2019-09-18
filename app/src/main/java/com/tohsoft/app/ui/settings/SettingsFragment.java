@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.tohsoft.app.R;
 import com.tohsoft.app.ui.base.BaseFragment;
 import com.tohsoft.app.ui.base.BasePresenter;
+import com.tohsoft.app.utils.Utils;
 import com.tohsoft.app.utils.commons.Communicate;
 import com.tohsoft.app.utils.language.ChangeLanguageHelper;
 
@@ -67,6 +68,9 @@ public class SettingsFragment extends BaseFragment {
 
     @OnClick({R.id.ll_language, R.id.ll_report_problem, R.id.ll_rate_us, R.id.ll_more_apps, R.id.ll_share_app, R.id.ll_promotion_ads})
     public void onViewClicked(View view) {
+        if (!Utils.isAvailableClick()) {
+            return;
+        }
         switch (view.getId()) {
             case R.id.ll_language:
                 new ChangeLanguageHelper(mContext, null).changeLanguage();

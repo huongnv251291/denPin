@@ -33,6 +33,7 @@
         </activity>
 
         <!--Services-->
+        <service android:name=".services.BackgroundService" />
 
         <!--Receivers-->
         <receiver android:name=".receivers.BootUpReceiver">

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -19,6 +20,16 @@ import com.tohsoft.app.R;
  */
 
 public class Utils {
+    private static long mLastClickTime = 0;
+
+    public static boolean isAvailableClick() {
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 300) {
+            return false;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
+        return true;
+    }
+
     @SuppressLint("StaticFieldLeak")
     private static MaterialDialog sProgressDialog;
 

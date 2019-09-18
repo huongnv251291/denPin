@@ -1,22 +1,19 @@
 package com.tohsoft.app.ui.main;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.appcompat.app.AlertDialog;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.FragmentUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tohsoft.app.BaseApplication;
 import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.R;
@@ -24,12 +21,14 @@ import com.tohsoft.app.data.ApplicationModules;
 import com.tohsoft.app.ui.base.BaseActivity;
 import com.tohsoft.app.ui.base.BasePresenter;
 import com.tohsoft.app.ui.settings.SettingsFragment;
+import com.tohsoft.app.utils.AutoStartManagerUtil;
 import com.tohsoft.app.utils.ads.AdViewWrapper;
 import com.tohsoft.app.utils.ads.Advertisements;
 import com.tohsoft.app.utils.ads.InterstitialOPAHelper;
 import com.tohsoft.app.utils.language.LocaleManager;
 import com.tohsoft.lib.AppSelfLib;
 import com.utility.DebugLog;
+import com.utility.RuntimePermissions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +40,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     @BindView(R.id.fr_empty_ads) FrameLayout frEmptyAds;
     @BindView(R.id.fr_splash) View frSplash;
     @BindView(R.id.ll_fake_progress) View llFakeProgress;
+    @BindView(R.id.iv_warning) View ivWarning;
 
     private InterstitialOPAHelper mInterstitialOPAHelper;
     private AdViewWrapper mAdViewWrapper;
@@ -64,6 +64,8 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         ButterKnife.bind(this);
 
         initAds();
+
+        checkAutoStartManager();
     }
 
     /*
@@ -88,6 +90,31 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         }
     }
 
+    /**
+     * Kiểm tra và xin cấp quyền chạy service khi app bị kill trên một số dòng máy
+     *
+     * Start service sau method này {@link com.tohsoft.app.services.BackgroundService}
+     */
+    private void checkAutoStartManager() {
+        if (AutoStartManagerUtil.shouldShowEnableAutoStart(getContext())) {
+            ivWarning.setVisibility(View.VISIBLE);
+            /*if (AutoStartManagerUtil.canShowWarningIcon(getContext())) {
+                // Hiển thị icon warning
+            } else {
+                // Ẩn icon warning và hiển thị chỗ khác
+            }*/
+        } else {
+            ivWarning.setVisibility(View.GONE);
+        }
+    }
+
+    private MaterialDialog.SingleButtonCallback enableAutoStartListener = new MaterialDialog.SingleButtonCallback() {
+        @Override
+        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+            ivWarning.setVisibility(View.GONE);
+        }
+    };
+
     /*
      * Check runtime permissions & init data
      * */
@@ -95,17 +122,19 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     private void checkPermissions() {
         frSplash.setVisibility(View.GONE);
         // Check permission & request
-        new RxPermissions(this)
-                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe(granted -> {
-                    if (granted) { // Permissions granted
-                        mPresenter.initData();
-                    } else { // Permissions denied
-                        ToastUtils.showLong(R.string.msg_alert_storage_permission_denied);
-                    }
-                }, throwable -> {
-                    DebugLog.loge(throwable.getMessage());
-                });
+        if (RuntimePermissions.checkAccessStoragePermission(mContext)) {
+            mPresenter.initData();
+        } else {
+            RuntimePermissions.requestStoragePermission(mContext);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RuntimePermissions.RequestCodePermission.REQUEST_CODE_GRANT_STORAGE_PERMISSIONS) {
+            checkPermissions();
+        }
     }
 
     @Override
@@ -197,5 +226,10 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     public void onSettings() {
         FragmentUtils.add(getSupportFragmentManager(), SettingsFragment.newInstance(),
                 android.R.id.content, true, R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @OnClick(R.id.iv_warning)
+    public void showDialogAutoStartManager() {
+        AutoStartManagerUtil.showDialogEnableAutoStart(getContext(), enableAutoStartListener);
     }
 }

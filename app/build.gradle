@@ -62,23 +62,23 @@ android {
 }
 
 ext {
-    androidxVersion = '1.0.2'
+    androidxVersion = '1.1.0'
     playServicesVersion = "16.0.0"
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:$androidxVersion"
-    implementation "com.google.android.material:material:1.1.0-alpha09"
+    implementation "com.google.android.material:material:1.1.0-alpha10"
     implementation 'androidx.multidex:multidex:2.0.1'
     // Google services
     implementation "com.google.android.gms:play-services-ads:$playServicesVersion"
     // Utility Library
     implementation 'com.github.phongnx:Utility:1.1.8'
-    implementation 'com.blankj:utilcode:1.25.5'
+    implementation 'com.blankj:utilcode:1.25.9'
     // Setup Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
     // RxAndroid
