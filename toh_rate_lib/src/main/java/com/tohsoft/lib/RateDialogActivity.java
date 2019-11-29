@@ -65,6 +65,7 @@ public class RateDialogActivity extends Activity {
 //		setContentView(R.layout.rate_dialog_activity);
 
         context = this;
+        AppSelfLib.setCloseWithButton(false);
 
         SharedPreferences pref2 = getSharedPreferences(
                 RateDialogActivity.IS_NEW_DIALOG_HIGH_SCORE,
@@ -87,10 +88,10 @@ public class RateDialogActivity extends Activity {
         editor = pref.edit();
         countRecord = pref.getInt(PRE_SHARING_COUNT_OPENED, 0);
 
-        ratingBar = (RatingBar) findViewById(R.id.rating_5_stars);
-        btnRate = (Button) findViewById(R.id.btn_rate);
-        btnLater = (Button) findViewById(R.id.btn_later);
-        btnNever = (Button) findViewById(R.id.btn_cancel);
+        ratingBar = findViewById(R.id.rating_5_stars);
+        btnRate = findViewById(R.id.btn_rate);
+        btnLater = findViewById(R.id.btn_later);
+        btnNever = findViewById(R.id.btn_cancel);
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT >= 11) {
@@ -173,7 +174,6 @@ public class RateDialogActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-
         editor.putBoolean(RateDialogActivity.IS_ABLE_SHOW_RATE_ACTIVITY, false);
         editor.putInt(PRE_SHARING_COUNT_OPENED, -5);
         editor.apply();
@@ -182,6 +182,17 @@ public class RateDialogActivity extends Activity {
         AppSelfLib.setStopped(true);
 
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (!AppSelfLib.isCloseWithButton() && editor != null) {
+            editor.putBoolean(RateDialogActivity.IS_ABLE_SHOW_RATE_ACTIVITY, false);
+            editor.putInt(PRE_SHARING_COUNT_OPENED, -5);
+            editor.apply();
+        }
+        AppSelfLib.setStopped(true);
+        super.onDestroy();
     }
 
     public void sendMail(String fbMailTo, String subject) {

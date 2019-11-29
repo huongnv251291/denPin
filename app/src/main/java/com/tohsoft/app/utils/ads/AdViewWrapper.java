@@ -55,17 +55,17 @@ public class AdViewWrapper implements AdsId {
                     super.onAdFailedToLoad(i);
                     DebugLog.loge("onAdFailedToLoad - Code: " + i);
                     if (mAdView != null) {
-                        mAdView.setVisibility(View.GONE);
+//                        mAdView.setVisibility(View.GONE);
                         if (mAdView.getParent() != null) {
                             ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
-                            viewGroup.setVisibility(View.GONE);
+//                            viewGroup.setVisibility(View.GONE);
                             viewGroup.removeView(mAdView);
                         }
                         mAdView = null;
                     }
-                    if (container != null) {
-                        container.setVisibility(View.GONE);
-                    }
+//                    if (container != null) {
+//                        container.setVisibility(View.GONE);
+//                    }
                     if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
                         initBanner(context, container, null);
                         mTryReloadAds++;
@@ -83,9 +83,9 @@ public class AdViewWrapper implements AdsId {
                     if (mAdView != null) {
                         mAdView.setVisibility(View.VISIBLE);
                     }
-                    if (container != null) {
-                        container.setVisibility(View.VISIBLE);
-                    }
+//                    if (container != null) {
+//                        container.setVisibility(View.VISIBLE);
+//                    }
                 }
             };
         }

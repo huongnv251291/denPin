@@ -536,6 +536,10 @@ public class AppSelfLib {
     private static boolean isStopped = false;
     private static boolean isCloseWithButton = false;
 
+    public static boolean isCloseWithButton(){
+        return isCloseWithButton;
+    }
+
     public static boolean canCloseApplication() {
         return isStopped && isCloseWithButton;
     }

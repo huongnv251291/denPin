@@ -40,15 +40,15 @@ public class Advertisements {
                     }
                     ((ViewGroup) adView.getParent()).removeAllViews();
                 }
-                if (adView.getVisibility() == View.VISIBLE) {
-                    container.setVisibility(View.VISIBLE);
-                } else {
-                    container.setVisibility(View.GONE);
-                }
+//                if (adView.getVisibility() == View.VISIBLE) {
+//                    container.setVisibility(View.VISIBLE);
+//                } else {
+////                    container.setVisibility(View.GONE);
+//                }
                 container.removeAllViews();
                 container.addView(adView);
             } else {
-                container.setVisibility(View.GONE);
+//                container.setVisibility(View.GONE);
             }
         } catch (Exception e) {
             DebugLog.loge(e);
