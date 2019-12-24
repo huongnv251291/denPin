@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.FragmentUtils;
 import com.tohsoft.app.BaseApplication;
 import com.tohsoft.app.BuildConfig;
@@ -39,6 +41,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     @BindView(R.id.fr_bottom_banner) FrameLayout frBottomBanner;
     @BindView(R.id.fr_empty_ads) FrameLayout frEmptyAds;
     @BindView(R.id.fr_splash) View frSplash;
+    @BindView(R.id.iv_splash) ImageView ivSplash;
     @BindView(R.id.ll_fake_progress) View llFakeProgress;
     @BindView(R.id.iv_warning) View ivWarning;
 
@@ -63,6 +66,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setSplashMargin();
         initAds();
 
         checkAutoStartManager();
@@ -91,8 +95,22 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     }
 
     /**
+    * Fix lỗi co kéo ảnh splash so với ảnh window background
+    * */
+    private void setSplashMargin() {
+        if (ivSplash != null) {
+            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) ivSplash.getLayoutParams();
+            layoutParams.topMargin = -BarUtils.getStatusBarHeight();
+            if (BarUtils.isSupportNavBar()) {
+                layoutParams.bottomMargin = -BarUtils.getNavBarHeight();
+            }
+            ivSplash.setLayoutParams(layoutParams);
+        }
+    }
+
+    /**
      * Kiểm tra và xin cấp quyền chạy service khi app bị kill trên một số dòng máy
-     *
+     * <p>
      * Start service sau method này {@link com.tohsoft.app.services.BackgroundService}
      */
     private void checkAutoStartManager() {
