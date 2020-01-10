@@ -1,5 +1,6 @@
 package com.tohsoft.app.data;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.tohsoft.app.data.local.preference.PreferencesHelper;
@@ -11,6 +12,7 @@ import com.tohsoft.app.data.network.RemoteApiService;
  */
 
 public class ApplicationModules {
+    @SuppressLint("StaticFieldLeak")
     private static ApplicationModules sApplicationModules;
     private Context mContext;
     private PreferencesHelper mPreferencesHelper;

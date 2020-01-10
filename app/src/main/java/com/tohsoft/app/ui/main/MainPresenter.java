@@ -11,8 +11,6 @@ import com.tohsoft.app.ui.base.BasePresenter;
 import com.tohsoft.app.utils.commons.Communicate;
 import com.tohsoft.lib.AppSelfLib;
 
-import io.reactivex.disposables.CompositeDisposable;
-
 /**
  * Created by Phong on 2/2/2017.
  */

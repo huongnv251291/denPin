@@ -24,7 +24,6 @@ public class AppSelfLib {
             context.startActivity(intent);
 
             isStopped = false;
-            isCloseWithButton = false;
             isShow = true;
         }
         editor.putInt(RateDialogActivity.PRE_SHARING_COUNT_OPENED, countRecord + 1);
@@ -65,10 +64,9 @@ public class AppSelfLib {
 
     // Add this variable to check dialog is stopped?
     private static boolean isStopped = false;
-    private static boolean isCloseWithButton = false;
 
     public static boolean canCloseApplication() {
-        return isStopped && isCloseWithButton;
+        return isStopped;
     }
 
     public static boolean isStopped() {
