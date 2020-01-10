@@ -10,7 +10,6 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.*;
 import android.view.*;
 import android.widget.RatingBar.OnRatingBarChangeListener;
@@ -65,11 +64,8 @@ public class RateDialogActivity extends Activity {
 //		setContentView(R.layout.rate_dialog_activity);
 
         context = this;
-        AppSelfLib.setCloseWithButton(false);
 
-        SharedPreferences pref2 = getSharedPreferences(
-                RateDialogActivity.IS_NEW_DIALOG_HIGH_SCORE,
-                MODE_PRIVATE);
+        SharedPreferences pref2 = getSharedPreferences(RateDialogActivity.IS_NEW_DIALOG_HIGH_SCORE, MODE_PRIVATE);
         isNewDialogHighScore = pref2.getBoolean(RateDialogActivity.IS_NEW_DIALOG_HIGH_SCORE, true);
 
 
@@ -88,6 +84,12 @@ public class RateDialogActivity extends Activity {
         editor = pref.edit();
         countRecord = pref.getInt(PRE_SHARING_COUNT_OPENED, 0);
 
+        /*
+        * Luôn reset lại count state mỗi khi hiển thị lên Dialog rate
+        * -> Fix lỗi không hiển thị lại RateLib khi đang show RateLib thì kill app bằng recent
+        * */
+        resetState();
+
         ratingBar = findViewById(R.id.rating_5_stars);
         btnRate = findViewById(R.id.btn_rate);
         btnLater = findViewById(R.id.btn_later);
@@ -97,6 +99,7 @@ public class RateDialogActivity extends Activity {
         if (SDK_INT >= 11) {
             setFinishOnTouchOutside(false);
         }
+
         ratingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
             public void onRatingChanged(RatingBar ratingBar, float rating,
                                         boolean fromUser) {
@@ -110,14 +113,13 @@ public class RateDialogActivity extends Activity {
                 } else {
                     finish();
                 }
-                AppSelfLib.setCloseWithButton(true);
                 AppSelfLib.setStopped(true);
             }
         });
+
         btnNever.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                editor.putInt(PRE_SHARING_COUNT_OPENED, 6);
-                editor.apply();
+                setStateNeverShowAgain();
 
                 ///get editor
                 SharedPreferences pref = getSharedPreferences(
@@ -135,7 +137,6 @@ public class RateDialogActivity extends Activity {
                     }
                     sendMail(fbMailTo, subject);
                 }
-                AppSelfLib.setCloseWithButton(true);
                 AppSelfLib.setStopped(true);
                 finish();
             }
@@ -143,8 +144,7 @@ public class RateDialogActivity extends Activity {
 
         btnRate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                editor.putInt(PRE_SHARING_COUNT_OPENED, 6);
-                editor.apply();
+                setStateNeverShowAgain();
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + pakage)));
                 } catch (android.content.ActivityNotFoundException anfe) {
@@ -155,53 +155,54 @@ public class RateDialogActivity extends Activity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                AppSelfLib.setCloseWithButton(true);
                 AppSelfLib.setStopped(true);
                 finish();
             }
         });
+
         btnLater.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                editor.putBoolean(RateDialogActivity.IS_ABLE_SHOW_RATE_ACTIVITY, false);
-                editor.putInt(PRE_SHARING_COUNT_OPENED, -5);
-                editor.apply();
-                AppSelfLib.setCloseWithButton(true);
+                resetState();
                 AppSelfLib.setStopped(true);
                 finish();
             }
         });
     }
 
+    private void setStateNeverShowAgain() {
+        if (editor != null) {
+            editor.putInt(PRE_SHARING_COUNT_OPENED, 6);
+            editor.apply();
+        }
+    }
+
+    private void resetState() {
+        if (editor != null) {
+            editor.putBoolean(RateDialogActivity.IS_ABLE_SHOW_RATE_ACTIVITY, false);
+            editor.putInt(PRE_SHARING_COUNT_OPENED, -5);
+            editor.apply();
+        }
+    }
+
     @Override
     public void onBackPressed() {
-        editor.putBoolean(RateDialogActivity.IS_ABLE_SHOW_RATE_ACTIVITY, false);
-        editor.putInt(PRE_SHARING_COUNT_OPENED, -5);
-        editor.apply();
-
-        AppSelfLib.setCloseWithButton(false);
         AppSelfLib.setStopped(true);
-
         super.onBackPressed();
     }
 
     @Override
     protected void onDestroy() {
-        if (!AppSelfLib.isCloseWithButton() && editor != null) {
-            editor.putBoolean(RateDialogActivity.IS_ABLE_SHOW_RATE_ACTIVITY, false);
-            editor.putInt(PRE_SHARING_COUNT_OPENED, -5);
-            editor.apply();
-        }
         AppSelfLib.setStopped(true);
         super.onDestroy();
     }
 
     public void sendMail(String fbMailTo, String subject) {
-        Intent i = new Intent("android.intent.action.SENDTO");
-        i.setData(Uri.parse("mailto:" + fbMailTo));
-        i.putExtra(Intent.EXTRA_SUBJECT, subject);
-        i.putExtra(Intent.EXTRA_TEXT, "");
+        Intent intent = new Intent("android.intent.action.SENDTO");
+        intent.setData(Uri.parse("mailto:" + fbMailTo));
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, "");
         try {
-            startActivity(Intent.createChooser(i, getResources().getString(R.string.rate_dislike3)));
+            startActivity(Intent.createChooser(intent, getResources().getString(R.string.rate_dislike3)));
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_email_client_toast3), Toast.LENGTH_SHORT).show();
         }

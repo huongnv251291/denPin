@@ -57,14 +57,6 @@ public class Utils {
                 .build();
     }
 
-    public static void showToast(Context context, String message) {
-        if (!message.isEmpty()) {
-            Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
-            toast.setGravity(17, 0, 230);
-            toast.show();
-        }
-    }
-
     public static void loadImageWithGlide(Context context, Object model, int place_holder, ImageView target) {
         if (model == null || context == null) {
             return;
