@@ -33,5 +33,6 @@
     <string name="lbl_general">General</string>
     <string name="lbl_enable_auto_start">Enable auto-start</string>
     <string name="lbl_enable_auto_start_content">Auto-start manager in Settings in your device will prevent apps from running in background. You should give this permission for Weather app can run in background.</string>
-
+    <string name="lbl_enable_start_in_background">Start in background in Settings in your device will prevent apps open window setting in background. You should give this permission to this application work normal.</string>
+    <string name="lbl_other_permissions">Other permissions</string>
 </resources>

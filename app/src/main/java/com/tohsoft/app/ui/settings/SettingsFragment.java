@@ -17,6 +17,7 @@ import com.tohsoft.app.ui.base.BasePresenter;
 import com.tohsoft.app.utils.Utils;
 import com.tohsoft.app.utils.commons.Communicate;
 import com.tohsoft.app.utils.language.ChangeLanguageHelper;
+import com.tohsoft.app.utils.xiaomi.Miui;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +27,7 @@ import butterknife.Unbinder;
 public class SettingsFragment extends BaseFragment {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.ll_promotion_ads) LinearLayout llPromotionAds;
+    @BindView(R.id.ll_other_permissions) LinearLayout llOtherPermissions;
 
     private Unbinder mUnbinder;
 
@@ -53,6 +55,10 @@ public class SettingsFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (!Miui.needManagePermissionMui()) {
+            llOtherPermissions.setVisibility(View.GONE);
+        }
+
         toolbar.setNavigationOnClickListener(v -> {
             if (getActivity() != null) {
                 getActivity().onBackPressed();
@@ -74,6 +80,9 @@ public class SettingsFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.ll_language:
                 new ChangeLanguageHelper(mContext, null).changeLanguage();
+                break;
+            case R.id.ll_other_permissions:
+                Miui.openManagePermissionMui(mContext);
                 break;
             case R.id.ll_report_problem:
                 Communicate.onFeedback(mContext);

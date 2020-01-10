@@ -69,18 +69,18 @@ ext {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:$androidxVersion"
-    implementation "com.google.android.material:material:1.2.0-alpha02"
+    implementation "com.google.android.material:material:1.2.0-alpha03"
     implementation 'androidx.multidex:multidex:2.0.1'
     // Google services
     implementation "com.google.android.gms:play-services-ads:$playServicesVersion"
     // Utility Library
     implementation 'com.github.phongnx:Utility:1.1.8'
-    implementation 'com.blankj:utilcode:1.25.9'
+    implementation 'com.blankj:utilcode:1.26.0'
     // Setup Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
     // RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
@@ -98,7 +98,7 @@ dependencies {
     // Event Bus
     implementation 'org.greenrobot:eventbus:3.1.1'
     // GSon
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
     // Modules
     implementation project(':toh_rate_lib')
 }

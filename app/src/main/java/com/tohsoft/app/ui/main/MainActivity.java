@@ -20,6 +20,7 @@ import com.tohsoft.app.BaseApplication;
 import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.R;
 import com.tohsoft.app.data.ApplicationModules;
+import com.tohsoft.app.data.local.preference.PreferencesHelper;
 import com.tohsoft.app.ui.base.BaseActivity;
 import com.tohsoft.app.ui.base.BasePresenter;
 import com.tohsoft.app.ui.settings.SettingsFragment;
@@ -28,8 +29,8 @@ import com.tohsoft.app.utils.ads.AdViewWrapper;
 import com.tohsoft.app.utils.ads.Advertisements;
 import com.tohsoft.app.utils.ads.InterstitialOPAHelper;
 import com.tohsoft.app.utils.language.LocaleManager;
+import com.tohsoft.app.utils.xiaomi.Miui;
 import com.tohsoft.lib.AppSelfLib;
-import com.utility.DebugLog;
 import com.utility.RuntimePermissions;
 
 import butterknife.BindView;
@@ -70,6 +71,8 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         initAds();
 
         checkAutoStartManager();
+
+        checkStartInBackgroundPermission();
     }
 
     /*
@@ -95,8 +98,8 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     }
 
     /**
-    * Fix lỗi co kéo ảnh splash so với ảnh window background
-    * */
+     * Fix lỗi co kéo ảnh splash so với ảnh window background
+     */
     private void setSplashMargin() {
         if (ivSplash != null) {
             FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) ivSplash.getLayoutParams();
@@ -123,6 +126,16 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
             }*/
         } else {
             ivWarning.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Kiểm tra và xin cấp quyền StartInBackground khi startIntent như mở một app khác trên MIUI (Xiaomi devices)
+     *
+     */
+    private void checkStartInBackgroundPermission() {
+        if (!PreferencesHelper.isStartInBackgroundShowed(mContext)) {
+            Miui.requestStartInBackground(mContext);
         }
     }
 
