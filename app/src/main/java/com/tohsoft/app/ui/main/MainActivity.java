@@ -26,6 +26,7 @@ import com.tohsoft.app.ui.base.BasePresenter;
 import com.tohsoft.app.ui.settings.SettingsFragment;
 import com.tohsoft.app.utils.AutoStartManagerUtil;
 import com.tohsoft.app.utils.ads.AdViewWrapper;
+import com.tohsoft.app.utils.ads.AdsConstants;
 import com.tohsoft.app.utils.ads.Advertisements;
 import com.tohsoft.app.utils.ads.InterstitialOPAHelper;
 import com.tohsoft.app.utils.language.LocaleManager;
@@ -225,8 +226,8 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         if (mInterstitialOPAHelper != null) {
             mInterstitialOPAHelper.onStop();
         }
@@ -235,6 +236,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        AdsConstants.destroy();
         BaseApplication.getInstance().clearAllRequest();
     }
 

@@ -72,7 +72,7 @@ public class SettingsFragment extends BaseFragment {
         showPromotionView(llPromotionAds);
     }
 
-    @OnClick({R.id.ll_language, R.id.ll_report_problem, R.id.ll_rate_us, R.id.ll_more_apps, R.id.ll_share_app, R.id.ll_promotion_ads})
+    @OnClick({R.id.ll_language, R.id.ll_report_problem, R.id.ll_rate_us, R.id.ll_more_apps, R.id.ll_share_app, R.id.ll_promotion_ads, R.id.ll_other_permissions})
     public void onViewClicked(View view) {
         if (!Utils.isAvailableClick()) {
             return;

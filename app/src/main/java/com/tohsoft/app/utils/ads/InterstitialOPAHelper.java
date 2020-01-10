@@ -87,40 +87,44 @@ public class InterstitialOPAHelper implements AdsId {
                     }
                 }
             });
+        } else {
+            onAdOPALoadingCounterFinish();
         }
     }
 
     private void startAdOPALoadingCounter() {
-        if (mProgressLoading != null) {
-            mProgressLoading.setVisibility(View.VISIBLE);
-        }
+        if (BuildConfig.SHOW_AD) {
+            if (mProgressLoading != null) {
+                mProgressLoading.setVisibility(View.VISIBLE);
+            }
 
-        long checkInterval = 100;
-        long counterTimeout = DELAY_SPLASH + (mProgressLoading != null ? DELAY_TRY_LOAD_ADS : 0);
-        mCounter = new CountDownTimer(counterTimeout, checkInterval) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                // Check if ad OPA loaded
-                if (mInterstitialOpenApp == null || (mInterstitialOpenApp.isLoaded() && !mIsStop)) {
-                    mCounter.cancel();// stop mCounter & finish
-                    onAdOPALoadingCounterFinish();
-                    return;
-                }
+            long checkInterval = 100;
+            long counterTimeout = DELAY_SPLASH + (mProgressLoading != null ? DELAY_TRY_LOAD_ADS : 0);
+            mCounter = new CountDownTimer(counterTimeout, checkInterval) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    // Check if ad OPA loaded
+                    if (mInterstitialOpenApp == null || (mInterstitialOpenApp.isLoaded() && !mIsStop)) {
+                        mCounter.cancel();// stop mCounter & finish
+                        onAdOPALoadingCounterFinish();
+                        return;
+                    }
 
-                long passedTimeMS = counterTimeout - millisUntilFinished;
-                if (passedTimeMS >= DELAY_SPLASH) {
-                    if (mListener != null) {
-                        mListener.hideSplash();
+                    long passedTimeMS = counterTimeout - millisUntilFinished;
+                    if (passedTimeMS >= DELAY_SPLASH) {
+                        if (mListener != null) {
+                            mListener.hideSplash();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFinish() {
-                onAdOPALoadingCounterFinish();
-            }
-        };
-        mCounter.start();
+                @Override
+                public void onFinish() {
+                    onAdOPALoadingCounterFinish();
+                }
+            };
+            mCounter.start();
+        }
     }
 
     private void onAdOPALoadingCounterFinish() {

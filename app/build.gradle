@@ -53,6 +53,7 @@ android {
         }
 
         adDebug {
+            versionName "0.001"
             dimension "capabilities"
             buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"false\")"
             buildConfigField "boolean", "SHOW_AD", "Boolean.parseBoolean(\"true\")"
