@@ -60,6 +60,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
                     ((Activity) mContext).finish();
                 }
                 AppSelfLib.setStopped(false);
+                AppSelfLib.setCloseWithButton(false);
             } else {
                 mRateHandler.postDelayed(this, 100);
             }

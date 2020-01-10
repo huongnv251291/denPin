@@ -89,6 +89,7 @@ public class RateDialogActivity extends Activity {
         * -> Fix lỗi không hiển thị lại RateLib khi đang show RateLib thì kill app bằng recent
         * */
         resetState();
+        AppSelfLib.setCloseWithButton(false);
 
         ratingBar = findViewById(R.id.rating_5_stars);
         btnRate = findViewById(R.id.btn_rate);
@@ -113,6 +114,7 @@ public class RateDialogActivity extends Activity {
                 } else {
                     finish();
                 }
+                AppSelfLib.setCloseWithButton(true);
                 AppSelfLib.setStopped(true);
             }
         });
@@ -137,6 +139,7 @@ public class RateDialogActivity extends Activity {
                     }
                     sendMail(fbMailTo, subject);
                 }
+                AppSelfLib.setCloseWithButton(true);
                 AppSelfLib.setStopped(true);
                 finish();
             }
@@ -155,6 +158,7 @@ public class RateDialogActivity extends Activity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                AppSelfLib.setCloseWithButton(true);
                 AppSelfLib.setStopped(true);
                 finish();
             }
@@ -163,6 +167,7 @@ public class RateDialogActivity extends Activity {
         btnLater.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 resetState();
+                AppSelfLib.setCloseWithButton(true);
                 AppSelfLib.setStopped(true);
                 finish();
             }
@@ -186,12 +191,14 @@ public class RateDialogActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        AppSelfLib.setCloseWithButton(false);
         AppSelfLib.setStopped(true);
         super.onBackPressed();
     }
 
     @Override
     protected void onDestroy() {
+        AppSelfLib.setCloseWithButton(false);
         AppSelfLib.setStopped(true);
         super.onDestroy();
     }
