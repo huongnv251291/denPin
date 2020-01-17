@@ -63,7 +63,7 @@ android {
 }
 
 ext {
-    androidxVersion = '1.1.0'
+    androidxVersion = '1.0.2' // Dùng 1.1.0 bị lỗi không đổi được Locale cho Resources
     playServicesVersion = "16.0.0"
 }
 
