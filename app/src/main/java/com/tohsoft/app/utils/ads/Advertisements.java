@@ -1,10 +1,11 @@
 package com.tohsoft.app.utils.ads;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.provider.Settings;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -14,9 +15,6 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.tohsoft.app.BuildConfig;
 import com.utility.DebugLog;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * Created by Phong on 4/28/2017.
  */
@@ -25,9 +23,6 @@ public class Advertisements {
 
     private static AdRequest buildAdRequest(Context context) {
         AdRequest.Builder builder = new AdRequest.Builder();
-        if (BuildConfig.TEST_AD || BuildConfig.DEBUG) {
-            builder.addTestDevice(getAdmodDeviceId(context));
-        }
         return builder.build();
     }
 
@@ -40,15 +35,16 @@ public class Advertisements {
                     }
                     ((ViewGroup) adView.getParent()).removeAllViews();
                 }
-//                if (adView.getVisibility() == View.VISIBLE) {
-//                    container.setVisibility(View.VISIBLE);
-//                } else {
-////                    container.setVisibility(View.GONE);
-//                }
+                if (adView.getVisibility() == View.VISIBLE) {
+                    container.setVisibility(View.VISIBLE);
+                } else {
+                    container.setVisibility(View.GONE);
+                }
                 container.removeAllViews();
                 container.addView(adView);
             } else {
-//                container.setVisibility(View.GONE);
+                container.removeAllViews();
+                container.setVisibility(View.GONE);
             }
         } catch (Exception e) {
             DebugLog.loge(e);
@@ -85,7 +81,7 @@ public class Advertisements {
             adsId = AdsId.banner_test_id;
         }
         final AdView adView = new AdView(context.getApplicationContext());
-        adView.setAdSize(AdSize.BANNER); // 320x50
+        adView.setAdSize(getAdSize(context)); // 320x50
         adView.setAdUnitId(adsId);
         if (adListener != null) {
             adView.setAdListener(adListener);
@@ -131,29 +127,26 @@ public class Advertisements {
         return adView;
     }
 
-    //
-    @SuppressLint("HardwareIds")
-    private static String getAdmodDeviceId(Context context) {
-        try {
-            String android_id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            // Create MD5 Hash
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            digest.update(android_id.getBytes());
-            byte messageDigest[] = digest.digest();
-            // Create Hex String
-            StringBuilder hexString = new StringBuilder();
-            for (byte aMessageDigest : messageDigest) {
-                StringBuilder h = new StringBuilder(Integer.toHexString(0xFF & aMessageDigest));
-                while (h.length() < 2)
-                    h.insert(0, "0");
-                hexString.append(h);
-            }
-            return hexString.toString().toUpperCase();
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+    /*
+    * Adaptive Banner
+    * */
+    private static AdSize getAdSize(Context context) {
+        if (context == null) {
+            return AdSize.BANNER;
         }
-        return "";
+
+        // Determine the screen width (less decorations) to use for the ad width.
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+
+        float widthPixels = outMetrics.widthPixels;
+        float density = outMetrics.density;
+
+        int adWidth = (int) (widthPixels / density);
+
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, adWidth);
     }
 
 }

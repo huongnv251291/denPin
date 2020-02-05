@@ -55,17 +55,12 @@ public class AdViewWrapper implements AdsId {
                     super.onAdFailedToLoad(i);
                     DebugLog.loge("onAdFailedToLoad - Code: " + i);
                     if (mAdView != null) {
-//                        mAdView.setVisibility(View.GONE);
-                        if (mAdView.getParent() != null) {
-                            ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
-//                            viewGroup.setVisibility(View.GONE);
-                            viewGroup.removeView(mAdView);
-                        }
+                        goneAdViewAndContainer();
                         mAdView = null;
                     }
-//                    if (container != null) {
-//                        container.setVisibility(View.GONE);
-//                    }
+                    if (container != null) {
+                        container.setVisibility(View.GONE);
+                    }
                     if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
                         initBanner(context, container, null);
                         mTryReloadAds++;
@@ -83,9 +78,21 @@ public class AdViewWrapper implements AdsId {
                     if (mAdView != null) {
                         mAdView.setVisibility(View.VISIBLE);
                     }
-//                    if (container != null) {
-//                        container.setVisibility(View.VISIBLE);
-//                    }
+                    if (container != null) {
+                        container.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void onAdClicked() {
+                    super.onAdClicked();
+                    goneAdViewAndContainer();
+                }
+
+                @Override
+                public void onAdOpened() {
+                    super.onAdOpened();
+                    goneAdViewAndContainer();
                 }
             };
         }
@@ -139,6 +146,18 @@ public class AdViewWrapper implements AdsId {
                         mAdView.setVisibility(View.VISIBLE);
                     }
                 }
+
+                @Override
+                public void onAdClicked() {
+                    super.onAdClicked();
+                    goneAdViewAndContainer();
+                }
+
+                @Override
+                public void onAdOpened() {
+                    super.onAdOpened();
+                    goneAdViewAndContainer();
+                }
             };
         }
 
@@ -148,6 +167,16 @@ public class AdViewWrapper implements AdsId {
         mAdView = Advertisements.initMediumBanner(context.getApplicationContext(), bannersExitDialog[mAdsPosition], adListener);
     }
 
+    private void goneAdViewAndContainer() {
+        if (mAdView != null) {
+            mAdView.setVisibility(View.GONE);
+            if (mAdView.getParent() != null) {
+                ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
+                viewGroup.setVisibility(View.GONE);
+                viewGroup.removeView(mAdView);
+            }
+        }
+    }
 
     /*
      * Destroy references

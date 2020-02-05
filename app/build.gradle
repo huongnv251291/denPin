@@ -64,13 +64,13 @@ android {
 
 ext {
     androidxVersion = '1.0.2' // Dùng 1.1.0 bị lỗi không đổi được Locale cho Resources
-    playServicesVersion = "16.0.0"
+    playServicesVersion = "18.3.0"
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:$androidxVersion"
-    implementation "com.google.android.material:material:1.2.0-alpha03"
+    implementation "com.google.android.material:material:1.2.0-alpha04"
     implementation 'androidx.multidex:multidex:2.0.1'
     // Google services
     implementation "com.google.android.gms:play-services-ads:$playServicesVersion"
