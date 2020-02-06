@@ -33,13 +33,9 @@ public class Advertisements {
                     if (adView.getParent() == container) {
                         return;
                     }
-                    ((ViewGroup) adView.getParent()).removeAllViews();
+                    ((ViewGroup) adView.getParent()).removeView(adView);
                 }
-                if (adView.getVisibility() == View.VISIBLE) {
-                    container.setVisibility(View.VISIBLE);
-                } else {
-                    container.setVisibility(View.GONE);
-                }
+                container.setVisibility(View.VISIBLE);
                 container.removeAllViews();
                 container.addView(adView);
             } else {
@@ -128,8 +124,8 @@ public class Advertisements {
     }
 
     /*
-    * Adaptive Banner
-    * */
+     * Adaptive Banner
+     * */
     private static AdSize getAdSize(Context context) {
         if (context == null) {
             return AdSize.BANNER;
