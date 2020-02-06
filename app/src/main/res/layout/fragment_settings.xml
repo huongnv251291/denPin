@@ -44,8 +44,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="16dp"
-                    android:tint="@color/dark"
-                    app:srcCompat="@drawable/ic_language_black_24dp"
+                    app:srcCompat="@drawable/ic_settings_language"
                     tools:ignore="PrivateResource" />
 
                 <TextView
@@ -70,8 +69,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="16dp"
-                    android:tint="@color/dark"
-                    app:srcCompat="@drawable/ic_security_black_24dp"
+                    app:srcCompat="@drawable/ic_settings_permission"
                     tools:ignore="PrivateResource" />
 
                 <TextView
@@ -79,6 +77,31 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:text="@string/lbl_other_permissions"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_get_pro_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                tools:ignore="UnusedAttribute">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="16dp"
+                    app:srcCompat="@drawable/ic_settings_pro"
+                    tools:ignore="PrivateResource" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/lbl_get_pro_version"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -106,8 +129,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="16dp"
-                    android:tint="@color/dark"
-                    app:srcCompat="@drawable/ic_info_outline_black_24dp"
+                    app:srcCompat="@drawable/ic_settings_report"
                     tools:ignore="PrivateResource" />
 
                 <TextView
@@ -132,8 +154,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="16dp"
-                    android:tint="@color/dark"
-                    app:srcCompat="@drawable/ic_star_border_black_24dp"
+                    app:srcCompat="@drawable/ic_settings_rate"
                     tools:ignore="PrivateResource" />
 
                 <TextView
@@ -158,8 +179,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="16dp"
-                    android:tint="@color/dark"
-                    app:srcCompat="@drawable/ic_more_horiz_black_24dp"
+                    app:srcCompat="@drawable/ic_settings_apps"
                     tools:ignore="PrivateResource" />
 
                 <TextView
@@ -184,8 +204,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="16dp"
-                    android:tint="@color/dark"
-                    app:srcCompat="@drawable/ic_share_black_24dp"
+                    app:srcCompat="@drawable/ic_settings_share"
                     tools:ignore="PrivateResource" />
 
                 <TextView
@@ -210,7 +229,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="16dp"
-                    android:tint="@color/dark"
                     app:srcCompat="@drawable/ic_settings_ads"
                     tools:ignore="PrivateResource" />
 

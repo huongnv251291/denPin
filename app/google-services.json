@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "486013432718",
+    "firebase_url": "https://base-source.firebaseio.com",
+    "project_id": "base-source",
+    "storage_bucket": "base-source.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486013432718:android:b09788155fda1218512adf",
+        "android_client_info": {
+          "package_name": "com.tohsoft.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486013432718-msio1pi80c4be3b38kduc9d069ta7u4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYAt_nwiS5SQaR-tcFpi2cE7ZjAc2lmq8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486013432718-msio1pi80c4be3b38kduc9d069ta7u4k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

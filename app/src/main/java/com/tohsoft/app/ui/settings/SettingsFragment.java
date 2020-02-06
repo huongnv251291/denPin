@@ -2,7 +2,6 @@ package com.tohsoft.app.ui.settings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -11,7 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
+import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.R;
+import com.tohsoft.app.helper.FirebaseRemoteConfigHelper;
 import com.tohsoft.app.ui.base.BaseFragment;
 import com.tohsoft.app.ui.base.BasePresenter;
 import com.tohsoft.app.utils.Utils;
@@ -28,6 +29,7 @@ public class SettingsFragment extends BaseFragment {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.ll_promotion_ads) LinearLayout llPromotionAds;
     @BindView(R.id.ll_other_permissions) LinearLayout llOtherPermissions;
+    @BindView(R.id.ll_get_pro_version) LinearLayout llGetProVersion;
 
     private Unbinder mUnbinder;
 
@@ -58,6 +60,11 @@ public class SettingsFragment extends BaseFragment {
         if (!Miui.needManagePermissionMui()) {
             llOtherPermissions.setVisibility(View.GONE);
         }
+        if (!BuildConfig.FULL_VERSION && FirebaseRemoteConfigHelper.getInstance().getProVersionEnable()) {
+            llGetProVersion.setVisibility(View.VISIBLE);
+        } else {
+            llGetProVersion.setVisibility(View.GONE);
+        }
 
         toolbar.setNavigationOnClickListener(v -> {
             if (getActivity() != null) {
@@ -72,7 +79,8 @@ public class SettingsFragment extends BaseFragment {
         showPromotionView(llPromotionAds);
     }
 
-    @OnClick({R.id.ll_language, R.id.ll_report_problem, R.id.ll_rate_us, R.id.ll_more_apps, R.id.ll_share_app, R.id.ll_promotion_ads, R.id.ll_other_permissions})
+    @OnClick({R.id.ll_language, R.id.ll_report_problem, R.id.ll_rate_us, R.id.ll_more_apps, R.id.ll_share_app, R.id.ll_promotion_ads,
+            R.id.ll_other_permissions, R.id.ll_get_pro_version})
     public void onViewClicked(View view) {
         if (!Utils.isAvailableClick()) {
             return;
@@ -83,6 +91,9 @@ public class SettingsFragment extends BaseFragment {
                 break;
             case R.id.ll_other_permissions:
                 Miui.openManagePermissionMui(mContext);
+                break;
+            case R.id.ll_get_pro_version:
+                Communicate.getFullVersion(mContext);
                 break;
             case R.id.ll_report_problem:
                 Communicate.onFeedback(mContext);

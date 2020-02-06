@@ -21,6 +21,7 @@ import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.R;
 import com.tohsoft.app.data.ApplicationModules;
 import com.tohsoft.app.data.local.preference.PreferencesHelper;
+import com.tohsoft.app.helper.FirebaseRemoteConfigHelper;
 import com.tohsoft.app.ui.base.BaseActivity;
 import com.tohsoft.app.ui.base.BasePresenter;
 import com.tohsoft.app.ui.settings.SettingsFragment;
@@ -29,6 +30,7 @@ import com.tohsoft.app.utils.ads.AdViewWrapper;
 import com.tohsoft.app.utils.ads.AdsConstants;
 import com.tohsoft.app.utils.ads.Advertisements;
 import com.tohsoft.app.utils.ads.InterstitialOPAHelper;
+import com.tohsoft.app.utils.commons.Communicate;
 import com.tohsoft.app.utils.language.LocaleManager;
 import com.tohsoft.app.utils.xiaomi.Miui;
 import com.tohsoft.lib.AppSelfLib;
@@ -50,6 +52,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     private InterstitialOPAHelper mInterstitialOPAHelper;
     private AdViewWrapper mAdViewWrapper;
     private AlertDialog mDialogExitApp;
+    private MaterialDialog mDialogGetProVersion;
 
     @Override
     protected BasePresenter onRegisterPresenter() {
@@ -67,6 +70,8 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         AppSelfLib.language = LocaleManager.getLocale(getResources()).getLanguage();
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        FirebaseRemoteConfigHelper.getInstance().fetchRemoteData(mContext);
 
         setSplashMargin();
         initAds();
@@ -131,8 +136,35 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     }
 
     /**
+     * Kiểm tra và hiển thị pop-up gợi ý users mua bản PRO
+     */
+    private void checkAndShowGetProVersion() {
+        if (mDialogGetProVersion != null && mDialogGetProVersion.isShowing()) {
+            return;
+        }
+        if (FirebaseRemoteConfigHelper.getInstance().getProVersionEnable() &&
+                ApplicationModules.getInstant().getPreferencesHelper().canShowGetProVersion()) {
+            MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
+                    .content(R.string.lbl_get_pro_version_title)
+                    .negativeText(R.string.action_later)
+                    .positiveText(R.string.action_ok_buy_now)
+                    .onPositive((dialog, which) -> {
+                        ApplicationModules.getInstant().getPreferencesHelper().setGetProVersionEnable(false);
+                        Communicate.getFullVersion(mContext);
+                    })
+                    .neutralText(R.string.action_no_thanks)
+                    .onNeutral((dialog, which) -> {
+                                ApplicationModules.getInstant().getPreferencesHelper().setGetProVersionEnable(false);
+                            }
+                    );
+
+            mDialogGetProVersion = builder.build();
+            mDialogGetProVersion.show();
+        }
+    }
+
+    /**
      * Kiểm tra và xin cấp quyền StartInBackground khi startIntent như mở một app khác trên MIUI (Xiaomi devices)
-     *
      */
     private void checkStartInBackgroundPermission() {
         if (!PreferencesHelper.isStartInBackgroundShowed(mContext)) {
@@ -159,6 +191,8 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         } else {
             RuntimePermissions.requestStoragePermission(mContext);
         }
+
+        checkAndShowGetProVersion();
     }
 
     @Override

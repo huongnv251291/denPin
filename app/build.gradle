@@ -1,4 +1,8 @@
 apply plugin: 'com.android.application'
+// Google Services Gradle plugin
+apply plugin: 'com.google.gms.google-services'
+// Crashlytics Gradle plugin
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 28
@@ -42,6 +46,12 @@ android {
         abortOnError false
     }
 
+    sourceSets {
+        pro.setRoot('src/pro')
+        normal.setRoot('src/main')
+        adDebug.setRoot('src/main')
+    }
+
     flavorDimensions "capabilities"
 
     productFlavors {
@@ -52,12 +62,20 @@ android {
             buildConfigField "boolean", "TEST_AD", "Boolean.parseBoolean(\"false\")"
         }
 
+        pro {
+            dimension "capabilities"
+            buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"true\")"
+            buildConfigField "boolean", "SHOW_AD", "Boolean.parseBoolean(\"false\")"
+            buildConfigField "boolean", "TEST_AD", "Boolean.parseBoolean(\"false\")"
+            applicationIdSuffix ".pro"
+        }
+
         adDebug {
-            versionName "0.001"
             dimension "capabilities"
             buildConfigField "boolean", "FULL_VERSION", "Boolean.parseBoolean(\"false\")"
             buildConfigField "boolean", "SHOW_AD", "Boolean.parseBoolean(\"true\")"
             buildConfigField "boolean", "TEST_AD", "Boolean.parseBoolean(\"true\")"
+            versionName "0.001"
         }
     }
 }
@@ -74,6 +92,11 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     // Google services
     implementation "com.google.android.gms:play-services-ads:$playServicesVersion"
+    // Firebase
+    implementation 'com.google.firebase:firebase-core:17.2.2'
+    implementation 'com.google.firebase:firebase-config:19.1.0'
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
     // Utility Library
     implementation 'com.github.phongnx:Utility:1.1.8'
     implementation 'com.blankj:utilcode:1.26.0'
