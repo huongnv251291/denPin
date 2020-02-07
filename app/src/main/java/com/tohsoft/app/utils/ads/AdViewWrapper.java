@@ -172,7 +172,6 @@ public class AdViewWrapper implements AdsId {
             if (mAdView.getParent() != null) {
                 ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
                 viewGroup.setVisibility(View.GONE);
-                viewGroup.removeView(mAdView);
             }
         }
     }

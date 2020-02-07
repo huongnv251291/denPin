@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.FragmentUtils;
+import com.google.android.gms.ads.MobileAds;
 import com.tohsoft.app.BaseApplication;
 import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.R;
@@ -87,6 +88,10 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     private void initAds() {
         if (BuildConfig.SHOW_AD) {
             frSplash.setVisibility(View.VISIBLE);
+
+            // Initialize Ads
+            MobileAds.initialize(mContext, getString(R.string.admob_app_id));
+
             // OPA
             mInterstitialOPAHelper = new InterstitialOPAHelper(getContext(), llFakeProgress, this);
             mInterstitialOPAHelper.initInterstitialOpenApp();
