@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
  * Created by PhongNX on 9/18/2019.
  *
  * Service xử lý tác vụ ngầm kể cả khi app bị kill
+ *
+ * Note: Nếu không dùng Service này thì xóa đi
  */
 public class BackgroundService extends Service {
 

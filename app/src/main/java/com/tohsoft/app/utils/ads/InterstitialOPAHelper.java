@@ -25,6 +25,7 @@ public class InterstitialOPAHelper implements AdsId {
     private volatile boolean mIsInterstitialOpenAppShownOnStartup = false;
     private volatile boolean mIsInterstitialOpenAppShownOnQuit = false;
     private volatile boolean mIsStop = false;
+    private boolean mIsCounting = false;
     private int mTryToReloadInterstitialOPA = 0;
     private int mAdsPosition = 0;
 
@@ -98,6 +99,7 @@ public class InterstitialOPAHelper implements AdsId {
                 mProgressLoading.setVisibility(View.VISIBLE);
             }
 
+            mIsCounting = true;
             long checkInterval = 100;
             long counterTimeout = DELAY_SPLASH + (mProgressLoading != null ? DELAY_TRY_LOAD_ADS : 0);
             mCounter = new CountDownTimer(counterTimeout, checkInterval) {
@@ -128,6 +130,7 @@ public class InterstitialOPAHelper implements AdsId {
     }
 
     private void onAdOPALoadingCounterFinish() {
+        mIsCounting = false;
         if (!mIsStop && mInterstitialOpenApp != null && mInterstitialOpenApp.isLoaded()) {
             mIsInterstitialOpenAppShownOnStartup = true;
             mInterstitialOpenApp.show();
@@ -153,6 +156,10 @@ public class InterstitialOPAHelper implements AdsId {
         } else if (mListener != null) {
             mListener.showExitDialog();
         }
+    }
+
+    public boolean isCounting() {
+        return mIsCounting;
     }
 
     public boolean isLoaded() {

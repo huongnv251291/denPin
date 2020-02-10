@@ -1,6 +1,8 @@
 package com.tohsoft.app.ui.main;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.FragmentUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.gms.ads.MobileAds;
 import com.tohsoft.app.BaseApplication;
 import com.tohsoft.app.BuildConfig;
@@ -23,8 +26,11 @@ import com.tohsoft.app.R;
 import com.tohsoft.app.data.ApplicationModules;
 import com.tohsoft.app.data.local.preference.PreferencesHelper;
 import com.tohsoft.app.helper.FirebaseRemoteConfigHelper;
+import com.tohsoft.app.services.BackgroundService;
 import com.tohsoft.app.ui.base.BaseActivity;
 import com.tohsoft.app.ui.base.BasePresenter;
+import com.tohsoft.app.ui.custom.EmptyAdView;
+import com.tohsoft.app.ui.history.HistoryActivity;
 import com.tohsoft.app.ui.settings.SettingsFragment;
 import com.tohsoft.app.utils.AutoStartManagerUtil;
 import com.tohsoft.app.utils.ads.AdViewWrapper;
@@ -44,7 +50,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainMvpPresenter> implements MainMvpView {
     @BindView(R.id.fr_bottom_banner) FrameLayout frBottomBanner;
-    @BindView(R.id.fr_empty_ads) FrameLayout frEmptyAds;
     @BindView(R.id.fr_splash) View frSplash;
     @BindView(R.id.iv_splash) ImageView ivSplash;
     @BindView(R.id.ll_fake_progress) View llFakeProgress;
@@ -100,8 +105,6 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
                 // AdView exit dialog
                 mAdViewWrapper = new AdViewWrapper();
                 mAdViewWrapper.initBannerExitDialog(mContext, null);
-                // Empty Ads
-                showBannerEmptyScreen(frEmptyAds);
             }, 2000);
         } else {
             checkPermissions();
@@ -125,7 +128,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     /**
      * Kiểm tra và xin cấp quyền chạy service khi app bị kill trên một số dòng máy
      * <p>
-     * Start service sau method này {@link com.tohsoft.app.services.BackgroundService}
+     * Start service sau method này {@link BackgroundService}
      */
     private void checkAutoStartManager() {
         if (AutoStartManagerUtil.shouldShowEnableAutoStart(getContext())) {
@@ -180,7 +183,9 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     private MaterialDialog.SingleButtonCallback enableAutoStartListener = new MaterialDialog.SingleButtonCallback() {
         @Override
         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            ivWarning.setVisibility(View.GONE);
+            if (ivWarning != null) {
+                ivWarning.setVisibility(View.GONE);
+            }
         }
     };
 
@@ -204,7 +209,11 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == RuntimePermissions.RequestCodePermission.REQUEST_CODE_GRANT_STORAGE_PERMISSIONS) {
-            checkPermissions();
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                checkPermissions();
+            } else {
+                ToastUtils.showLong(getString(R.string.msg_alert_storage_permission_denied));
+            }
         }
     }
 
@@ -281,6 +290,9 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
 
     @Override
     public void onBackPressed() {
+        if (mInterstitialOPAHelper != null && mInterstitialOPAHelper.isCounting()) {
+            return;
+        }
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             super.onBackPressed();
             // Có thể show OPA ở đây khi back về từ 1 Fragment nào đó
@@ -294,14 +306,20 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         }
     }
 
-    @OnClick(R.id.btn_settings)
-    public void onSettings() {
-        FragmentUtils.add(getSupportFragmentManager(), SettingsFragment.newInstance(),
-                android.R.id.content, true, R.anim.fade_in, R.anim.fade_out);
-    }
 
-    @OnClick(R.id.iv_warning)
-    public void showDialogAutoStartManager() {
-        AutoStartManagerUtil.showDialogEnableAutoStart(getContext(), enableAutoStartListener);
+    @OnClick({R.id.btn_settings, R.id.btn_history, R.id.iv_warning})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_settings:
+                FragmentUtils.add(getSupportFragmentManager(), SettingsFragment.newInstance(),
+                        android.R.id.content, true, R.anim.fade_in, R.anim.fade_out);
+                break;
+            case R.id.btn_history:
+                startActivity(new Intent(mContext, HistoryActivity.class));
+                break;
+            case R.id.iv_warning:
+                AutoStartManagerUtil.showDialogEnableAutoStart(getContext(), enableAutoStartListener);
+                break;
+        }
     }
 }

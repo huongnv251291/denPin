@@ -40,5 +40,7 @@
     <string name="lbl_enable_start_in_background">Start in background in Settings in your device will prevent apps open window setting in background. You should give this permission to this application work normal.</string>
     <string name="lbl_other_permissions">Other permissions</string>
     <string name="lbl_get_pro_version_title">Buy a professional version to remove ads and motivate us to work hard to improve the product better.</string>
+    <string name="msg_empty_data">No data!</string>
+    <string name="lbl_history">History</string>
 
 </resources>
