@@ -90,6 +90,7 @@ public class RateDialogActivity extends Activity {
         * */
         resetState();
         AppSelfLib.setCloseWithButton(false);
+        AppSelfLib.setStopped(false);
 
         ratingBar = findViewById(R.id.rating_5_stars);
         btnRate = findViewById(R.id.btn_rate);
@@ -191,14 +192,12 @@ public class RateDialogActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        AppSelfLib.setCloseWithButton(false);
         AppSelfLib.setStopped(true);
         super.onBackPressed();
     }
 
     @Override
     protected void onDestroy() {
-        AppSelfLib.setCloseWithButton(false);
         AppSelfLib.setStopped(true);
         super.onDestroy();
     }

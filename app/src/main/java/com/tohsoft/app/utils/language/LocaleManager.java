@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.LocaleList;
 
 import com.tohsoft.app.BuildConfig;
+import com.utility.DebugLog;
 import com.utility.SharedPreference;
 
 import java.util.Locale;
@@ -52,16 +54,20 @@ public class LocaleManager {
             }
         }
         Locale.setDefault(locale);
+        DebugLog.logd("Change language:\nlanguage: " + language + "\nlocale: " + locale.getLanguage());
 
-        Resources res = context.getResources();
-        Configuration config = new Configuration(res.getConfiguration());
-        if (Build.VERSION.SDK_INT >= 17) {
-            config.setLocale(locale);
-            context = context.createConfigurationContext(config);
-        } else {
-            config.locale = locale;
-            res.updateConfiguration(config, res.getDisplayMetrics());
+        return updateResourcesLocaleLegacy(context, locale);
+    }
+
+    private static Context updateResourcesLocaleLegacy(Context context, Locale locale) {
+        Resources resources = context.getResources();
+        Configuration configuration = resources.getConfiguration();
+        configuration.setLocale(locale);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            LocaleList localeList = new LocaleList(locale);
+            LocaleList.setDefault(localeList);
         }
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
         return context;
     }
 

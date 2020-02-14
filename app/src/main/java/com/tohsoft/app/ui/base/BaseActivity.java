@@ -82,7 +82,7 @@ public abstract class BaseActivity<P extends MvpPresenter> extends AppCompatActi
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleManager.setLocale(newBase));
-    }
+}
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

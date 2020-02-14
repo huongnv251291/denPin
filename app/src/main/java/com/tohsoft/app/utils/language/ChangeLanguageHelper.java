@@ -75,6 +75,7 @@ public class ChangeLanguageHelper {
             }
             if (key.equalsIgnoreCase(detectedLanguage)) {
                 hasDetectLanguage = true;
+                continue;
             }
             languages.add(toDisplayCase(loc.getDisplayName(loc)));
         }

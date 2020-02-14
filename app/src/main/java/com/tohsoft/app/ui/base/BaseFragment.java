@@ -2,6 +2,8 @@ package com.tohsoft.app.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.View;
@@ -11,6 +13,7 @@ import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.utils.ads.AdViewWrapper;
 import com.tohsoft.app.utils.ads.AdsConstants;
 import com.tohsoft.app.utils.ads.InterstitialAdWrapper;
+import com.tohsoft.app.utils.language.LocaleManager;
 import com.utility.DebugLog;
 
 /**
@@ -43,17 +46,16 @@ public abstract class BaseFragment<P extends MvpPresenter> extends Fragment impl
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getActivity();
+        mContext = getContext();
         setHasOptionsMenu(false);
         initPresenter();
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(LocaleManager.setLocale(context));
         if (context instanceof BaseActivity) {
-            BaseActivity activity = (BaseActivity) context;
-            mActivity = activity;
+            mActivity = (BaseActivity) context;
         }
     }
 
