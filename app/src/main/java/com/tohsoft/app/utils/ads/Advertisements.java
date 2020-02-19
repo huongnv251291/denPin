@@ -6,6 +6,9 @@ import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -38,6 +41,17 @@ public class Advertisements {
                 container.setVisibility(View.VISIBLE);
                 container.removeAllViews();
                 container.addView(adView);
+
+                ViewGroup.LayoutParams layoutParams = adView.getLayoutParams();
+                int topMargin = 2;
+                if (layoutParams instanceof LinearLayout.LayoutParams) {
+                    ((LinearLayout.LayoutParams) layoutParams).topMargin = topMargin;
+                } else if (layoutParams instanceof FrameLayout.LayoutParams) {
+                    ((FrameLayout.LayoutParams) layoutParams).topMargin = topMargin;
+                } else if (layoutParams instanceof RelativeLayout.LayoutParams) {
+                    ((RelativeLayout.LayoutParams) layoutParams).topMargin = topMargin;
+                }
+                adView.setLayoutParams(layoutParams);
             } else {
                 container.removeAllViews();
                 container.setVisibility(View.GONE);

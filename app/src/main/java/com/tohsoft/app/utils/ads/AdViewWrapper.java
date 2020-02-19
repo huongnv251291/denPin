@@ -2,6 +2,8 @@ package com.tohsoft.app.utils.ads;
 
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -14,12 +16,14 @@ import com.utility.DebugLog;
  * Created by Phong on 11/16/2018.
  */
 
-public class AdViewWrapper implements AdsId {
+public class AdViewWrapper implements AdsId, Handler.Callback {
+    private static final int MSG_VISIBLE_ADVIEW = 2;
     private static final int MAX_TRY_LOAD_ADS = 3;
     private AdView mAdView;
     private int mTryReloadAds = 0;
     private int mAdsPosition = 0;
     private boolean mIsEmptyAds = false;
+    private Handler mHandler = new Handler(this);
 
     public AdView getAdView() {
         return mAdView;
@@ -53,7 +57,7 @@ public class AdViewWrapper implements AdsId {
                 @Override
                 public void onAdFailedToLoad(int i) {
                     super.onAdFailedToLoad(i);
-                    DebugLog.loge("onAdFailedToLoad - Code: " + i);
+                    DebugLog.loge("\n[NormalBanner] onAdFailedToLoad - Code: " + i + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
                     if (mAdView != null) {
                         mAdView.setVisibility(View.GONE);
                         if (mAdView.getParent() != null) {
@@ -71,6 +75,8 @@ public class AdViewWrapper implements AdsId {
                         mTryReloadAds = 0;
                         mAdsPosition = 0;
                     }
+
+                    mHandler.removeMessages(MSG_VISIBLE_ADVIEW);
                 }
 
                 @Override
@@ -78,8 +84,10 @@ public class AdViewWrapper implements AdsId {
                     super.onAdLoaded();
                     mTryReloadAds = 0;
                     if (mAdView != null) {
-                        mAdView.setVisibility(View.VISIBLE);
+                        mAdView.setVisibility(View.INVISIBLE);
                     }
+                    container.setVisibility(View.VISIBLE);
+                    delayToShowAdView();
                 }
 
                 @Override
@@ -120,6 +128,7 @@ public class AdViewWrapper implements AdsId {
                 @Override
                 public void onAdFailedToLoad(int i) {
                     super.onAdFailedToLoad(i);
+                    DebugLog.loge("\n[BannerExitDialog] onAdFailedToLoad - Code: " + i + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
                     if (mAdView != null) {
                         mAdView.setVisibility(View.GONE);
                         if (mAdView.getParent() != null) {
@@ -135,6 +144,7 @@ public class AdViewWrapper implements AdsId {
                         mTryReloadAds = 0;
                         mAdsPosition = 0;
                     }
+                    mHandler.removeMessages(MSG_VISIBLE_ADVIEW);
                 }
 
                 @Override
@@ -142,8 +152,9 @@ public class AdViewWrapper implements AdsId {
                     super.onAdLoaded();
                     mTryReloadAds = 0;
                     if (mAdView != null) {
-                        mAdView.setVisibility(View.VISIBLE);
+                        mAdView.setVisibility(View.INVISIBLE);
                     }
+                    delayToShowAdView();
                 }
 
                 @Override
@@ -166,8 +177,19 @@ public class AdViewWrapper implements AdsId {
         mAdView = Advertisements.initMediumBanner(context.getApplicationContext(), bannersExitDialog[mAdsPosition], adListener);
     }
 
+    private void delayToShowAdView() {
+        if (mHandler != null) {
+            mHandler.removeMessages(MSG_VISIBLE_ADVIEW);
+
+            Message message = new Message();
+            message.what = MSG_VISIBLE_ADVIEW;
+            mHandler.sendMessageDelayed(message, 1000);
+        }
+    }
+
     private void goneAdViewAndContainer() {
         if (mAdView != null) {
+            mHandler.removeMessages(MSG_VISIBLE_ADVIEW);
             mAdView.setVisibility(View.GONE);
             if (mAdView.getParent() != null) {
                 ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
@@ -181,11 +203,22 @@ public class AdViewWrapper implements AdsId {
      * */
     public void destroy() {
         if (mAdView != null) {
+            mHandler.removeMessages(MSG_VISIBLE_ADVIEW);
             mAdView.setVisibility(View.GONE);
             if (mAdView.getParent() != null) {
                 ((ViewGroup) mAdView.getParent()).removeView(mAdView);
             }
             mAdView = null;
         }
+    }
+
+    @Override
+    public boolean handleMessage(Message msg) {
+        if (msg.what == MSG_VISIBLE_ADVIEW) {
+            if (mAdView != null) {
+                mAdView.setVisibility(View.VISIBLE);
+            }
+        }
+        return false;
     }
 }
