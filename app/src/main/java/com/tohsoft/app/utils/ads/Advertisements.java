@@ -38,7 +38,7 @@ public class Advertisements {
                     }
                     ((ViewGroup) adView.getParent()).removeView(adView);
                 }
-                container.setVisibility(View.VISIBLE);
+                container.setVisibility(adView.getVisibility());
                 container.removeAllViews();
                 container.addView(adView);
 
@@ -91,12 +91,12 @@ public class Advertisements {
             adsId = AdsId.banner_test_id;
         }
         final AdView adView = new AdView(context.getApplicationContext());
-        adView.setAdSize(getAdSize(context)); // 320x50
+        adView.setAdSize(getAdSize(context));
         adView.setAdUnitId(adsId);
         if (adListener != null) {
             adView.setAdListener(adListener);
         }
-        adView.setVisibility(View.GONE);
+//        adView.setVisibility(View.GONE);
         adView.loadAd(buildAdRequest(context));
         return adView;
     }

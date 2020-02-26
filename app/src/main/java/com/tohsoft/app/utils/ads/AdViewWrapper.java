@@ -16,14 +16,12 @@ import com.utility.DebugLog;
  * Created by Phong on 11/16/2018.
  */
 
-public class AdViewWrapper implements AdsId, Handler.Callback {
-    private static final int MSG_VISIBLE_ADVIEW = 2;
+public class AdViewWrapper implements AdsId {
     private static final int MAX_TRY_LOAD_ADS = 3;
     private AdView mAdView;
     private int mTryReloadAds = 0;
     private int mAdsPosition = 0;
     private boolean mIsEmptyAds = false;
-    private Handler mHandler = new Handler(this);
 
     public AdView getAdView() {
         return mAdView;
@@ -75,8 +73,6 @@ public class AdViewWrapper implements AdsId, Handler.Callback {
                         mTryReloadAds = 0;
                         mAdsPosition = 0;
                     }
-
-                    mHandler.removeMessages(MSG_VISIBLE_ADVIEW);
                 }
 
                 @Override
@@ -84,10 +80,9 @@ public class AdViewWrapper implements AdsId, Handler.Callback {
                     super.onAdLoaded();
                     mTryReloadAds = 0;
                     if (mAdView != null) {
-                        mAdView.setVisibility(View.INVISIBLE);
+                        mAdView.setVisibility(View.VISIBLE);
                     }
                     container.setVisibility(View.VISIBLE);
-                    delayToShowAdView();
                 }
 
                 @Override
@@ -144,7 +139,6 @@ public class AdViewWrapper implements AdsId, Handler.Callback {
                         mTryReloadAds = 0;
                         mAdsPosition = 0;
                     }
-                    mHandler.removeMessages(MSG_VISIBLE_ADVIEW);
                 }
 
                 @Override
@@ -152,9 +146,8 @@ public class AdViewWrapper implements AdsId, Handler.Callback {
                     super.onAdLoaded();
                     mTryReloadAds = 0;
                     if (mAdView != null) {
-                        mAdView.setVisibility(View.INVISIBLE);
+                        mAdView.setVisibility(View.VISIBLE);
                     }
-                    delayToShowAdView();
                 }
 
                 @Override
@@ -177,19 +170,8 @@ public class AdViewWrapper implements AdsId, Handler.Callback {
         mAdView = Advertisements.initMediumBanner(context.getApplicationContext(), bannersExitDialog[mAdsPosition], adListener);
     }
 
-    private void delayToShowAdView() {
-        if (mHandler != null) {
-            mHandler.removeMessages(MSG_VISIBLE_ADVIEW);
-
-            Message message = new Message();
-            message.what = MSG_VISIBLE_ADVIEW;
-            mHandler.sendMessageDelayed(message, 1000);
-        }
-    }
-
     private void goneAdViewAndContainer() {
         if (mAdView != null) {
-            mHandler.removeMessages(MSG_VISIBLE_ADVIEW);
             mAdView.setVisibility(View.GONE);
             if (mAdView.getParent() != null) {
                 ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
@@ -200,10 +182,10 @@ public class AdViewWrapper implements AdsId, Handler.Callback {
 
     /*
      * Destroy references
+     *
      * */
     public void destroy() {
         if (mAdView != null) {
-            mHandler.removeMessages(MSG_VISIBLE_ADVIEW);
             mAdView.setVisibility(View.GONE);
             if (mAdView.getParent() != null) {
                 ((ViewGroup) mAdView.getParent()).removeView(mAdView);
@@ -212,13 +194,4 @@ public class AdViewWrapper implements AdsId, Handler.Callback {
         }
     }
 
-    @Override
-    public boolean handleMessage(Message msg) {
-        if (msg.what == MSG_VISIBLE_ADVIEW) {
-            if (mAdView != null) {
-                mAdView.setVisibility(View.VISIBLE);
-            }
-        }
-        return false;
-    }
 }
