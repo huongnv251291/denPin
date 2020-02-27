@@ -24,7 +24,7 @@ public class InterstitialOPAHelper implements AdsId {
     private static final int DELAY_TRY_LOAD_ADS = 3000; // Fake progress timeout
     private volatile boolean mIsInterstitialOpenAppShownOnStartup = false;
     private volatile boolean mIsInterstitialOpenAppShownOnQuit = false;
-    private volatile boolean mIsStop = false;
+    private volatile boolean mIsPause = false;
     private boolean mIsCounting = false;
     private int mTryToReloadInterstitialOPA = 0;
     private int mAdsPosition = 0;
@@ -41,6 +41,10 @@ public class InterstitialOPAHelper implements AdsId {
     }
 
     private void initInterstitialOpenApp(String adsId) {
+//        if (BuildConfig.DEBUG) {
+//            onAdOPALoadingCounterFinish();
+//            return;
+//        }
         if (BuildConfig.SHOW_AD) {
             mInterstitialOpenApp = Advertisements.initInterstitialAd(mContext, adsId, new AdListener() {
 
@@ -106,7 +110,7 @@ public class InterstitialOPAHelper implements AdsId {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     // Check if ad OPA loaded
-                    if (mInterstitialOpenApp == null || (mInterstitialOpenApp.isLoaded() && !mIsStop)) {
+                    if (mInterstitialOpenApp == null || (mInterstitialOpenApp.isLoaded() && !mIsPause)) {
                         mCounter.cancel();// stop mCounter & finish
                         onAdOPALoadingCounterFinish();
                         return;
@@ -131,10 +135,8 @@ public class InterstitialOPAHelper implements AdsId {
 
     private void onAdOPALoadingCounterFinish() {
         mIsCounting = false;
-        if (!mIsStop && mInterstitialOpenApp != null && mInterstitialOpenApp.isLoaded()) {
-            mIsInterstitialOpenAppShownOnStartup = true;
-            mInterstitialOpenApp.show();
-        } else { // Ads not showing
+        mIsInterstitialOpenAppShownOnStartup = show();
+        if (!mIsInterstitialOpenAppShownOnStartup) { // Ads not showing
             if (mListener != null) {
                 mListener.onAdOPACompleted();
             }
@@ -150,10 +152,8 @@ public class InterstitialOPAHelper implements AdsId {
     }
 
     public void checkAndShowFullScreenQuitApp() {
-        if (mInterstitialOpenApp != null && mInterstitialOpenApp.isLoaded()) {
-            mIsInterstitialOpenAppShownOnQuit = true;
-            mInterstitialOpenApp.show();
-        } else if (mListener != null) {
+        mIsInterstitialOpenAppShownOnQuit = show();
+        if (!mIsInterstitialOpenAppShownOnQuit && mListener != null) {
             mListener.showExitDialog();
         }
     }
@@ -166,18 +166,20 @@ public class InterstitialOPAHelper implements AdsId {
         return mInterstitialOpenApp != null && mInterstitialOpenApp.isLoaded();
     }
 
-    public void show() {
-        if (mInterstitialOpenApp != null && mInterstitialOpenApp.isLoaded() && !mIsStop) {
+    public boolean show() {
+        if (mInterstitialOpenApp != null && mInterstitialOpenApp.isLoaded() && !mIsPause) {
             mInterstitialOpenApp.show();
+            return true;
         }
+        return false;
     }
 
     public void onResume() {
-        mIsStop = false;
+        mIsPause = false;
     }
 
-    public void onStop() {
-        mIsStop = true;
+    public void onPause() {
+        mIsPause = true;
     }
 
     public interface InterstitialOPAListener {

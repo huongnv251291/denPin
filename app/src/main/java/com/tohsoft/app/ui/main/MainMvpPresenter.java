@@ -6,5 +6,5 @@ public interface MainMvpPresenter<V extends MainMvpView> extends MvpPresenter<V>
 
     void initData();
 
-    void onBackPressed();
+    void checkRateDialogStopped();
 }

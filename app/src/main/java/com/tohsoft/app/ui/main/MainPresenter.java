@@ -31,23 +31,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     }
 
     @Override
-    public void onBackPressed() {
-        boolean isShowRateDialog = AppSelfLib.showRateActivityNewStyleHighScore(mContext, 1,
-                Communicate.EMAIL_COMPANY, mContext.getString(R.string.app_name));
-        if (isShowRateDialog) {
-            checkRateDialogStopped();
-        } else {
-            if (ApplicationModules.getInstant().getPreferencesHelper().canShowExitDialog()) {
-                if (getMvpView() != null) {
-                    getMvpView().checkAndShowFullScreenQuitApp();
-                }
-            } else {
-                ((Activity) mContext).finish();
-            }
-        }
-    }
-
-    private void checkRateDialogStopped() {
+    public void checkRateDialogStopped() {
         mRateHandler.postDelayed(mRateRunnable, 100);
     }
 

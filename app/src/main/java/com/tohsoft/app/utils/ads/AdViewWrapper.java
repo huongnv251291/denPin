@@ -7,6 +7,7 @@ import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.ConvertUtils;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdView;
 import com.tohsoft.app.BuildConfig;
@@ -22,6 +23,12 @@ public class AdViewWrapper implements AdsId {
     private int mTryReloadAds = 0;
     private int mAdsPosition = 0;
     private boolean mIsEmptyAds = false;
+    private final int DEFAULT_CONTAINER_HEIGHT;
+    private int mAdViewHeight = 0;
+
+    public AdViewWrapper() {
+        DEFAULT_CONTAINER_HEIGHT = ConvertUtils.dp2px(56);
+    }
 
     public AdView getAdView() {
         return mAdView;
@@ -47,6 +54,13 @@ public class AdViewWrapper implements AdsId {
             if (adListener != null) {
                 mAdView.setAdListener(adListener);
             }
+            if (!mIsEmptyAds) {
+                int height = mAdViewHeight;
+                if (height == 0 && mAdView.getVisibility() != View.GONE) {
+                    height = DEFAULT_CONTAINER_HEIGHT;
+                }
+                Advertisements.setHeightForContainer(container, height);
+            }
             Advertisements.addBannerAdsToContainer(container, mAdView);
             return;
         }
@@ -56,11 +70,12 @@ public class AdViewWrapper implements AdsId {
                 public void onAdFailedToLoad(int i) {
                     super.onAdFailedToLoad(i);
                     DebugLog.loge("\n[NormalBanner] onAdFailedToLoad - Code: " + i + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
+                    mAdViewHeight = 0;
+                    Advertisements.setHeightForContainer(container, 0);
                     if (mAdView != null) {
                         mAdView.setVisibility(View.GONE);
                         if (mAdView.getParent() != null) {
                             ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
-                            viewGroup.setVisibility(View.GONE);
                             viewGroup.removeView(mAdView);
                         }
                         mAdView = null;
@@ -81,6 +96,11 @@ public class AdViewWrapper implements AdsId {
                     mTryReloadAds = 0;
                     if (mAdView != null) {
                         mAdView.setVisibility(View.VISIBLE);
+                        if (!mIsEmptyAds) {
+                            mAdViewHeight = mAdView.getHeight();
+                            Advertisements.setHeightForContainer(container, mAdViewHeight);
+                            DebugLog.loge("onAdLoaded - Height: " + mAdViewHeight);
+                        }
                     }
                     container.setVisibility(View.VISIBLE);
                 }
@@ -101,6 +121,10 @@ public class AdViewWrapper implements AdsId {
 
         if (mIsEmptyAds ? mAdsPosition >= bannersEmptyScreen.length : mAdsPosition >= banners.length) {
             mAdsPosition = 0;
+        }
+        mAdViewHeight = 0;
+        if (!mIsEmptyAds) {
+            Advertisements.setHeightForContainer(container, DEFAULT_CONTAINER_HEIGHT);
         }
         if (mIsEmptyAds) {
             mAdView = Advertisements.initMediumBanner(context.getApplicationContext(), bannersEmptyScreen[mAdsPosition], adListener);
@@ -175,7 +199,8 @@ public class AdViewWrapper implements AdsId {
             mAdView.setVisibility(View.GONE);
             if (mAdView.getParent() != null) {
                 ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
-                viewGroup.setVisibility(View.GONE);
+                viewGroup.removeAllViews();
+                Advertisements.setHeightForContainer(viewGroup, 0);
             }
         }
     }
@@ -188,7 +213,9 @@ public class AdViewWrapper implements AdsId {
         if (mAdView != null) {
             mAdView.setVisibility(View.GONE);
             if (mAdView.getParent() != null) {
-                ((ViewGroup) mAdView.getParent()).removeView(mAdView);
+                ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
+                viewGroup.removeAllViews();
+                Advertisements.setHeightForContainer(viewGroup, 0);
             }
             mAdView = null;
         }

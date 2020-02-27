@@ -42,6 +42,7 @@ public class Advertisements {
                 container.removeAllViews();
                 container.addView(adView);
 
+                // Adview cách view liền kế tối thiểu 2px
                 ViewGroup.LayoutParams layoutParams = adView.getLayoutParams();
                 int topMargin = 2;
                 if (layoutParams instanceof LinearLayout.LayoutParams) {
@@ -54,10 +55,22 @@ public class Advertisements {
                 adView.setLayoutParams(layoutParams);
             } else {
                 container.removeAllViews();
-                container.setVisibility(View.GONE);
+                setHeightForContainer(container, 0);
             }
         } catch (Exception e) {
             DebugLog.loge(e);
+        }
+    }
+
+    static void setHeightForContainer(ViewGroup container, int height) {
+        if (container != null) {
+            ViewGroup.LayoutParams layoutParams = container.getLayoutParams();
+            if (height <= 0) {
+                layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            } else {
+                layoutParams.height = height;
+            }
+            container.setLayoutParams(layoutParams);
         }
     }
 

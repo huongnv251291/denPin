@@ -88,7 +88,7 @@ ext {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:$androidxVersion"
-    implementation "com.google.android.material:material:1.2.0-alpha04"
+    implementation "com.google.android.material:material:1.2.0-alpha05"
     implementation 'androidx.multidex:multidex:2.0.1'
     // Google services
     implementation "com.google.android.gms:play-services-ads:$playServicesVersion"
@@ -115,8 +115,8 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     // Bind view Library
-    implementation 'com.jakewharton:butterknife:10.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation 'com.jakewharton:butterknife:10.2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     // Event Bus
     implementation 'org.greenrobot:eventbus:3.1.1'
     // GSon

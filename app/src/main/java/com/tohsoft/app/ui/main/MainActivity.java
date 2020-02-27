@@ -29,7 +29,6 @@ import com.tohsoft.app.helper.FirebaseRemoteConfigHelper;
 import com.tohsoft.app.services.BackgroundService;
 import com.tohsoft.app.ui.base.BaseActivity;
 import com.tohsoft.app.ui.base.BasePresenter;
-import com.tohsoft.app.ui.custom.EmptyAdView;
 import com.tohsoft.app.ui.history.HistoryActivity;
 import com.tohsoft.app.ui.settings.SettingsFragment;
 import com.tohsoft.app.utils.AutoStartManagerUtil;
@@ -267,18 +266,18 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
 
     @Override
     protected void onResume() {
-        super.onResume();
         if (mInterstitialOPAHelper != null) {
             mInterstitialOPAHelper.onResume();
         }
+        super.onResume();
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
         if (mInterstitialOPAHelper != null) {
-            mInterstitialOPAHelper.onStop();
+            mInterstitialOPAHelper.onPause();
         }
+        super.onPause();
     }
 
     @Override
@@ -301,11 +300,24 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
 //            }
             return;
         }
-        if (mPresenter != null) {
-            mPresenter.onBackPressed();
-        }
+        onQuitApp();
     }
 
+    public void onQuitApp() {
+        boolean isShowRateDialog = AppSelfLib.showRateActivityNewStyleHighScore(mContext, 1,
+                Communicate.EMAIL_COMPANY, mContext.getString(R.string.app_name));
+        if (isShowRateDialog) {
+            if (mPresenter != null) {
+                mPresenter.checkRateDialogStopped();
+            }
+        } else {
+            if (ApplicationModules.getInstant().getPreferencesHelper().canShowExitDialog()) {
+                checkAndShowFullScreenQuitApp();
+            } else {
+                finish();
+            }
+        }
+    }
 
     @OnClick({R.id.btn_settings, R.id.btn_history, R.id.iv_warning})
     public void onViewClicked(View view) {
