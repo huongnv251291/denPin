@@ -27,7 +27,7 @@ public class AdViewWrapper implements AdsId {
     private int mAdViewHeight = 0;
 
     public AdViewWrapper() {
-        DEFAULT_CONTAINER_HEIGHT = ConvertUtils.dp2px(56);
+        DEFAULT_CONTAINER_HEIGHT = ConvertUtils.dp2px(60);
     }
 
     public AdView getAdView() {
@@ -77,6 +77,7 @@ public class AdViewWrapper implements AdsId {
                         if (mAdView.getParent() != null) {
                             ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
                             viewGroup.removeView(mAdView);
+                            Advertisements.setHeightForContainer(viewGroup, 0);
                         }
                         mAdView = null;
                     }
@@ -97,7 +98,11 @@ public class AdViewWrapper implements AdsId {
                     if (mAdView != null) {
                         mAdView.setVisibility(View.VISIBLE);
                         if (!mIsEmptyAds) {
-                            mAdViewHeight = mAdView.getHeight();
+                            mAdViewHeight = mAdView.getMinimumHeight();
+                            if (mAdView.getParent() != null && mAdView.getParent() != container) {
+                                ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
+                                Advertisements.setHeightForContainer(viewGroup, mAdViewHeight);
+                            }
                             Advertisements.setHeightForContainer(container, mAdViewHeight);
                             DebugLog.loge("onAdLoaded - Height: " + mAdViewHeight);
                         }
@@ -196,6 +201,7 @@ public class AdViewWrapper implements AdsId {
 
     private void goneAdViewAndContainer() {
         if (mAdView != null) {
+            mAdViewHeight = 0;
             mAdView.setVisibility(View.GONE);
             if (mAdView.getParent() != null) {
                 ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
