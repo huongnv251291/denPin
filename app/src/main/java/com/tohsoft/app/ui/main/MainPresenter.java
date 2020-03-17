@@ -27,7 +27,15 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     @Override
     public void initData() {
         // Do something
-        getMvpView().hideSplash();
+        if (isViewAttached()) {
+            getMvpView().hideSplash();
+        }
+    }
+
+    private void finish() {
+        if (mContext != null) {
+            ((Activity) mContext).finish();
+        }
     }
 
     @Override
@@ -41,7 +49,12 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
             if (AppSelfLib.isStopped()) {
                 mRateHandler.removeCallbacks(mRateRunnable);
                 if (AppSelfLib.canCloseApplication()) {
-                    ((Activity) mContext).finish();
+                    if (AppSelfLib.isCloseWithNoThanks() && isViewAttached() &&
+                            ApplicationModules.getInstant().getPreferencesHelper().canShowExitDialog()) {
+                        getMvpView().checkAndShowFullScreenQuitApp();
+                    } else {
+                        finish();
+                    }
                 }
             } else {
                 mRateHandler.postDelayed(this, 100);

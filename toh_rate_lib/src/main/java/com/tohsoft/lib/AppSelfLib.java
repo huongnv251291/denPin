@@ -25,6 +25,7 @@ public class AppSelfLib {
 
             isStopped = false;
             isCloseWithButton = false;
+            isCloseWithNoThanks = false;
             isShow = true;
         }
         editor.putInt(RateDialogActivity.PRE_SHARING_COUNT_OPENED, countRecord + 1);
@@ -67,6 +68,8 @@ public class AppSelfLib {
     private static boolean isStopped = false;
     // Add this variable to check dialog has been stopped by buttons on view or back button on device
     private static boolean isCloseWithButton = false;
+    // Add this variable to check dialog has been stopped by No, Thanks button
+    private static boolean isCloseWithNoThanks = false;
 
     public static boolean canCloseApplication() {
         return isStopped && isCloseWithButton;
@@ -84,4 +87,11 @@ public class AppSelfLib {
         AppSelfLib.isCloseWithButton = isCloseWithButton;
     }
 
+    public static boolean isCloseWithNoThanks() {
+        return isCloseWithNoThanks;
+    }
+
+    public static void setCloseWithNoThanks(boolean isCloseWithNoThanks) {
+        AppSelfLib.isCloseWithNoThanks = isCloseWithNoThanks;
+    }
 }

@@ -230,8 +230,16 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         }
     }
 
+    private void dismissExitDialog() {
+        if (mDialogExitApp != null && mDialogExitApp.isShowing()) {
+            mDialogExitApp.dismiss();
+        }
+    }
+
     @Override
     public void showExitDialog() {
+        dismissExitDialog();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.msg_exit_app);
         @SuppressLint("InflateParams") View exitDialogView = getLayoutInflater().inflate(R.layout.dialog_exit_app, null);
@@ -282,9 +290,9 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         AdsConstants.destroy();
         BaseApplication.getInstance().clearAllRequest();
+        super.onDestroy();
     }
 
     @Override
@@ -294,10 +302,6 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         }
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             super.onBackPressed();
-            // Có thể show OPA ở đây khi back về từ 1 Fragment nào đó
-//            if (mInterstitialOPAHelper != null && mInterstitialOPAHelper.isLoaded()) {
-//                mInterstitialOPAHelper.show();
-//            }
             return;
         }
         onQuitApp();
@@ -307,6 +311,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         boolean isShowRateDialog = AppSelfLib.showRateActivityNewStyleHighScore(mContext, 1,
                 Communicate.EMAIL_COMPANY, mContext.getString(R.string.app_name));
         if (isShowRateDialog) {
+            dismissExitDialog();
             if (mPresenter != null) {
                 mPresenter.checkRateDialogStopped();
             }

@@ -89,6 +89,7 @@ public class RateDialogActivity extends Activity {
         * -> Fix lỗi không hiển thị lại RateLib khi đang show RateLib thì kill app bằng recent
         * */
         resetState();
+        AppSelfLib.setCloseWithNoThanks(false);
         AppSelfLib.setCloseWithButton(false);
         AppSelfLib.setStopped(false);
 
@@ -169,6 +170,7 @@ public class RateDialogActivity extends Activity {
             public void onClick(View v) {
                 resetState();
                 AppSelfLib.setCloseWithButton(true);
+                AppSelfLib.setCloseWithNoThanks(true);
                 AppSelfLib.setStopped(true);
                 finish();
             }
@@ -190,10 +192,14 @@ public class RateDialogActivity extends Activity {
         }
     }
 
+    /*
+    * Comment mới của a Hiếu
+    * - Khi đang show rate dialog, không cho phép thoát dialog bằng việc click back
+    * */
     @Override
     public void onBackPressed() {
-        AppSelfLib.setStopped(true);
-        super.onBackPressed();
+        /*AppSelfLib.setStopped(true);
+        super.onBackPressed();*/
     }
 
     @Override
