@@ -111,7 +111,7 @@ public abstract class BaseActivity<P extends MvpPresenter> extends AppCompatActi
             }
             AdsConstants.bannerBottom.initBanner(getApplicationContext(), container);
         } else if (container != null) {
-            container.setVisibility(View.GONE);
+            container.removeAllViews();
         }
     }
 
@@ -122,7 +122,7 @@ public abstract class BaseActivity<P extends MvpPresenter> extends AppCompatActi
             }
             AdsConstants.bannerEmptyScreen.initEmptyAdView(getApplicationContext(), container);
         } else if (container != null) {
-            container.setVisibility(View.GONE);
+            container.removeAllViews();
         }
     }
 

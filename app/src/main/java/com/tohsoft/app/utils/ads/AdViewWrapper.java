@@ -104,7 +104,7 @@ public class AdViewWrapper implements AdsId {
                                 Advertisements.setHeightForContainer(viewGroup, mAdViewHeight);
                             }
                             Advertisements.setHeightForContainer(container, mAdViewHeight);
-                            DebugLog.loge("onAdLoaded - Height: " + mAdViewHeight);
+                            DebugLog.logd("onAdLoaded - Height: " + mAdViewHeight);
                         }
                     }
                     container.setVisibility(View.VISIBLE);
@@ -201,8 +201,6 @@ public class AdViewWrapper implements AdsId {
 
     private void goneAdViewAndContainer() {
         if (mAdView != null) {
-            mAdViewHeight = 0;
-            mAdView.setVisibility(View.GONE);
             if (mAdView.getParent() != null) {
                 ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
                 viewGroup.removeAllViews();

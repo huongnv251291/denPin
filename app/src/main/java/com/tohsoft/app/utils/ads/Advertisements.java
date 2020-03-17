@@ -3,6 +3,7 @@ package com.tohsoft.app.utils.ads;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -47,10 +48,13 @@ public class Advertisements {
                 int topMargin = 2;
                 if (layoutParams instanceof LinearLayout.LayoutParams) {
                     ((LinearLayout.LayoutParams) layoutParams).topMargin = topMargin;
+                    ((LinearLayout.LayoutParams) layoutParams).gravity = Gravity.BOTTOM;
                 } else if (layoutParams instanceof FrameLayout.LayoutParams) {
                     ((FrameLayout.LayoutParams) layoutParams).topMargin = topMargin;
+                    ((FrameLayout.LayoutParams) layoutParams).gravity = Gravity.BOTTOM;
                 } else if (layoutParams instanceof RelativeLayout.LayoutParams) {
                     ((RelativeLayout.LayoutParams) layoutParams).topMargin = topMargin;
+                    ((RelativeLayout.LayoutParams) layoutParams).addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 }
                 adView.setLayoutParams(layoutParams);
             } else {
@@ -68,7 +72,7 @@ public class Advertisements {
             if (height <= 0) {
                 layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             } else {
-                layoutParams.height = height;
+                layoutParams.height = height + 2;
             }
             container.setLayoutParams(layoutParams);
         }

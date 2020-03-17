@@ -80,25 +80,20 @@ android {
     }
 }
 
-ext {
-    androidxVersion = '1.0.2' // Dùng 1.1.0 bị lỗi không đổi được Locale cho Resources
-    playServicesVersion = "18.3.0"
-}
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "androidx.appcompat:appcompat:$androidxVersion"
+    implementation "androidx.appcompat:appcompat:1.1.0"
     implementation "com.google.android.material:material:1.2.0-alpha05"
     implementation 'androidx.multidex:multidex:2.0.1'
     // Google services
-    implementation "com.google.android.gms:play-services-ads:$playServicesVersion"
+    implementation "com.google.android.gms:play-services-ads:19.0.0"
     // Firebase
-    implementation 'com.google.firebase:firebase-core:17.2.2'
-    implementation 'com.google.firebase:firebase-config:19.1.1'
-    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'com.google.firebase:firebase-core:17.2.3'
+    implementation 'com.google.firebase:firebase-config:19.1.2'
+    implementation 'com.google.firebase:firebase-analytics:17.2.3'
     implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
     // Utility Library
-    implementation 'com.github.phongnx:Utility:1.1.8'
+    implementation 'com.github.phongnx:Utility:1.2.0'
     implementation 'com.blankj:utilcode:1.26.0'
     // Setup Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
@@ -115,8 +110,8 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     // Bind view Library
-    implementation 'com.jakewharton:butterknife:10.2.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     // Event Bus
     implementation 'org.greenrobot:eventbus:3.1.1'
     // GSon

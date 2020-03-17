@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
  *
  * Service xử lý tác vụ ngầm kể cả khi app bị kill
  *
- * Note: Nếu không dùng Service này thì xóa đi
+ * Note: Service này chỉ là demo, nếu app không dùng Service này cho tác vụ chạy ngầm nào thì xóa đi
  */
 public class BackgroundService extends Service {
 
