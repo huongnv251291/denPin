@@ -98,7 +98,7 @@ public class AdViewWrapper implements AdsId {
                     if (mAdView != null) {
                         mAdView.setVisibility(View.VISIBLE);
                         if (!mIsEmptyAds) {
-                            mAdViewHeight = mAdView.getMinimumHeight();
+                            mAdViewHeight = mAdView.getMeasuredHeight();
                             if (mAdView.getParent() != null && mAdView.getParent() != container) {
                                 ViewGroup viewGroup = (ViewGroup) mAdView.getParent();
                                 Advertisements.setHeightForContainer(viewGroup, mAdViewHeight);
