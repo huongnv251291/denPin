@@ -9,9 +9,7 @@ import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 import com.facebook.ads.InterstitialAd;
 import com.facebook.ads.InterstitialAdListener;
-import com.tohsoft.ads.AdsModules;
-
-import java.util.Arrays;
+import com.tohsoft.ads.AdsConfig;
 
 /**
  * Created by Phong on 4/28/2017.
@@ -26,7 +24,7 @@ public class FanAdvertisements {
         if (context == null) {
             return null;
         }
-        AdSettings.addTestDevices(AdsModules.getInstance().getTestDevices());
+        AdSettings.addTestDevices(AdsConfig.getInstance().getTestDevices());
         InterstitialAd interstitialAd = new InterstitialAd(context, adsId);
         if (adListener != null) {
             interstitialAd.setAdListener(adListener);
@@ -42,7 +40,7 @@ public class FanAdvertisements {
         if (context == null) {
             return null;
         }
-        AdSettings.addTestDevices(AdsModules.getInstance().getTestDevices());
+        AdSettings.addTestDevices(AdsConfig.getInstance().getTestDevices());
         final AdView adView = new AdView(context, adsId, AdSize.BANNER_HEIGHT_50);
         if (adListener != null) {
             adView.setAdListener(adListener);
@@ -56,7 +54,7 @@ public class FanAdvertisements {
         if (context == null) {
             return null;
         }
-        AdSettings.addTestDevices(AdsModules.getInstance().getTestDevices());
+        AdSettings.addTestDevices(AdsConfig.getInstance().getTestDevices());
         final AdView adView = new AdView(context, adsId, AdSize.RECTANGLE_HEIGHT_250);
         if (adListener != null) {
             adView.setAdListener(adListener);
@@ -70,7 +68,7 @@ public class FanAdvertisements {
         if (context == null) {
             return null;
         }
-        AdSettings.addTestDevices(AdsModules.getInstance().getTestDevices());
+        AdSettings.addTestDevices(AdsConfig.getInstance().getTestDevices());
         final AdView adView = new AdView(context, adsId, AdSize.BANNER_HEIGHT_90);
         if (adListener != null) {
             adView.setAdListener(adListener);

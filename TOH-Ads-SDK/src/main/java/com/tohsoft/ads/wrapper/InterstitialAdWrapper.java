@@ -10,11 +10,14 @@ import com.facebook.ads.AdError;
 import com.facebook.ads.InterstitialAdListener;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.InterstitialAd;
-import com.tohsoft.ads.models.AdsConfig;
+import com.tohsoft.ads.AdsConfig;
 import com.tohsoft.ads.AdsConstants;
 import com.tohsoft.ads.admob.AdmobAdvertisements;
 import com.tohsoft.ads.fan.FanAdvertisements;
 import com.utility.DebugLog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Phong on 11/16/2018.
@@ -22,8 +25,7 @@ import com.utility.DebugLog;
 
 public class InterstitialAdWrapper {
     private int MAX_TRY_LOAD_ADS = 3;
-    private final AdsConfig mAdsConfig;
-    private final String[] mAdsIds;
+    private final List<String> mAdsIds = new ArrayList<>();
     private final Context mContext;
     private InterstitialAd mInterstitialAd;
     private com.facebook.ads.InterstitialAd mFanInterstitialAd;
@@ -35,13 +37,19 @@ public class InterstitialAdWrapper {
     private boolean useFanAdNetwork;
     private int mAdsPosition = 0;
 
-    public InterstitialAdWrapper(@NonNull AdsConfig adsConfig) {
-        this.mAdsConfig = adsConfig;
-        this.mContext = mAdsConfig.getContext();
-        this.mAdsIds = mAdsConfig.getAdsIds();
+    public InterstitialAdWrapper(@NonNull Context context, @NonNull List<String> adsId) {
+        this.mContext = context;
+        this.mAdsIds.addAll(adsId);
 
-        if (mAdsIds != null && mAdsIds.length > 3) {
-            MAX_TRY_LOAD_ADS = mAdsIds.length;
+        if (mAdsIds.size() > 3) {
+            MAX_TRY_LOAD_ADS = mAdsIds.size();
+        }
+    }
+
+    public void setAdsId(List<String> adsId) {
+        if (adsId != null) {
+            this.mAdsIds.clear();
+            this.mAdsIds.addAll(adsId);
         }
     }
 
@@ -59,10 +67,10 @@ public class InterstitialAdWrapper {
     }
 
     private void getAdsId() {
-        if (mAdsPosition >= mAdsIds.length) {
+        if (mAdsPosition >= mAdsIds.size()) {
             mAdsPosition = 0;
         }
-        mCurrentAdsId = mAdsIds[mAdsPosition];
+        mCurrentAdsId = mAdsIds.get(mAdsPosition);
         useFanAdNetwork = mCurrentAdsId.startsWith(AdsConstants.FAN_ID_PREFIX);
 
         // Destroy previous Ads instance
@@ -96,15 +104,15 @@ public class InterstitialAdWrapper {
 
         AdListener adListener = new AdListener() {
             @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
+            public void onAdFailedToLoad(int errorCode) {
+                super.onAdFailedToLoad(errorCode);
                 if (mGiftView != null) {
                     mGiftView.setVisibility(View.GONE);
                     DebugLog.logd("Hide Gift button");
                 }
                 mInterstitialAd = null;
                 if (mAdListener != null) {
-                    mAdListener.onAdFailedToLoad(i);
+                    mAdListener.onAdFailedToLoad(errorCode);
                 }
                 if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
                     mTryReloadAds++;
@@ -150,11 +158,19 @@ public class InterstitialAdWrapper {
                 }
                 initAds(mGiftView);
             }
+
+            @Override
+            public void onAdClicked() {
+                super.onAdClicked();
+                if (mAdListener != null) {
+                    mAdListener.onAdClicked();
+                }
+            }
         };
 
         // Init Ads
         String adsId = mCurrentAdsId.replaceAll(AdsConstants.ADMOB_ID_PREFIX, "");
-        if (mAdsConfig.isTestMode()) {
+        if (AdsConfig.getInstance().isTestMode()) {
             adsId = AdsConstants.interstitial_test_id;
         }
         mInterstitialAd = AdmobAdvertisements.initInterstitialAd(mContext.getApplicationContext(), adsId, adListener);
@@ -244,6 +260,9 @@ public class InterstitialAdWrapper {
 
             @Override
             public void onAdClicked(Ad ad) {
+                if (mAdListener != null) {
+                    mAdListener.onAdClicked();
+                }
             }
 
             @Override

@@ -11,12 +11,15 @@ import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdView;
-import com.tohsoft.ads.models.AdsConfig;
+import com.tohsoft.ads.AdsConfig;
 import com.tohsoft.ads.AdsConstants;
 import com.tohsoft.ads.admob.AdmobAdvertisements;
 import com.tohsoft.ads.fan.FanAdvertisements;
 import com.tohsoft.ads.utils.AdsUtils;
 import com.utility.DebugLog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Phong on 11/16/2018.
@@ -25,8 +28,7 @@ import com.utility.DebugLog;
 public class AdViewWrapper {
     private int MAX_TRY_LOAD_ADS = 3;
     private int DEFAULT_CONTAINER_HEIGHT;
-    private final AdsConfig mAdsConfig;
-    private final String[] mAdsIds;
+    private final List<String> mAdsIds = new ArrayList<>();
     private final Context mContext;
 
     private ViewGroup mContainer;
@@ -41,13 +43,19 @@ public class AdViewWrapper {
     private boolean useFanAdNetwork;
     private int mAdsPosition = 0;
 
-    public AdViewWrapper(@NonNull AdsConfig adsConfig) {
-        this.mAdsConfig = adsConfig;
-        this.mContext = mAdsConfig.getContext();
-        this.mAdsIds = mAdsConfig.getAdsIds();
+    public AdViewWrapper(@NonNull Context context, @NonNull List<String> adsId) {
+        this.mContext = context;
+        this.mAdsIds.addAll(adsId);
 
-        if (mAdsIds != null && mAdsIds.length > 3) {
-            MAX_TRY_LOAD_ADS = mAdsIds.length;
+        if (mAdsIds.size() > 3) {
+            MAX_TRY_LOAD_ADS = mAdsIds.size();
+        }
+    }
+
+    public void setAdsId(List<String> adsId) {
+        if (adsId != null) {
+            this.mAdsIds.clear();
+            this.mAdsIds.addAll(adsId);
         }
     }
 
@@ -96,10 +104,10 @@ public class AdViewWrapper {
     }
 
     private void getAdsId() {
-        if (mAdsPosition >= mAdsIds.length) {
+        if (mAdsPosition >= mAdsIds.size()) {
             mAdsPosition = 0;
         }
-        mCurrentAdsId = mAdsIds[mAdsPosition];
+        mCurrentAdsId = mAdsIds.get(mAdsPosition);
         boolean useFanAdNetwork = mCurrentAdsId.startsWith(AdsConstants.FAN_ID_PREFIX);
 
         // Init default bottom banner height for container
@@ -137,7 +145,7 @@ public class AdViewWrapper {
             @Override
             public void onAdFailedToLoad(int code) {
                 super.onAdFailedToLoad(code);
-                DebugLog.loge("\n[Admob - NormalBanner] onAdFailedToLoad - Code: " + code + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
+                DebugLog.logd("\n[Admob - NormalBanner] onAdFailedToLoad - Code: " + code + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
                 if (mAdListener != null) {
                     mAdListener.onAdFailedToLoad(code);
                 }
@@ -210,7 +218,7 @@ public class AdViewWrapper {
 
         // Init Ads
         String adsId = mCurrentAdsId.replaceAll(AdsConstants.ADMOB_ID_PREFIX, "");
-        if (mAdsConfig.isTestMode()) {
+        if (AdsConfig.getInstance().isTestMode()) {
             adsId = AdsConstants.banner_test_id;
         }
         if (!isUseAdaptiveBanner) {
@@ -236,7 +244,7 @@ public class AdViewWrapper {
             @Override
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
-                DebugLog.loge("\n[Admob - MediumBanner] onAdFailedToLoad - Code: " + i + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
+                DebugLog.logd("\n[Admob - MediumBanner] onAdFailedToLoad - Code: " + i + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
                 if (mAdListener != null) {
                     mAdListener.onAdFailedToLoad(i);
                 }
@@ -292,7 +300,7 @@ public class AdViewWrapper {
 
         // Init Ads
         String adsId = mCurrentAdsId.replaceAll(AdsConstants.ADMOB_ID_PREFIX, "");
-        if (mAdsConfig.isTestMode()) {
+        if (AdsConfig.getInstance().isTestMode()) {
             adsId = AdsConstants.banner_test_id;
         }
         mAdView = AdmobAdvertisements.initMediumBanner(mContext.getApplicationContext(), adsId, adListener);
@@ -346,7 +354,7 @@ public class AdViewWrapper {
                 if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
                     mTryReloadAds++;
                     mAdsPosition++;
-                    initFanNormalBanner(container);
+                    initNormalBanner(container);
                 } else {
                     mTryReloadAds = 0;
                     mAdsPosition = 0;

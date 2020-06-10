@@ -11,22 +11,24 @@ import com.facebook.ads.AdError;
 import com.facebook.ads.InterstitialAdListener;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.InterstitialAd;
-import com.tohsoft.ads.models.AdsConfig;
+import com.tohsoft.ads.AdsConfig;
 import com.tohsoft.ads.AdsConstants;
-import com.tohsoft.ads.AdsModules;
 import com.tohsoft.ads.admob.AdmobAdvertisements;
 import com.tohsoft.ads.fan.FanAdvertisements;
 import com.utility.DebugLog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Phong on 01/05/2019.
  */
 public class InterstitialOPAHelper {
     private int MAX_TRY_LOAD_ADS = 3;
-    private final AdsConfig mAdsConfig;
-    private final String[] mAdsIds;
+    private final List<String> mAdsIds = new ArrayList<>();
     private final Context mContext;
 
+    private AdListener mAdListener;
     private InterstitialOPAListener mListener;
     private InterstitialAd mInterstitialOpenApp;
     private com.facebook.ads.InterstitialAd mFanInterstitialOpenApp;
@@ -45,21 +47,27 @@ public class InterstitialOPAHelper {
     private int mAdsPosition = 0;
     private int mTryReloadAds = 0;
 
-    public InterstitialOPAHelper(@NonNull AdsConfig adsConfig, View progressLoading, InterstitialOPAListener listener) {
-        this.mAdsConfig = adsConfig;
-        this.mContext = mAdsConfig.getContext();
-        this.mAdsIds = mAdsConfig.getAdsIds();
+    public InterstitialOPAHelper(@NonNull Context context, @NonNull List<String> adsId, View progressLoading, InterstitialOPAListener listener) {
+        this.mContext = context;
+        this.mAdsIds.addAll(adsId);
 
         this.mProgressLoading = progressLoading;
         this.mListener = listener;
 
-        if (mAdsIds != null && mAdsIds.length > 3) {
-            MAX_TRY_LOAD_ADS = mAdsIds.length;
+        if (mAdsIds.size() > 3) {
+            MAX_TRY_LOAD_ADS = mAdsIds.size();
         }
 
-        DELAY_SPLASH = mAdsConfig.getSplashDelayTimeInMs();
-        DELAY_PROGRESS = mAdsConfig.getOPAProgressDelayTimeInMs();
-        DebugLog.loge("\nDELAY_SPLASH: " + DELAY_SPLASH + " - DELAY_PROGRESS: " + DELAY_PROGRESS);
+        DELAY_SPLASH = AdsConfig.getInstance().getSplashDelayInMs();
+        DELAY_PROGRESS = AdsConfig.getInstance().getInterOPAProgressDelayInMs();
+        DebugLog.logd("\nDELAY_SPLASH: " + DELAY_SPLASH + " - DELAY_PROGRESS: " + DELAY_PROGRESS);
+    }
+
+    public void setAdsId(List<String> adsId) {
+        if (adsId != null) {
+            this.mAdsIds.clear();
+            this.mAdsIds.addAll(adsId);
+        }
     }
 
     public void initInterstitialOpenApp() {
@@ -73,14 +81,18 @@ public class InterstitialOPAHelper {
     }
 
     private void getAdsId() {
-        if (mAdsPosition >= mAdsIds.length) {
+        if (mAdsPosition >= mAdsIds.size()) {
             mAdsPosition = 0;
         }
-        mCurrentAdsId = mAdsIds[mAdsPosition];
+        mCurrentAdsId = mAdsIds.get(mAdsPosition);
         useFanAdNetwork = mCurrentAdsId.startsWith(AdsConstants.FAN_ID_PREFIX);
 
         // Destroy previous Ads instance
         destroy();
+    }
+
+    public void setAdListener(AdListener adListener) {
+        this.mAdListener = adListener;
     }
 
     public void setListener(InterstitialOPAListener listener) {
@@ -88,7 +100,7 @@ public class InterstitialOPAHelper {
     }
 
     private void initAdmobInterstitial() {
-        if (!AdsModules.getInstance().canShowOPA()) {
+        if (!AdsConfig.getInstance().canShowOPA()) {
             return;
         }
         if (mInterstitialOpenApp != null && isCounting()) {
@@ -98,9 +110,12 @@ public class InterstitialOPAHelper {
         AdListener adListener = new AdListener() {
 
             @Override
-            public void onAdFailedToLoad(int code) {
-                super.onAdFailedToLoad(code);
-                DebugLog.logd("\n---\n[Admob - Interstitial OPA] adsId: " + mCurrentAdsId + "\nError Code: " + code + "\n---");
+            public void onAdFailedToLoad(int errorCode) {
+                super.onAdFailedToLoad(errorCode);
+                DebugLog.logd("\n---\n[Admob - Interstitial OPA] adsId: " + mCurrentAdsId + "\nError Code: " + errorCode + "\n---");
+                if (mAdListener != null) {
+                    mAdListener.onAdFailedToLoad(errorCode);
+                }
                 mInterstitialOpenApp = null;
                 if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
                     mTryReloadAds++;
@@ -113,8 +128,27 @@ public class InterstitialOPAHelper {
             }
 
             @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                if (mAdListener != null) {
+                    mAdListener.onAdLoaded();
+                }
+            }
+
+            @Override
+            public void onAdClicked() {
+                super.onAdClicked();
+                if (mAdListener != null) {
+                    mAdListener.onAdClicked();
+                }
+            }
+
+            @Override
             public void onAdOpened() {
                 super.onAdOpened();
+                if (mAdListener != null) {
+                    mAdListener.onAdOpened();
+                }
                 if (mIsInterstitialOpenAppShownOnQuit) {
                     mIsInterstitialOpenAppShownOnQuit = false; // Reset flag
                     if (mListener != null) {
@@ -126,6 +160,9 @@ public class InterstitialOPAHelper {
             @Override
             public void onAdClosed() {
                 super.onAdClosed();
+                if (mAdListener != null) {
+                    mAdListener.onAdClosed();
+                }
                 if (mIsInterstitialOpenAppShownOnStartup) {
                     mIsInterstitialOpenAppShownOnStartup = false; // Reset flag
                     if (mListener != null) {
@@ -140,14 +177,14 @@ public class InterstitialOPAHelper {
 
         // Init Ads
         String adsId = mCurrentAdsId.replaceAll(AdsConstants.ADMOB_ID_PREFIX, "");
-        if (mAdsConfig.isTestMode()) {
+        if (AdsConfig.getInstance().isTestMode()) {
             adsId = AdsConstants.interstitial_test_id;
         }
         mInterstitialOpenApp = AdmobAdvertisements.initInterstitialAd(mContext, adsId, adListener);
     }
 
     private void initFanInterstitial() {
-        if (!AdsModules.getInstance().canShowOPA()) {
+        if (!AdsConfig.getInstance().canShowOPA()) {
             return;
         }
         if (mFanInterstitialOpenApp != null && isCounting()) {
@@ -157,6 +194,9 @@ public class InterstitialOPAHelper {
         InterstitialAdListener listener = new InterstitialAdListener() {
             @Override
             public void onInterstitialDisplayed(Ad ad) {
+                if (mAdListener != null) {
+                    mAdListener.onAdOpened();
+                }
                 if (mIsInterstitialOpenAppShownOnQuit) {
                     mIsInterstitialOpenAppShownOnQuit = false; // Reset flag
                     if (mListener != null) {
@@ -167,6 +207,9 @@ public class InterstitialOPAHelper {
 
             @Override
             public void onInterstitialDismissed(Ad ad) {
+                if (mAdListener != null) {
+                    mAdListener.onAdClosed();
+                }
                 if (mIsInterstitialOpenAppShownOnStartup) {
                     mIsInterstitialOpenAppShownOnStartup = false; // Reset flag
                     if (mListener != null) {
@@ -182,6 +225,9 @@ public class InterstitialOPAHelper {
             public void onError(Ad ad, AdError adError) {
                 DebugLog.logd("\n[FAN - Interstitial OPA] PlacementId: " + ad.getPlacementId() + "\nErrorCode: "
                         + adError.getErrorCode() + "\nErrorMessage: " + adError.getErrorMessage());
+                if (mAdListener != null) {
+                    mAdListener.onAdFailedToLoad(adError.getErrorCode());
+                }
                 mFanInterstitialOpenApp = null;
                 if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
                     mTryReloadAds++;
@@ -195,10 +241,16 @@ public class InterstitialOPAHelper {
 
             @Override
             public void onAdLoaded(Ad ad) {
+                if (mAdListener != null) {
+                    mAdListener.onAdLoaded();
+                }
             }
 
             @Override
             public void onAdClicked(Ad ad) {
+                if (mAdListener != null) {
+                    mAdListener.onAdClicked();
+                }
             }
 
             @Override
@@ -289,13 +341,13 @@ public class InterstitialOPAHelper {
 
     public boolean show() {
         try {
-            if (isLoaded() && AdsModules.getInstance().canShowOPA() && !mIsPause) {
+            if (isLoaded() && AdsConfig.getInstance().canShowOPA() && !mIsPause) {
                 if (useFanAdNetwork) {
                     mFanInterstitialOpenApp.show();
                 } else {
                     mInterstitialOpenApp.show();
                 }
-                AdsModules.getInstance().setLastTimeOPAShow();
+                AdsConfig.getInstance().setLastTimeOPAShow();
                 return true;
             }
         } catch (Exception e) {
