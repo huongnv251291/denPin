@@ -133,6 +133,9 @@ public class InterstitialOPAHelper {
                 if (mAdListener != null) {
                     mAdListener.onAdLoaded();
                 }
+                if (mListener != null) {
+                    mListener.onAdOPALoaded();
+                }
             }
 
             @Override
@@ -148,6 +151,9 @@ public class InterstitialOPAHelper {
                 super.onAdOpened();
                 if (mAdListener != null) {
                     mAdListener.onAdOpened();
+                }
+                if (mListener != null) {
+                    mListener.onAdOPAOpened();
                 }
                 if (mIsInterstitialOpenAppShownOnQuit) {
                     mIsInterstitialOpenAppShownOnQuit = false; // Reset flag
@@ -379,6 +385,12 @@ public class InterstitialOPAHelper {
         void hideSplash();
 
         void showExitDialog();
+
+        default void onAdOPALoaded() {
+        }
+
+        default void onAdOPAOpened() {
+        }
 
         void onAdOPACompleted(); // Check permissions, request permissions or show dialogs at here
     }
