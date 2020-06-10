@@ -5,26 +5,22 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.tohsoft.app.BuildConfig;
+import com.tohsoft.ads.AdsModule;
 import com.tohsoft.app.R;
 import com.tohsoft.app.ui.base.subview.BaseSubView;
 import com.tohsoft.app.ui.base.subview.LifeCycle;
 import com.tohsoft.app.ui.base.subview.SubViewLifeCycleHelper;
 import com.tohsoft.app.utils.Utils;
-import com.tohsoft.app.utils.ads.AdViewWrapper;
-import com.tohsoft.app.utils.ads.AdsConstants;
-import com.tohsoft.app.utils.ads.InterstitialAdWrapper;
 import com.tohsoft.app.utils.language.LocaleManager;
 import com.utility.DebugLog;
 
@@ -82,7 +78,7 @@ public abstract class BaseActivity<P extends MvpPresenter> extends AppCompatActi
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleManager.setLocale(newBase));
-}
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,40 +101,11 @@ public abstract class BaseActivity<P extends MvpPresenter> extends AppCompatActi
     }
 
     protected void showBannerBottom(ViewGroup container) {
-        if (BuildConfig.SHOW_AD && container != null) {
-            if (AdsConstants.bannerBottom == null) {
-                AdsConstants.bannerBottom = new AdViewWrapper();
-            }
-            AdsConstants.bannerBottom.initBanner(getApplicationContext(), container);
-        } else if (container != null) {
-            container.removeAllViews();
-        }
+        AdsModule.getInstance().showBannerBottom(container);
     }
 
     public void showBannerEmptyScreen(ViewGroup container) {
-        if (BuildConfig.SHOW_AD && container != null) {
-            if (AdsConstants.bannerEmptyScreen == null) {
-                AdsConstants.bannerEmptyScreen = new AdViewWrapper();
-            }
-            AdsConstants.bannerEmptyScreen.initEmptyAdView(getApplicationContext(), container);
-        } else if (container != null) {
-            container.removeAllViews();
-        }
-    }
-
-    public void showPromotionView(View viewPromotionAds) {
-        if (BuildConfig.SHOW_AD) {
-            if (AdsConstants.promotionAds == null) {
-                AdsConstants.promotionAds = new InterstitialAdWrapper();
-            }
-            AdsConstants.promotionAds.initAds(getApplicationContext(), viewPromotionAds);
-        }
-    }
-
-    public void showPromotionAds() {
-        if (AdsConstants.promotionAds != null) {
-            AdsConstants.promotionAds.show();
-        }
+        AdsModule.getInstance().showBannerEmptyScreen(container);
     }
 
     @Override

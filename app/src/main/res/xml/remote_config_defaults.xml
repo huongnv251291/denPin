@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <defaultsMap>
     <entry>
-        <key>get_pro_version</key>
-        <value>0</value>
+        <key>pro_app_url</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>freq_cap_inter_opa_in_minute</key>
+        <value>15</value>
+    </entry>
+    <entry>
+        <key>splash_delay_in_ms</key>
+        <value>3000</value>
+    </entry>
+    <entry>
+        <key>inter_opa_progress_delay_in_ms</key>
+        <value>2000</value>
+    </entry>
+    <entry>
+        <key>ads_id_list</key>
+        <value>FAN-0, ADMOB-0, ADMOB-1</value>
+    </entry>
+    <entry>
+        <key>custom_ads_id_list</key>
+        <value></value>
     </entry>
 </defaultsMap>

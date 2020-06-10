@@ -1,0 +1,17 @@
+{
+  "std_banner": [
+    "fan-id"
+  ],
+  "banner_exit_dialog": [
+    "fan-id"
+  ],
+  "banner_empty_screen": [
+    "fan-id"
+  ],
+  "interstitial_opa": [
+    "fan-id"
+  ],
+  "interstitial_gift": [
+    "fan-id"
+  ]
+}

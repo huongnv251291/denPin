@@ -5,9 +5,13 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.multidex.MultiDexApplication;
 
+import com.tohsoft.ads.AdsConfig;
+import com.tohsoft.ads.AdsModule;
 import com.tohsoft.app.data.ApplicationModules;
+import com.tohsoft.app.helper.FirebaseRemoteConfigHelper;
 import com.tohsoft.app.ui.main.MainActivity;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.CrashUtils;
@@ -36,30 +40,42 @@ public class BaseApplication extends MultiDexApplication {
         super.onCreate();
         sBaseApplication = this;
         DebugLog.DEBUG = BuildConfig.DEBUG; // Đặt flag cho DebugLog (Chỉ hiển thị log trong bản build Debug)
-        ApplicationModules.getInstant().initModules(getApplicationContext());
+        ApplicationModules.getInstant().initModules(this);
+        FirebaseRemoteConfigHelper.getInstance().fetchRemoteData(this);
 
         Utils.init(this);
+
+        // Init AdsConfigs
+        AdsConfig.getInstance().init(this)
+                .setFullVersion(BuildConfig.FULL_VERSION)
+                .setTestMode(BuildConfig.TEST_AD)
+                .addTestDevices("0ca1bc4f-365d-4303-9312-1324d43e329c");
+        // Init Ads module
+        AdsModule.getInstance().init(this)
+                .setResourceAdsId("admob_ids.json", "fan_ids.json")
+                .setAdsIdListConfig(FirebaseRemoteConfigHelper.getInstance().getAdsIdList());
+
         if (!BuildConfig.DEBUG) {
             initCrash();
         }
     }
 
-    public void addRequest(Disposable disposable){
+    public void addRequest(Disposable disposable) {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();
         }
         mCompositeDisposable.add(disposable);
     }
 
-    public void clearAllRequest(){
+    public void clearAllRequest() {
         if (mCompositeDisposable != null) {
             mCompositeDisposable.clear();
         }
     }
 
     /*
-    * Tự động restart app khi bị crash
-    * */
+     * Tự động restart app khi bị crash
+     * */
     @SuppressLint("MissingPermission")
     private void initCrash() {
         CrashUtils.init((crashInfo, e) -> {
@@ -93,8 +109,8 @@ public class BaseApplication extends MultiDexApplication {
     private static final String AUTO_RESTART = "AUTO_RESTART";
 
     /*
-    * Tự restart app tối đa 3 lần liên tục
-    * */
+     * Tự restart app tối đa 3 lần liên tục
+     * */
     private boolean shouldAutoRestartApp() {
         return SharedPreference.getInt(this, AUTO_RESTART, 0) < 3;
     }

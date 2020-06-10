@@ -2,17 +2,15 @@ package com.tohsoft.app.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.view.View;
-import android.view.ViewGroup;
 
+import com.tohsoft.ads.AdsModule;
 import com.tohsoft.app.BuildConfig;
-import com.tohsoft.app.utils.ads.AdViewWrapper;
-import com.tohsoft.app.utils.ads.AdsConstants;
-import com.tohsoft.app.utils.ads.InterstitialAdWrapper;
 import com.tohsoft.app.utils.language.LocaleManager;
 import com.utility.DebugLog;
 
@@ -71,17 +69,12 @@ public abstract class BaseFragment<P extends MvpPresenter> extends Fragment impl
 
     protected void showPromotionView(View viewPromotionAds) {
         if (BuildConfig.SHOW_AD) {
-            if (AdsConstants.promotionAds == null) {
-                AdsConstants.promotionAds = new InterstitialAdWrapper();
-            }
-            AdsConstants.promotionAds.initAds(getContext().getApplicationContext(), viewPromotionAds);
+            AdsModule.getInstance().showPromotionAdsView(viewPromotionAds);
         }
     }
 
     protected void showPromotionAds() {
-        if (AdsConstants.promotionAds != null) {
-            AdsConstants.promotionAds.show();
-        }
+        AdsModule.getInstance().showPromotionAds();
     }
 
     @Override

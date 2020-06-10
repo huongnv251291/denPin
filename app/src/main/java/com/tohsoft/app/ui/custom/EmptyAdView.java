@@ -16,10 +16,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.blankj.utilcode.util.ConvertUtils;
+import com.tohsoft.ads.AdsModule;
 import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.R;
-import com.tohsoft.app.utils.ads.AdViewWrapper;
-import com.tohsoft.app.utils.ads.AdsConstants;
 
 /**
  * Created by PhongNX on 2/10/2020.
@@ -83,10 +82,7 @@ public class EmptyAdView extends LinearLayout {
     public void showEmptyAd() {
         if (mAdContainer != null) {
             if (BuildConfig.SHOW_AD) {
-                if (AdsConstants.bannerEmptyScreen == null) {
-                    AdsConstants.bannerEmptyScreen = new AdViewWrapper();
-                }
-                AdsConstants.bannerEmptyScreen.initEmptyAdView(getContext().getApplicationContext(), mAdContainer);
+                AdsModule.getInstance().showBannerEmptyScreen(mAdContainer);
             } else {
                 mAdContainer.setVisibility(View.GONE);
             }

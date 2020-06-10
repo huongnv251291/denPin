@@ -9,6 +9,7 @@ import com.tohsoft.app.BaseApplication;
 import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.R;
 import com.tohsoft.app.data.ApplicationModules;
+import com.tohsoft.app.helper.FirebaseRemoteConfigHelper;
 import com.tohsoft.app.utils.Utils;
 import com.utility.DebugLog;
 import com.utility.SharedPreference;
@@ -72,15 +73,15 @@ public class Communicate {
     public static void getFullVersion(Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        String proAppUrl = FirebaseRemoteConfigHelper.getInstance().getProAppUrl();
+        if (TextUtils.isEmpty(proAppUrl)) {
+            proAppUrl = "https://play.google.com/store/apps/details?id=" + PACKAGE_NAME_PRO;
+        }
         try {
-            intent.setData(Uri.parse("market://details?id=" + PACKAGE_NAME_PRO));
+            intent.setData(Uri.parse(proAppUrl));
             context.startActivity(intent);
-        } catch (android.content.ActivityNotFoundException e) {
-            try {
-                intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + PACKAGE_NAME_PRO));
-                context.startActivity(intent);
-            } catch (Exception ignored) {
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

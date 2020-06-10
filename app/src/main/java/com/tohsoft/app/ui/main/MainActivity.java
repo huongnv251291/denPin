@@ -20,6 +20,10 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.gms.ads.MobileAds;
+import com.tohsoft.ads.AdsModule;
+import com.tohsoft.ads.utils.AdsUtils;
+import com.tohsoft.ads.wrapper.AdViewWrapper;
+import com.tohsoft.ads.wrapper.InterstitialOPAHelper;
 import com.tohsoft.app.BaseApplication;
 import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.R;
@@ -32,10 +36,6 @@ import com.tohsoft.app.ui.base.BasePresenter;
 import com.tohsoft.app.ui.history.HistoryActivity;
 import com.tohsoft.app.ui.settings.SettingsFragment;
 import com.tohsoft.app.utils.AutoStartManagerUtil;
-import com.tohsoft.app.utils.ads.AdViewWrapper;
-import com.tohsoft.app.utils.ads.AdsConstants;
-import com.tohsoft.app.utils.ads.Advertisements;
-import com.tohsoft.app.utils.ads.InterstitialOPAHelper;
 import com.tohsoft.app.utils.commons.Communicate;
 import com.tohsoft.app.utils.language.LocaleManager;
 import com.tohsoft.app.utils.xiaomi.Miui;
@@ -94,19 +94,36 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
             frSplash.setVisibility(View.VISIBLE);
 
             // Initialize Ads
-            MobileAds.initialize(mContext, getString(R.string.admob_app_id));
+            MobileAds.initialize(mContext);
 
             // OPA
-            mInterstitialOPAHelper = new InterstitialOPAHelper(getContext(), llFakeProgress, this);
-            mInterstitialOPAHelper.initInterstitialOpenApp();
+            initInterstitialOPA();
+
             // Others (Banner, Gift, EmptyScreen...)
             new Handler().postDelayed(() -> {
                 // AdView exit dialog
-                mAdViewWrapper = new AdViewWrapper();
-                mAdViewWrapper.initBannerExitDialog(mContext, null);
+                initBannerExitDialog();
             }, 2000);
         } else {
             checkPermissions();
+        }
+    }
+
+    private void initInterstitialOPA() {
+        if (BuildConfig.SHOW_AD) {
+            mInterstitialOPAHelper = AdsModule.getInstance().getInterstitialOPAHelper(llFakeProgress, this);
+            if (mInterstitialOPAHelper != null) {
+                mInterstitialOPAHelper.initInterstitialOpenApp();
+            }
+        }
+    }
+
+    private void initBannerExitDialog() {
+        if (BuildConfig.SHOW_AD) {
+            mAdViewWrapper = AdsModule.getInstance().getBannerExitDialog();
+            if (mAdViewWrapper != null) {
+                mAdViewWrapper.initMediumBanner();
+            }
         }
     }
 
@@ -245,7 +262,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         @SuppressLint("InflateParams") View exitDialogView = getLayoutInflater().inflate(R.layout.dialog_exit_app, null);
         // Ads
         ViewGroup adsContainer = exitDialogView.findViewById(R.id.fr_ads_container_exit);
-        Advertisements.addBannerAdsToContainer(adsContainer, mAdViewWrapper != null ? mAdViewWrapper.getAdView() : null);
+        AdsUtils.addBannerAdsToContainer(adsContainer, mAdViewWrapper != null ? mAdViewWrapper.getAdView() : null);
         // Checkbox never show again
         CheckBox cbNeverShowAgain = exitDialogView.findViewById(R.id.cb_never_show_again);
         cbNeverShowAgain.setOnCheckedChangeListener((buttonView, isChecked) ->
@@ -290,7 +307,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
 
     @Override
     protected void onDestroy() {
-        AdsConstants.destroy();
+        AdsModule.getInstance().destroyStaticAds();
         BaseApplication.getInstance().clearAllRequest();
         super.onDestroy();
     }
