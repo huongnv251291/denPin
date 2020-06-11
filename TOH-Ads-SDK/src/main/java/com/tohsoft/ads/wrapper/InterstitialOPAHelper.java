@@ -2,6 +2,7 @@ package com.tohsoft.ads.wrapper;
 
 import android.content.Context;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import com.tohsoft.ads.AdsConstants;
 import com.tohsoft.ads.admob.AdmobAdvertisements;
 import com.tohsoft.ads.fan.FanAdvertisements;
 import com.utility.DebugLog;
+import com.utility.UtilsLib;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +74,11 @@ public class InterstitialOPAHelper {
 
     public void initInterstitialOpenApp() {
         getAdsId();
+        if (TextUtils.isEmpty(mCurrentAdsId)) {
+            DebugLog.loge("mCurrentAdsId is NULL");
+            onAdOPALoadingCounterFinish();
+            return;
+        }
         if (useFanAdNetwork) {
             initFanInterstitial();
         } else {
@@ -81,6 +88,10 @@ public class InterstitialOPAHelper {
     }
 
     private void getAdsId() {
+        if (UtilsLib.isEmptyList(mAdsIds)) {
+            DebugLog.loge("mAdsIds is EMPTY");
+            return;
+        }
         if (mAdsPosition >= mAdsIds.size()) {
             mAdsPosition = 0;
         }

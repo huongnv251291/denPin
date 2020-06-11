@@ -2,6 +2,7 @@ package com.tohsoft.ads;
 
 import android.app.Application;
 
+import com.utility.DebugLog;
 import com.utility.SharedPreference;
 
 import java.util.ArrayList;
@@ -62,6 +63,9 @@ public class AdsConfig {
 
     public AdsConfig setTestMode(boolean testMode) {
         isTestMode = testMode;
+        if (isTestMode) {
+            DebugLog.DEBUG = true;
+        }
         return sAdsConfig;
     }
 

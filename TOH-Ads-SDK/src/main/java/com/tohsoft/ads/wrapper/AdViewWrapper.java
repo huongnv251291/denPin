@@ -1,12 +1,12 @@
 package com.tohsoft.ads.wrapper;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.blankj.utilcode.util.ConvertUtils;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.google.android.gms.ads.AdListener;
@@ -17,6 +17,7 @@ import com.tohsoft.ads.admob.AdmobAdvertisements;
 import com.tohsoft.ads.fan.FanAdvertisements;
 import com.tohsoft.ads.utils.AdsUtils;
 import com.utility.DebugLog;
+import com.utility.UtilsLib;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,10 @@ public class AdViewWrapper {
     public void initBanner(ViewGroup container) {
         mContainer = container;
         getAdsId();
+        if (TextUtils.isEmpty(mCurrentAdsId)) {
+            DebugLog.loge("mCurrentAdsId is NULL");
+            return;
+        }
         if (useFanAdNetwork) {
             initFanNormalBanner(container);
         } else {
@@ -96,6 +101,10 @@ public class AdViewWrapper {
 
     public void initMediumBanner() {
         getAdsId();
+        if (TextUtils.isEmpty(mCurrentAdsId)) {
+            DebugLog.loge("mCurrentAdsId is NULL");
+            return;
+        }
         if (useFanAdNetwork) {
             initFanMediumBanner();
         } else {
@@ -104,6 +113,10 @@ public class AdViewWrapper {
     }
 
     private void getAdsId() {
+        if (UtilsLib.isEmptyList(mAdsIds)) {
+            DebugLog.loge("mAdsIds is EMPTY");
+            return;
+        }
         if (mAdsPosition >= mAdsIds.size()) {
             mAdsPosition = 0;
         }
@@ -112,11 +125,12 @@ public class AdViewWrapper {
 
         // Init default bottom banner height for container
         if (useFanAdNetwork) {
-            DEFAULT_CONTAINER_HEIGHT = ConvertUtils.dp2px(50);
+            DEFAULT_CONTAINER_HEIGHT = UtilsLib.convertDPtoPixel(mContext, 50);
         } else {
-            DEFAULT_CONTAINER_HEIGHT = ConvertUtils.dp2px(60);
+            DEFAULT_CONTAINER_HEIGHT = UtilsLib.convertDPtoPixel(mContext, 60);
         }
 
+        DebugLog.loge("DEFAULT_CONTAINER_HEIGHT: " + DEFAULT_CONTAINER_HEIGHT);
         if (this.useFanAdNetwork != useFanAdNetwork) {
             // Destroy previous Ads instance
             destroy();

@@ -71,6 +71,9 @@ public class AdsModule {
 
     private AdsModule() {
         DebugLog.DEBUG = BuildConfig.DEBUG;
+        if (AdsConfig.getInstance().isTestMode()) {
+            DebugLog.DEBUG = true;
+        }
     }
 
     public AdsModule init(Application application) {
@@ -165,8 +168,8 @@ public class AdsModule {
     }
 
     /*
-    * Check and set Ads id for existed wrapper
-    * */
+     * Check and set Ads id for existed wrapper
+     * */
     private void refreshAdsIdIfNeeded() {
         if (mAdsId != null) {
             if (sBannerBottom != null) {

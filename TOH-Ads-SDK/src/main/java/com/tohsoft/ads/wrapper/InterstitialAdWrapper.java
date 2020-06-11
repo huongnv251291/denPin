@@ -1,6 +1,7 @@
 package com.tohsoft.ads.wrapper;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import com.tohsoft.ads.AdsConstants;
 import com.tohsoft.ads.admob.AdmobAdvertisements;
 import com.tohsoft.ads.fan.FanAdvertisements;
 import com.utility.DebugLog;
+import com.utility.UtilsLib;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,10 @@ public class InterstitialAdWrapper {
 
     public void initAds(View giftView) {
         getAdsId();
+        if (TextUtils.isEmpty(mCurrentAdsId)) {
+            DebugLog.loge("mCurrentAdsId is NULL");
+            return;
+        }
         if (useFanAdNetwork) {
             initFanAds(giftView);
         } else {
@@ -67,6 +73,10 @@ public class InterstitialAdWrapper {
     }
 
     private void getAdsId() {
+        if (UtilsLib.isEmptyList(mAdsIds)) {
+            DebugLog.loge("mAdsIds is EMPTY");
+            return;
+        }
         if (mAdsPosition >= mAdsIds.size()) {
             mAdsPosition = 0;
         }
