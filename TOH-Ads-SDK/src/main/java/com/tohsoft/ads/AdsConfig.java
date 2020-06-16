@@ -119,6 +119,11 @@ public class AdsConfig {
         return isTestMode;
     }
 
+    /*
+    * This method will check condition time with config FREQ_INTER_OPA_IN_MILLISECONDS
+    *
+    * return true if current time minus the latest time OPA displayed > FREQ_INTER_OPA_IN_MILLISECONDS has been set
+    * */
     public boolean canShowOPA() {
         long freqInterOPAInMilliseconds = SharedPreference.getLong(mApplication, FREQ_INTER_OPA_IN_MILLISECONDS, DEFAULT_FREQ_CAP_INTER_OPA_IN_MS);
         if (freqInterOPAInMilliseconds == 0) {

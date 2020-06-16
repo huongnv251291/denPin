@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.Utils;
 import com.facebook.ads.AudienceNetworkAds;
@@ -76,7 +77,10 @@ public class AdsModule {
         }
     }
 
-    public AdsModule init(Application application) {
+    /*
+     * Set Application Context & initialize modules
+     * */
+    public AdsModule init(@NonNull Application application) {
         mApplication = application;
         AudienceNetworkAds.initialize(application);
         MobileAds.initialize(application);
@@ -85,7 +89,11 @@ public class AdsModule {
         return sAdsModule;
     }
 
-    public AdsModule setResourceAdsId(String admobAssetsFileName, String fanAssetsFileName) {
+    /*
+     * Set and generate Ads id from assets file
+     * */
+    public AdsModule setResourceAdsId(@Nullable String admobAssetsFileName, @Nullable String fanAssetsFileName) {
+        checkCondition();
         mAdmobAdsId = AdsUtils.readIdsFromAssetsFile(mApplication, admobAssetsFileName);
         mFanAdsId = AdsUtils.readIdsFromAssetsFile(mApplication, fanAssetsFileName);
         if (!UtilsLib.isEmptyList(mAdsIdConfigList) && (mAdmobAdsId != null || mFanAdsId != null)) {
@@ -97,9 +105,10 @@ public class AdsModule {
     }
 
     /*
-     * This method have to call first
+     * This method must be called before setCustomAdsIdListConfig() is called
      * */
     public AdsModule setAdsIdListConfig(String adsIdListConfig) {
+        checkCondition();
         if (!TextUtils.isEmpty(adsIdListConfig)) {
             DebugLog.logd("\n---------------\nadsIdListConfig: " + adsIdListConfig + "\n---------------");
             SharedPreference.setString(mApplication, GENERAL_CONFIG_ADS_ID_LIST, adsIdListConfig);
@@ -114,9 +123,10 @@ public class AdsModule {
     }
 
     /*
-     * This method have to call after setAdsIdListConfig() called
+     * This method must call after setAdsIdListConfig() is called
      * */
     public AdsModule setCustomAdsIdListConfig(String customAdsIdJsonValue) {
+        checkCondition();
         if (!TextUtils.isEmpty(customAdsIdJsonValue)) {
             generateCustomAdsIdList(customAdsIdJsonValue);
             mixCustomAdsIdList();
@@ -124,6 +134,20 @@ public class AdsModule {
         return sAdsModule;
     }
 
+    /*
+    * Check if Application not set, it will throw an Exception
+    * */
+    @SuppressWarnings("ThrowableNotThrown")
+    private void checkCondition() {
+        if (mApplication == null) {
+            new Throwable(new NullPointerException("Application is NULL, you must to call init() first at onCreate() of Application class"));
+        }
+    }
+
+    /*
+     * Parse custom Ads id from JSONObject
+     * (customAdsIdJsonValue will look like: { 	"std_banner_list" : "ADMOB-1,ADMOB-0,ADMOB-2"  })
+     * */
     private void generateCustomAdsIdList(String customAdsIdJsonValue) {
         try {
             JSONObject jsonObject = new JSONObject(customAdsIdJsonValue);
@@ -144,6 +168,7 @@ public class AdsModule {
                         adsType = AdsType.INTERSTITIAL_GIFT;
                     }
 
+                    // Put custom Ads id to map
                     if (adsType != null && !UtilsLib.isEmptyList(generateAdsIdListConfig(jsonObject.getString(key)))) {
                         mCustomAdsIdConfig.put(adsType, generateAdsIdListConfig(jsonObject.getString(key)));
                     }
@@ -155,6 +180,9 @@ public class AdsModule {
         }
     }
 
+    /*
+     * Mix Ads id with custom Ads id
+     * */
     private void mixCustomAdsIdList() {
         if (mCustomAdsIdConfig != null && !mCustomAdsIdConfig.isEmpty()) {
             for (AdsType adsType : mCustomAdsIdConfig.keySet()) {
@@ -190,6 +218,10 @@ public class AdsModule {
         }
     }
 
+    /*
+     * Generate Ads id list with a Firebase value
+     * (adsIdList will look like: FAN-0, ADMOB-0, ADMOB-1)
+     * */
     @NonNull
     private List<String> generateAdsIdListConfig(String adsIdList) {
         if (adsIdList.contains(",")) {
@@ -200,7 +232,8 @@ public class AdsModule {
     }
 
     /*
-     *
+     * Generate Banner Exit Dialog - AdViewWrapper instance (Medium Banner)
+     * Auto get Ads id from config
      * */
     public AdViewWrapper getBannerExitDialog() {
         if (mAdsId != null && mAdsId.banner_exit_dialog != null) {
@@ -210,6 +243,14 @@ public class AdsModule {
         return null;
     }
 
+    /*
+     * Generate InterstitialOPAHelper instance (Interstitial OPA flow)
+     * Auto get Ads id from config
+     *
+     * @param:
+     * View progressLoading: fake progress loading view
+     * InterstitialOPAListener listener: Call back for each state of the OPA flow
+     * */
     public InterstitialOPAHelper getInterstitialOPAHelper(View progressLoading, InterstitialOPAHelper.InterstitialOPAListener listener) {
         if (mAdsId != null && mAdsId.interstitial_opa != null) {
             mInterstitialOPAHelper = new InterstitialOPAHelper(mApplication, mAdsId.interstitial_opa, progressLoading, listener);
@@ -218,17 +259,31 @@ public class AdsModule {
         return null;
     }
 
+    /*
+     * Generate standard bottom Banner - sBannerBottom static instance (Adaptive Banner)
+     * Auto get Ads id from config
+     *
+     * @param:
+     * ViewGroup container: The container that AdView will be added to
+     * */
     public void showBannerBottom(ViewGroup container) {
         if (!AdsConfig.getInstance().isFullVersion() && container != null && mAdsId != null && mAdsId.std_banner != null) {
             if (sBannerBottom == null) {
                 sBannerBottom = new AdViewWrapper(mApplication, mAdsId.std_banner);
             }
-            sBannerBottom.initBanner(container);
+            sBannerBottom.initBottomBanner(container);
         } else if (container != null) {
             container.removeAllViews();
         }
     }
 
+    /*
+     * Generate Banner Empty Screen - sBannerEmptyScreen static instance (Medium Banner)
+     * Auto get Ads id from config
+     *
+     * @param:
+     * ViewGroup container: The container that AdsView will be added to
+     * */
     public void showBannerEmptyScreen(ViewGroup container) {
         if (!AdsConfig.getInstance().isFullVersion() && container != null && mAdsId != null && mAdsId.banner_empty_screen != null) {
             if (sBannerEmptyScreen == null) {
@@ -240,6 +295,13 @@ public class AdsModule {
         }
     }
 
+    /*
+     * Generate Promotion Ads - sPromotionAds static instance (Interstitial Ads)
+     * Auto get Ads id from config
+     *
+     * @param:
+     * View viewPromotionAds: Gift icon to show or hide when Interstitial is loaded or failed
+     * */
     public void showPromotionAdsView(View viewPromotionAds) {
         if (!AdsConfig.getInstance().isFullVersion() && mAdsId != null && mAdsId.interstitial_gift != null) {
             if (sPromotionAds == null) {
@@ -249,6 +311,12 @@ public class AdsModule {
         }
     }
 
+    /*
+    * Call this method when the user click on the Gift icon (View viewPromotionAds in method showPromotionAdsView()),
+    * it will display Interstitial Ads if it has been successfully loaded before
+    *
+    * After that, InterstitialAdWrapper (sPromotionAds instance) will auto reload Ads and show Gift icon when Ads is loaded
+    * */
     public void showPromotionAds() {
         if (sPromotionAds != null) {
             sPromotionAds.show();

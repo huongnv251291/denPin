@@ -80,7 +80,7 @@ public class AdViewWrapper {
         }
     }
 
-    public void initBanner(ViewGroup container) {
+    public void initBottomBanner(ViewGroup container) {
         mContainer = container;
         getAdsId();
         if (TextUtils.isEmpty(mCurrentAdsId)) {
@@ -90,7 +90,7 @@ public class AdViewWrapper {
         if (useFanAdNetwork) {
             initFanNormalBanner(container);
         } else {
-            initNormalBanner(container);
+            initAdmobNormalBanner(container);
         }
     }
 
@@ -112,6 +112,9 @@ public class AdViewWrapper {
         }
     }
 
+    /*
+    * Get current Ads id in list and detect it is FAN id or Admob id
+    * */
     private void getAdsId() {
         if (UtilsLib.isEmptyList(mAdsIds)) {
             DebugLog.loge("mAdsIds is EMPTY");
@@ -123,14 +126,6 @@ public class AdViewWrapper {
         mCurrentAdsId = mAdsIds.get(mAdsPosition);
         boolean useFanAdNetwork = mCurrentAdsId.startsWith(AdsConstants.FAN_ID_PREFIX);
 
-        // Init default bottom banner height for container
-        if (useFanAdNetwork) {
-            DEFAULT_CONTAINER_HEIGHT = UtilsLib.convertDPtoPixel(mContext, 50);
-        } else {
-            DEFAULT_CONTAINER_HEIGHT = UtilsLib.convertDPtoPixel(mContext, 60);
-        }
-
-        DebugLog.loge("DEFAULT_CONTAINER_HEIGHT: " + DEFAULT_CONTAINER_HEIGHT);
         if (this.useFanAdNetwork != useFanAdNetwork) {
             // Destroy previous Ads instance
             destroy();
@@ -141,10 +136,14 @@ public class AdViewWrapper {
     /**
      * Admob
      */
-    private void initNormalBanner(final ViewGroup container) {
+    private void initAdmobNormalBanner(final ViewGroup container) {
         if (mContext == null) {
             return;
         }
+        // Generate default height for container
+        DEFAULT_CONTAINER_HEIGHT = UtilsLib.convertDPtoPixel(mContext, 60);
+
+        // Check if AdView has been init -> add to container
         if (mAdView != null) {
             int height = mAdViewHeight;
             if (height == 0 && mAdView.getVisibility() != View.GONE) {
@@ -155,6 +154,7 @@ public class AdViewWrapper {
             return;
         }
 
+        // If AdView instance does not init -> Init AdView and add it to container
         AdListener adListener = new AdListener() {
             @Override
             public void onAdFailedToLoad(int code) {
@@ -181,7 +181,7 @@ public class AdViewWrapper {
                 if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
                     mTryReloadAds++;
                     mAdsPosition++;
-                    initNormalBanner(container);
+                    initBottomBanner(container);
                 } else {
                     mTryReloadAds = 0;
                     mAdsPosition = 0;
@@ -330,6 +330,7 @@ public class AdViewWrapper {
         if (mContext == null) {
             return;
         }
+        DEFAULT_CONTAINER_HEIGHT = UtilsLib.convertDPtoPixel(mContext, 50);
         if (mFanAdView != null) {
             int height = mAdViewHeight;
             if (height == 0 && mFanAdView.getVisibility() != View.GONE) {
@@ -368,7 +369,7 @@ public class AdViewWrapper {
                 if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
                     mTryReloadAds++;
                     mAdsPosition++;
-                    initNormalBanner(container);
+                    initBottomBanner(container);
                 } else {
                     mTryReloadAds = 0;
                     mAdsPosition = 0;
