@@ -18,6 +18,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.FragmentUtils;
+import com.blankj.utilcode.util.ImageUtils;
+import com.blankj.utilcode.util.NotificationUtils;
+import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.gms.ads.MobileAds;
 import com.tohsoft.ads.AdsModule;
@@ -210,7 +213,11 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
      * */
     @SuppressLint("CheckResult")
     private void checkPermissions() {
-        frSplash.setVisibility(View.GONE);
+        hideSplash();
+        if (llFakeProgress != null) {
+            llFakeProgress.setVisibility(View.GONE);
+        }
+
         // Check permission & request
         if (RuntimePermissions.checkAccessStoragePermission(mContext)) {
             mPresenter.initData();

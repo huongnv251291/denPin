@@ -39,7 +39,7 @@ public class BaseApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         sBaseApplication = this;
-        DebugLog.DEBUG = BuildConfig.DEBUG; // Đặt flag cho DebugLog (Chỉ hiển thị log trong bản build Debug)
+        DebugLog.DEBUG = BuildConfig.DEBUG || BuildConfig.TEST_AD; // Đặt flag cho DebugLog (Chỉ hiển thị log trong bản build Debug | TEST_AD)
         ApplicationModules.getInstant().initModules(this);
         FirebaseRemoteConfigHelper.getInstance().fetchRemoteData(this);
 
@@ -53,7 +53,8 @@ public class BaseApplication extends MultiDexApplication {
         // Init Ads module
         AdsModule.getInstance().init(this)
                 .setResourceAdsId("admob_ids.json", "fan_ids.json")
-                .setAdsIdListConfig(FirebaseRemoteConfigHelper.getInstance().getAdsIdList());
+                .setAdsIdListConfig(FirebaseRemoteConfigHelper.getInstance().getAdsIdList())
+                .setCustomAdsIdListConfig(FirebaseRemoteConfigHelper.getInstance().getCustomAdsIdList());
 
         if (!BuildConfig.DEBUG) {
             initCrash();

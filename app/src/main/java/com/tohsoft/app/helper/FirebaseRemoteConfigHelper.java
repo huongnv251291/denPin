@@ -1,5 +1,6 @@
 package com.tohsoft.app.helper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -13,6 +14,7 @@ import com.tohsoft.app.R;
 import com.utility.DebugLog;
 import com.utility.SharedPreference;
 
+@SuppressLint("StaticFieldLeak")
 public class FirebaseRemoteConfigHelper {
     private static final String REMOTE_PRO_APP_URL = "pro_app_url";
     private static final String REMOTE_ADS_ID_LIST = "ads_id_list";
@@ -22,9 +24,9 @@ public class FirebaseRemoteConfigHelper {
     private static final String REMOTE_INTER_OPA_PROGRESS_DELAY_IN_MS = "inter_opa_progress_delay_in_ms";
 
     private static final String DEFAULT_ADS_ID_LIST = "ADMOB-0, ADMOB-1, ADMOB-2";
-    public static final long DEFAULT_FREQ_CAP_INTER_OPA_IN_MS = 15 * 60 * 1000; // 15 minutes
-    public static final long DEFAULT_SPLASH_DELAY_IN_MS = 3000; // 3 seconds
-    public static final long DEFAULT_INTER_OPA_PROGRESS_DELAY_IN_MS = 2000; // 2 seconds
+    private static final long DEFAULT_FREQ_CAP_INTER_OPA_IN_MS = 15 * 60 * 1000; // 15 minutes
+    private static final long DEFAULT_SPLASH_DELAY_IN_MS = 3000; // 3 seconds
+    private static final long DEFAULT_INTER_OPA_PROGRESS_DELAY_IN_MS = 2000; // 2 seconds
 
     private static FirebaseRemoteConfigHelper firebaseRemoteConfigHelper;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
@@ -88,6 +90,7 @@ public class FirebaseRemoteConfigHelper {
     private void setAdsConfigs() {
         if (BuildConfig.SHOW_AD) {
             SharedPreference.setString(mContext, REMOTE_ADS_ID_LIST, getAdsIdList());
+            SharedPreference.setString(mContext, REMOTE_CUSTOM_ADS_ID_LIST, getCustomAdsIdList());
 
             AdsConfig.getInstance()
                     .setFreqInterOPAInMs(getFreqInterOPAInMs())
@@ -133,24 +136,24 @@ public class FirebaseRemoteConfigHelper {
         if (mFirebaseRemoteConfig != null) {
             return mFirebaseRemoteConfig.getString(REMOTE_CUSTOM_ADS_ID_LIST);
         }
-        return "";
+        return SharedPreference.getString(mContext, REMOTE_CUSTOM_ADS_ID_LIST, "");
     }
 
-    public long getFreqInterOPAInMs() {
+    private long getFreqInterOPAInMs() {
         if (mFirebaseRemoteConfig != null) {
             return mFirebaseRemoteConfig.getLong(REMOTE_FREQ_CAP_INTER_OPA_IN_MINUTE) * 60 * 1000;
         }
         return DEFAULT_FREQ_CAP_INTER_OPA_IN_MS;
     }
 
-    public long getSplashDelayInMs() {
+    private long getSplashDelayInMs() {
         if (mFirebaseRemoteConfig != null) {
             return mFirebaseRemoteConfig.getLong(REMOTE_SPLASH_DELAY_IN_MS);
         }
         return DEFAULT_SPLASH_DELAY_IN_MS;
     }
 
-    public long getInterOPAProgressDelayInMs() {
+    private long getInterOPAProgressDelayInMs() {
         if (mFirebaseRemoteConfig != null) {
             return mFirebaseRemoteConfig.getLong(REMOTE_INTER_OPA_PROGRESS_DELAY_IN_MS);
         }

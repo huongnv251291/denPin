@@ -134,7 +134,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:17.0.1'
     // Utility Library
     implementation 'com.github.phongnx:Utility:1.2.0'
-    implementation 'com.blankj:utilcode:1.26.0'
+    implementation 'com.blankj:utilcode:1.29.0'
     // Setup Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
