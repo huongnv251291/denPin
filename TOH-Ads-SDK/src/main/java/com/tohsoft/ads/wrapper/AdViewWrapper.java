@@ -150,7 +150,7 @@ public class AdViewWrapper {
                 height = DEFAULT_CONTAINER_HEIGHT;
             }
             AdsUtils.setHeightForContainer(container, height);
-            AdsUtils.addBannerAdsToContainer(container, mAdView);
+            AdsUtils.addAdsToContainer(container, mAdView);
             return;
         }
 
@@ -242,7 +242,7 @@ public class AdViewWrapper {
         }
 
         // Add Ads to container
-        AdsUtils.addBannerAdsToContainer(container, mAdView);
+        AdsUtils.addAdsToContainer(container, mAdView);
     }
 
     private void initAdmobMediumBanner() {
@@ -250,7 +250,7 @@ public class AdViewWrapper {
             return;
         }
         if (mAdView != null && mContainer != null) {
-            AdsUtils.addBannerAdsToContainer(mContainer, mAdView);
+            AdsUtils.addAdsToContainer(mContainer, mAdView);
             return;
         }
 
@@ -320,7 +320,7 @@ public class AdViewWrapper {
         mAdView = AdmobAdvertisements.initMediumBanner(mContext.getApplicationContext(), adsId, adListener);
 
         // Add Ads to container
-        AdsUtils.addBannerAdsToContainer(mContainer, mAdView);
+        AdsUtils.addAdsToContainer(mContainer, mAdView);
     }
 
     /**
@@ -337,7 +337,7 @@ public class AdViewWrapper {
                 height = DEFAULT_CONTAINER_HEIGHT;
             }
             AdsUtils.setHeightForContainer(container, height);
-            AdsUtils.addBannerAdsToContainer(container, mFanAdView);
+            AdsUtils.addAdsToContainer(container, mFanAdView);
             return;
         }
 
@@ -418,7 +418,7 @@ public class AdViewWrapper {
         mFanAdView = FanAdvertisements.initNormalBanner(mContext.getApplicationContext(), adsId, adListener);
 
         // Add Ads to container
-        AdsUtils.addBannerAdsToContainer(container, mFanAdView);
+        AdsUtils.addAdsToContainer(container, mFanAdView);
     }
 
     private void initFanMediumBanner() {
@@ -426,7 +426,7 @@ public class AdViewWrapper {
             return;
         }
         if (mFanAdView != null && mContainer != null) {
-            AdsUtils.addBannerAdsToContainer(mContainer, mFanAdView);
+            AdsUtils.addAdsToContainer(mContainer, mFanAdView);
             return;
         }
 
@@ -491,7 +491,7 @@ public class AdViewWrapper {
         mFanAdView = FanAdvertisements.initMediumBanner(mContext.getApplicationContext(), adsId, adListener);
 
         // Add Ads to container
-        AdsUtils.addBannerAdsToContainer(mContainer, mFanAdView);
+        AdsUtils.addAdsToContainer(mContainer, mFanAdView);
     }
 
     /*

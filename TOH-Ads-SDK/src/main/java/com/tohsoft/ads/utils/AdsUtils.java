@@ -2,6 +2,7 @@ package com.tohsoft.ads.utils;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 public class AdsUtils {
 
-    public static void addBannerAdsToContainer(final ViewGroup container, final View adView) {
+    public static void addAdsToContainer(final ViewGroup container, final View adView) {
         try {
             if (container == null) {
                 return;
@@ -47,10 +48,14 @@ public class AdsUtils {
                 int topMargin = 2;
                 if (layoutParams instanceof LinearLayout.LayoutParams) {
                     ((LinearLayout.LayoutParams) layoutParams).topMargin = topMargin;
+                    ((LinearLayout.LayoutParams) layoutParams).gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
                 } else if (layoutParams instanceof FrameLayout.LayoutParams) {
                     ((FrameLayout.LayoutParams) layoutParams).topMargin = topMargin;
+                    ((FrameLayout.LayoutParams) layoutParams).gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
                 } else if (layoutParams instanceof RelativeLayout.LayoutParams) {
                     ((RelativeLayout.LayoutParams) layoutParams).topMargin = topMargin;
+                    ((RelativeLayout.LayoutParams) layoutParams).addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                    ((RelativeLayout.LayoutParams) layoutParams).addRule(RelativeLayout.CENTER_HORIZONTAL);
                 }
                 adView.setLayoutParams(layoutParams);
 
