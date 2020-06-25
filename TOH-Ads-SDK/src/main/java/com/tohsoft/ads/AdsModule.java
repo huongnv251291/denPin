@@ -137,10 +137,9 @@ public class AdsModule {
     /*
     * Check if Application not set, it will throw an Exception
     * */
-    @SuppressWarnings("ThrowableNotThrown")
     private void checkCondition() {
         if (mApplication == null) {
-            new Throwable(new NullPointerException("Application is NULL, you must to call init() first at onCreate() of Application class"));
+            throw new NullPointerException("Application is NULL, you must to call init() first at onCreate() of Application class");
         }
     }
 
@@ -308,6 +307,8 @@ public class AdsModule {
                 sPromotionAds = new InterstitialAdWrapper(mApplication, mAdsId.interstitial_gift);
             }
             sPromotionAds.initAds(viewPromotionAds);
+        } else if (viewPromotionAds != null) {
+            viewPromotionAds.setVisibility(View.GONE);
         }
     }
 
