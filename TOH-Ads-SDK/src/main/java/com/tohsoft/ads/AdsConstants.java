@@ -13,5 +13,6 @@ public interface AdsConstants {
 
     String banner_test_id = "ca-app-pub-3940256099942544/6300978111";
     String interstitial_test_id = "ca-app-pub-3940256099942544/1033173712";
+    String native_ad_test_id = "ca-app-pub-3940256099942544/2247696110";
 
 }

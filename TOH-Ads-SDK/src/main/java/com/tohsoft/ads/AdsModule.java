@@ -19,6 +19,7 @@ import com.tohsoft.ads.utils.AdsUtils;
 import com.tohsoft.ads.wrapper.AdViewWrapper;
 import com.tohsoft.ads.wrapper.InterstitialAdWrapper;
 import com.tohsoft.ads.wrapper.InterstitialOPAHelper;
+import com.tohsoft.ads.wrapper.NativeAdViewWrapper;
 import com.utility.DebugLog;
 import com.utility.SharedPreference;
 import com.utility.UtilsLib;
@@ -44,6 +45,7 @@ public class AdsModule {
     private static AdsModule sAdsModule;
     public static AdViewWrapper sBannerBottom;
     public static AdViewWrapper sBannerEmptyScreen;
+    public static NativeAdViewWrapper sNativeAdViewWrapper;
     public static InterstitialAdWrapper sPromotionAds;
     public AdViewWrapper mBannerExitDialog;
     public InterstitialOPAHelper mInterstitialOPAHelper;
@@ -289,6 +291,24 @@ public class AdsModule {
                 sBannerEmptyScreen = new AdViewWrapper(mApplication, mAdsId.banner_empty_screen);
             }
             sBannerEmptyScreen.initMediumBanner(container);
+        } else if (container != null) {
+            container.removeAllViews();
+        }
+    }
+
+    /*
+     * Generate Native AdView - sNativeAdViewWrapper static instance
+     *
+     * @param:
+     * ViewGroup container: The container that AdsView will be added to
+     * String[] adsId: array ids for Native AdView
+     * */
+    public void showNativeAdView(ViewGroup container, String[] adsId) {
+        if (!AdsConfig.getInstance().isFullVersion() && container != null && adsId != null) {
+            if (sNativeAdViewWrapper == null) {
+                sNativeAdViewWrapper = new NativeAdViewWrapper(adsId);
+            }
+            sNativeAdViewWrapper.refreshAd(mApplication, container);
         } else if (container != null) {
             container.removeAllViews();
         }
