@@ -1,4 +1,4 @@
-package com.tohsoft.app.utils.language;
+package com.tohsoft.base.mvp.utils.language;
 
 import android.util.Log;
 

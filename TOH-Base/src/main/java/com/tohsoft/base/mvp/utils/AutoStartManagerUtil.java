@@ -1,4 +1,4 @@
-package com.tohsoft.app.utils;
+package com.tohsoft.base.mvp.utils;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -7,8 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.tohsoft.app.R;
-import com.tohsoft.app.services.BackgroundService;
+import com.tohsoft.base.mvp.R;
 import com.utility.DebugLog;
 import com.utility.SharedPreference;
 import com.utility.UtilsLib;
@@ -66,9 +65,9 @@ public class AutoStartManagerUtil {
     }
 
     /**
-    * Phải gọi method này trước khi khởi chạy service {@link BackgroundService}
+    * Phải gọi method này trước khi khởi chạy backgroundService
     * */
-    public static boolean shouldShowEnableAutoStart(Context context) {
+    public static boolean shouldShowEnableAutoStart(Context context, Class backgroundService) {
         if (context == null) {
             return false;
         }
@@ -79,7 +78,7 @@ public class AutoStartManagerUtil {
             return true;
         }
 
-        if (!UtilsLib.isServiceRunning(context, BackgroundService.class)) {
+        if (backgroundService != null && !UtilsLib.isServiceRunning(context, backgroundService)) {
             return hasPowerManagerIntent(context);
         }
         return false;

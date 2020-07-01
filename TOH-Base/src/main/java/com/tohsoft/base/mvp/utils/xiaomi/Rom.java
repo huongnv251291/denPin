@@ -1,4 +1,4 @@
-package com.tohsoft.app.utils.xiaomi;
+package com.tohsoft.base.mvp.utils.xiaomi;
 
 import java.io.BufferedReader;
 import java.io.IOException;

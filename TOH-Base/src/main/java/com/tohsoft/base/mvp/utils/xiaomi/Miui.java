@@ -1,4 +1,4 @@
-package com.tohsoft.app.utils.xiaomi;
+package com.tohsoft.base.mvp.utils.xiaomi;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +9,8 @@ import android.text.TextUtils;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.IntentUtils;
-import com.tohsoft.app.R;
-import com.tohsoft.app.data.local.preference.PreferencesHelper;
+import com.tohsoft.base.mvp.R;
+import com.utility.SharedPreference;
 
 
 public class Miui {
@@ -40,7 +40,7 @@ public class Miui {
 
     public static void openManagePermissionMui(Context context) {
         String prop = getProp();
-        PreferencesHelper.setStartInBackgroundShowed(context, true);
+        setStartInBackgroundShowed(context, true);
         switch (prop) {
             case miui5:
                 reqForMiui5(context);
@@ -58,7 +58,6 @@ public class Miui {
     public static boolean needManagePermissionMui() {
         return Build.MANUFACTURER.equals("Xiaomi") && !TextUtils.isEmpty(getProp());
     }
-
 
     private static void reqForMiui5(Context context) {
         String packageName = context.getPackageName();
@@ -99,4 +98,18 @@ public class Miui {
             }
         }
     }
+
+    public static boolean mustToRequestStartInBackground(Context context) {
+        return SharedPreference.getBoolean(context, FREF_START_IN_BACKGROUND_SHOWED, true);
+    }
+
+    /**
+     * Start in background permission on Xiaomi devices (new)
+     */
+    private static final String FREF_START_IN_BACKGROUND_SHOWED = "FREF_START_IN_BACKGROUND_SHOWED";
+
+    public static void setStartInBackgroundShowed(Context context, boolean isShowed) {
+        SharedPreference.setBoolean(context, FREF_START_IN_BACKGROUND_SHOWED, isShowed);
+    }
+
 }

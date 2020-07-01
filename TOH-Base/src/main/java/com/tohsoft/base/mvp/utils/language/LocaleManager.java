@@ -1,4 +1,4 @@
-package com.tohsoft.app.utils.language;
+package com.tohsoft.base.mvp.utils.language;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,14 +7,13 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.LocaleList;
 
-import com.tohsoft.app.BuildConfig;
 import com.utility.DebugLog;
 import com.utility.SharedPreference;
 
 import java.util.Locale;
 
 public class LocaleManager {
-    public static String LANGUAGE_SELECTED = BuildConfig.APPLICATION_ID + "LANGUAGE_SELECTED";
+    public static String LANGUAGE_SELECTED = "LANGUAGE_SELECTED";
     public static String MODE_AUTO = "auto";
 
     public static Context setLocale(Context c) {
@@ -63,7 +62,7 @@ public class LocaleManager {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
         configuration.setLocale(locale);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             LocaleList localeList = new LocaleList(locale);
             LocaleList.setDefault(localeList);
         }

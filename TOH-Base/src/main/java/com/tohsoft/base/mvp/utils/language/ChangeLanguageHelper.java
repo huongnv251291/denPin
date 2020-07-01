@@ -1,18 +1,18 @@
-package com.tohsoft.app.utils.language;
+package com.tohsoft.base.mvp.utils.language;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.tohsoft.app.R;
-import com.tohsoft.app.ui.main.MainActivity;
+import com.tohsoft.ads.AdsModule;
+import com.tohsoft.base.mvp.R;
 import com.utility.DebugLog;
 import com.utility.SharedPreference;
 
@@ -30,6 +30,7 @@ public class ChangeLanguageHelper {
     private static final String URL_GET_COUNTRY_CODE_BY_IP = "http://gsp1.apple.com/pep/gcc";
     private static final String DEFAULT_COUNTRY_CODE = "US";
     private static final String DEFAULT_LANGUAGE = "en";
+    public static final String RESTART_APP_TO_APPLY_LANGUAGE_CHANGED = "RESTART_APP_TO_APPLY_LANGUAGE_CHANGED";
     private final Context mContext;
     @Nullable
     private ChangeLanguageListener mListener;
@@ -44,16 +45,20 @@ public class ChangeLanguageHelper {
     }
 
     @SuppressLint("CheckResult")
-    public void changeLanguage() {
+    public void changeLanguage(Class mainActivity) {
         Observable.concat(getCountryBySim(), getCountryByIp())
                 .filter(s -> !TextUtils.isEmpty(s))
                 .first(DEFAULT_COUNTRY_CODE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::showDialog, throwable -> showDialog(DEFAULT_COUNTRY_CODE));
+                .subscribe(countryCode -> {
+                    showDialog(countryCode, mainActivity);
+                }, throwable -> {
+                    showDialog(DEFAULT_COUNTRY_CODE, mainActivity);
+                });
     }
 
-    private void showDialog(String countryCode) {
+    private void showDialog(String countryCode, Class mainActivity) {
         String[] key_languages = mContext.getResources().getStringArray(R.array.key_language_support);
         List<String> languages = new ArrayList<>();
         Locale loc;
@@ -99,14 +104,17 @@ public class ChangeLanguageHelper {
         LocaleManager.getLanguage(mContext);
 
         showDialogSelectLanguage(mContext, languages, selectedPos, (dialog, which) -> {
-            if (dialog.getSelectedIndex() != selectedPos) {
-                if (dialog.getSelectedIndex() == 0) {
+            ItemLanguageAdapter adapter = null;
+            if (dialog.getRecyclerView() != null && dialog.getRecyclerView().getAdapter() instanceof ItemLanguageAdapter) {
+                adapter = (ItemLanguageAdapter) dialog.getRecyclerView().getAdapter();
+            }
+            if (adapter != null && adapter.getSelectedIndex() != selectedPos) {
+                if (adapter.getSelectedIndex() == 0) {
                     LocaleManager.setNewLocale(mContext, LocaleManager.MODE_AUTO);
-                    Locale locale = Resources.getSystem().getConfiguration().locale;
-                    restartToApplyLanguage();
+                    restartToApplyLanguage(mainActivity);
                     return;
                 }
-                String selectedLang = languages.get(dialog.getSelectedIndex());
+                String selectedLang = languages.get(adapter.getSelectedIndex());
                 for (String key : key_languages) {
                     Locale lloc;
                     String[] spk = key.split("-");
@@ -117,7 +125,7 @@ public class ChangeLanguageHelper {
                     }
                     if (selectedLang.equalsIgnoreCase(lloc.getDisplayName(lloc))) {
                         LocaleManager.setNewLocale(mContext, key);
-                        restartToApplyLanguage();
+                        restartToApplyLanguage(mainActivity);
                         break;
                     }
                 }
@@ -128,15 +136,14 @@ public class ChangeLanguageHelper {
     private void showDialogSelectLanguage(Context context, List<String> languages, int selectedPos, MaterialDialog.SingleButtonCallback callbackDone) {
         new MaterialDialog.Builder(context)
                 .title(R.string.lbl_select_language)
-                .items(languages)
-                .itemsCallbackSingleChoice(selectedPos, (dialog, view, which, text) -> true)
+                .adapter(new ItemLanguageAdapter(languages, selectedPos), new LinearLayoutManager(context))
                 .positiveText(R.string.action_done)
                 .onPositive(callbackDone)
                 .build()
                 .show();
     }
 
-    private void restartToApplyLanguage() {
+    private void restartToApplyLanguage(Class mainActivity) {
         if (mListener != null) {
             mListener.onChangeLanguageSuccess();
         }
@@ -149,10 +156,12 @@ public class ChangeLanguageHelper {
         new Handler().postDelayed(() -> {
             dialog.dismiss();
 
-            Intent intent = new Intent(mContext, MainActivity.class);
+            AdsModule.getInstance().setIgnoreDestroyStaticAd(true);
+
+            Intent intent = new Intent(mContext, mainActivity);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             mContext.startActivity(intent);
         }, 3000);
     }
