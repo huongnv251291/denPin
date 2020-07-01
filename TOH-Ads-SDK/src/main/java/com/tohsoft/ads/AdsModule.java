@@ -57,6 +57,8 @@ public class AdsModule {
     private AdsId mFanAdsId;
     private AdsId mAdsId;
 
+    private boolean mIgnoreDestroyStaticAd;
+
     public static AdsModule getInstance() {
         if (sAdsModule == null) {
             sAdsModule = new AdsModule();
@@ -137,8 +139,8 @@ public class AdsModule {
     }
 
     /*
-    * Check if Application not set, it will throw an Exception
-    * */
+     * Check if Application not set, it will throw an Exception
+     * */
     private void checkCondition() {
         if (mApplication == null) {
             throw new NullPointerException("Application is NULL, you must to call init() first at onCreate() of Application class");
@@ -333,21 +335,29 @@ public class AdsModule {
     }
 
     /*
-    * Call this method when the user click on the Gift icon (View viewPromotionAds in method showPromotionAdsView()),
-    * it will display Interstitial Ads if it has been successfully loaded before
-    *
-    * After that, InterstitialAdWrapper (sPromotionAds instance) will auto reload Ads and show Gift icon when Ads is loaded
-    * */
+     * Call this method when the user click on the Gift icon (View viewPromotionAds in method showPromotionAdsView()),
+     * it will display Interstitial Ads if it has been successfully loaded before
+     *
+     * After that, InterstitialAdWrapper (sPromotionAds instance) will auto reload Ads and show Gift icon when Ads is loaded
+     * */
     public void showPromotionAds() {
         if (sPromotionAds != null) {
             sPromotionAds.show();
         }
     }
 
+    public void setIgnoreDestroyStaticAd(boolean ignoreDestroyStaticAd) {
+        this.mIgnoreDestroyStaticAd = ignoreDestroyStaticAd;
+    }
+
     /*
      *
      * */
     public void destroyStaticAds() {
+        if (mIgnoreDestroyStaticAd) {
+            mIgnoreDestroyStaticAd = false;
+            return;
+        }
         if (sBannerBottom != null) {
             sBannerBottom.destroy();
             sBannerBottom = null;

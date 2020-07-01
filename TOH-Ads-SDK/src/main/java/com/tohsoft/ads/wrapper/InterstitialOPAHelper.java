@@ -97,7 +97,6 @@ public class InterstitialOPAHelper {
         }
         mCurrentAdsId = mAdsIds.get(mAdsPosition);
         useFanAdNetwork = mCurrentAdsId.startsWith(AdsConstants.FAN_ID_PREFIX);
-        DebugLog.loge("mCurrentAdsId: " + mCurrentAdsId);
 
         // Destroy previous Ads instance
         destroy();
@@ -113,7 +112,7 @@ public class InterstitialOPAHelper {
 
     private void initAdmobInterstitial() {
         if (!AdsConfig.getInstance().canShowOPA()) {
-            DebugLog.loge("RETURN when latest time OPA displayed < FREQ_INTER_OPA_IN_MILLISECONDS");
+            DebugLog.logd("RETURN when latest time OPA displayed < FREQ_INTER_OPA_IN_MILLISECONDS");
             return;
         }
         if (mInterstitialOpenApp != null && isCounting()) {
