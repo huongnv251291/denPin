@@ -1,6 +1,7 @@
 package com.tohsoft.app.ui.history;
 
-import com.tohsoft.app.ui.base.BaseMvpView;
+
+import com.tohsoft.base.mvp.ui.BaseMvpView;
 
 import java.util.List;
 

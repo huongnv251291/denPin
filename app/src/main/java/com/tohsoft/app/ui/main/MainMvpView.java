@@ -2,7 +2,7 @@ package com.tohsoft.app.ui.main;
 
 
 import com.tohsoft.ads.wrapper.InterstitialOPAHelper;
-import com.tohsoft.app.ui.base.BaseMvpView;
+import com.tohsoft.base.mvp.ui.BaseMvpView;
 
 /**
  * Created by Phong on 2/2/2017.

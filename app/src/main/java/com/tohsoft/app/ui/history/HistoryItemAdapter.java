@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tohsoft.app.R;
-import com.tohsoft.app.ui.base.BaseViewHolder;
+import com.tohsoft.base.mvp.ui.BaseViewHolder;
 import com.utility.UtilsLib;
 
 import java.util.List;

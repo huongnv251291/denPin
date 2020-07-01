@@ -1,6 +1,7 @@
 package com.tohsoft.app.ui.history;
 
-import com.tohsoft.app.ui.base.MvpPresenter;
+
+import com.tohsoft.base.mvp.ui.MvpPresenter;
 
 /**
  * Created by PhongNX on 2/10/2020.

@@ -1,2 +1,2 @@
-include ':TOH-Ads-SDK'
-include ':app', ':toh_rate_lib'
+include ':app'
+include ':TOH-Ads-SDK', ':toh_rate_lib', ':TOH-Base'

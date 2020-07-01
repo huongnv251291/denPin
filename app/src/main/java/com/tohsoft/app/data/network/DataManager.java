@@ -1,16 +1,13 @@
 package com.tohsoft.app.data.network;
 
 
-
 import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.data.local.preference.PreferencesHelper;
 import com.tohsoft.app.data.models.MoreApps;
-import com.tohsoft.app.data.models.User;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**

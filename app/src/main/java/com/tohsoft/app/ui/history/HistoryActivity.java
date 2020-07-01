@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tohsoft.app.R;
-import com.tohsoft.app.ui.base.BaseActivity;
-import com.tohsoft.app.ui.base.BasePresenter;
 import com.tohsoft.app.ui.custom.EmptyAdView;
+import com.tohsoft.base.mvp.ui.BaseActivity;
+import com.tohsoft.base.mvp.ui.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;

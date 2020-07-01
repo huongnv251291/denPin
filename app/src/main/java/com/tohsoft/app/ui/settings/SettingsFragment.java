@@ -13,12 +13,13 @@ import androidx.appcompat.widget.Toolbar;
 import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.R;
 import com.tohsoft.app.helper.FirebaseRemoteConfigHelper;
-import com.tohsoft.app.ui.base.BaseFragment;
-import com.tohsoft.app.ui.base.BasePresenter;
+import com.tohsoft.app.ui.main.MainActivity;
 import com.tohsoft.app.utils.Utils;
 import com.tohsoft.app.utils.commons.Communicate;
-import com.tohsoft.app.utils.language.ChangeLanguageHelper;
-import com.tohsoft.app.utils.xiaomi.Miui;
+import com.tohsoft.base.mvp.ui.BaseFragment;
+import com.tohsoft.base.mvp.ui.BasePresenter;
+import com.tohsoft.base.mvp.utils.language.ChangeLanguageHelper;
+import com.tohsoft.base.mvp.utils.xiaomi.Miui;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,7 +88,7 @@ public class SettingsFragment extends BaseFragment {
         }
         switch (view.getId()) {
             case R.id.ll_language:
-                new ChangeLanguageHelper(mContext, null).changeLanguage();
+                new ChangeLanguageHelper(mContext, null).changeLanguage(MainActivity.class);
                 break;
             case R.id.ll_other_permissions:
                 Miui.openManagePermissionMui(mContext);

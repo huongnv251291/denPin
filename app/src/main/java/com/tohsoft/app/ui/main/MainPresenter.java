@@ -5,10 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 
-import com.tohsoft.app.R;
 import com.tohsoft.app.data.ApplicationModules;
-import com.tohsoft.app.ui.base.BasePresenter;
-import com.tohsoft.app.utils.commons.Communicate;
+import com.tohsoft.base.mvp.ui.BasePresenter;
 import com.tohsoft.lib.AppSelfLib;
 
 /**

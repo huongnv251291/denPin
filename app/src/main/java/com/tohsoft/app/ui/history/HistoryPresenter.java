@@ -2,7 +2,8 @@ package com.tohsoft.app.ui.history;
 
 import android.content.Context;
 
-import com.tohsoft.app.ui.base.BasePresenter;
+
+import com.tohsoft.base.mvp.ui.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -60,17 +60,6 @@ public class PreferencesHelper {
         setInt(PreferenceKeys.FREF_GET_PRO_VERSION_COUNT, value);
     }
 
-    /**
-     * Start in background permission on Xiaomi devices (new)
-     */
-    public static void setStartInBackgroundShowed(Context context, boolean isShowed) {
-        SharedPreference.setBoolean(context, PreferenceKeys.FREF_START_IN_BACKGROUND_SHOWED, isShowed);
-    }
-
-    public static boolean isStartInBackgroundShowed(Context context) {
-        return SharedPreference.getBoolean(context, PreferenceKeys.FREF_START_IN_BACKGROUND_SHOWED, false);
-    }
-
     /*=============================================================================================*/
 
     public String getString(String key, String defValue) {

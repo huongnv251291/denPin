@@ -18,9 +18,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.FragmentUtils;
-import com.blankj.utilcode.util.ImageUtils;
-import com.blankj.utilcode.util.NotificationUtils;
-import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.gms.ads.MobileAds;
 import com.tohsoft.ads.AdsModule;
@@ -31,18 +28,18 @@ import com.tohsoft.app.BaseApplication;
 import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.R;
 import com.tohsoft.app.data.ApplicationModules;
-import com.tohsoft.app.data.local.preference.PreferencesHelper;
 import com.tohsoft.app.helper.FirebaseRemoteConfigHelper;
 import com.tohsoft.app.services.BackgroundService;
-import com.tohsoft.app.ui.base.BaseActivity;
-import com.tohsoft.app.ui.base.BasePresenter;
 import com.tohsoft.app.ui.history.HistoryActivity;
 import com.tohsoft.app.ui.settings.SettingsFragment;
-import com.tohsoft.app.utils.AutoStartManagerUtil;
 import com.tohsoft.app.utils.commons.Communicate;
-import com.tohsoft.app.utils.language.LocaleManager;
-import com.tohsoft.app.utils.xiaomi.Miui;
+import com.tohsoft.base.mvp.ui.BaseActivity;
+import com.tohsoft.base.mvp.ui.BasePresenter;
+import com.tohsoft.base.mvp.utils.AutoStartManagerUtil;
+import com.tohsoft.base.mvp.utils.language.LocaleManager;
+import com.tohsoft.base.mvp.utils.xiaomi.Miui;
 import com.tohsoft.lib.AppSelfLib;
+import com.utility.DebugLog;
 import com.utility.RuntimePermissions;
 
 import butterknife.BindView;
@@ -52,6 +49,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainMvpPresenter> implements MainMvpView {
     @BindView(R.id.fr_bottom_banner) FrameLayout frBottomBanner;
+    @BindView(R.id.fr_native_adview) ViewGroup frNativeAdView;
     @BindView(R.id.fr_splash) View frSplash;
     @BindView(R.id.iv_splash) ImageView ivSplash;
     @BindView(R.id.ll_fake_progress) View llFakeProgress;
@@ -87,6 +85,8 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         checkAutoStartManager();
 
         checkStartInBackgroundPermission();
+
+        AdsModule.getInstance().showNativeAdView(frNativeAdView, new String[]{"native_adview_id"});
     }
 
     /*
@@ -117,6 +117,8 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
             mInterstitialOPAHelper = AdsModule.getInstance().getInterstitialOPAHelper(llFakeProgress, this);
             if (mInterstitialOPAHelper != null) {
                 mInterstitialOPAHelper.initInterstitialOpenApp();
+            } else {
+                onAdOPACompleted();
             }
         }
     }
@@ -150,7 +152,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
      * Start service sau method này {@link BackgroundService}
      */
     private void checkAutoStartManager() {
-        if (AutoStartManagerUtil.shouldShowEnableAutoStart(getContext())) {
+        if (AutoStartManagerUtil.shouldShowEnableAutoStart(getContext(), BackgroundService.class)) {
             ivWarning.setVisibility(View.VISIBLE);
             /*if (AutoStartManagerUtil.canShowWarningIcon(getContext())) {
                 // Hiển thị icon warning
@@ -194,7 +196,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
      * Kiểm tra và xin cấp quyền StartInBackground khi startIntent như mở một app khác trên MIUI (Xiaomi devices)
      */
     private void checkStartInBackgroundPermission() {
-        if (!PreferencesHelper.isStartInBackgroundShowed(mContext)) {
+        if (!Miui.mustToRequestStartInBackground(mContext)) {
             Miui.requestStartInBackground(mContext);
         }
     }
@@ -242,6 +244,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
 
     @Override
     public void onAdOPACompleted() {
+        DebugLog.loge("onAdOPACompleted");
         checkPermissions();
     }
 
@@ -269,7 +272,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         @SuppressLint("InflateParams") View exitDialogView = getLayoutInflater().inflate(R.layout.dialog_exit_app, null);
         // Ads
         ViewGroup adsContainer = exitDialogView.findViewById(R.id.fr_ads_container_exit);
-        AdsUtils.addBannerAdsToContainer(adsContainer, mAdViewWrapper != null ? mAdViewWrapper.getAdView() : null);
+        AdsUtils.addAdsToContainer(adsContainer, mAdViewWrapper != null ? mAdViewWrapper.getAdView() : null);
         // Checkbox never show again
         CheckBox cbNeverShowAgain = exitDialogView.findViewById(R.id.cb_never_show_again);
         cbNeverShowAgain.setOnCheckedChangeListener((buttonView, isChecked) ->
@@ -331,9 +334,14 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         onQuitApp();
     }
 
+    @Override
+    public void finish() {
+        AdsModule.getInstance().setIgnoreDestroyStaticAd(false);
+        super.finish();
+    }
+
     public void onQuitApp() {
-        boolean isShowRateDialog = AppSelfLib.showRateActivityNewStyleHighScore(mContext, 1,
-                Communicate.EMAIL_COMPANY, mContext.getString(R.string.app_name));
+        boolean isShowRateDialog = AppSelfLib.showRateActivityNewStyleHighScore(mContext, 1, Communicate.EMAIL_COMPANY, mContext.getString(R.string.app_name));
         if (isShowRateDialog) {
             dismissExitDialog();
             if (mPresenter != null) {

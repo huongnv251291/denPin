@@ -8,6 +8,7 @@ import android.content.Intent;
 
 import androidx.multidex.MultiDexApplication;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.tohsoft.ads.AdsConfig;
 import com.tohsoft.ads.AdsModule;
 import com.tohsoft.app.data.ApplicationModules;
@@ -52,7 +53,7 @@ public class BaseApplication extends MultiDexApplication {
                 .addTestDevices("0ca1bc4f-365d-4303-9312-1324d43e329c");
         // Init Ads module
         AdsModule.getInstance().init(this)
-                .setResourceAdsId("admob_ids.json", "fan_ids.json")
+                .setResourceAdsId("admob_ids.json", null)
                 .setAdsIdListConfig(FirebaseRemoteConfigHelper.getInstance().getAdsIdList())
                 .setCustomAdsIdListConfig(FirebaseRemoteConfigHelper.getInstance().getCustomAdsIdList());
 
@@ -80,6 +81,7 @@ public class BaseApplication extends MultiDexApplication {
     @SuppressLint("MissingPermission")
     private void initCrash() {
         CrashUtils.init((crashInfo, e) -> {
+            FirebaseCrashlytics.getInstance().recordException(e);
             DebugLog.loge(e);
             restartApp();
         });
