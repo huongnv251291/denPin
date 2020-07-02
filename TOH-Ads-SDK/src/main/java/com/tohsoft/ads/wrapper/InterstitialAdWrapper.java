@@ -81,10 +81,13 @@ public class InterstitialAdWrapper {
             mAdsPosition = 0;
         }
         mCurrentAdsId = mAdsIds.get(mAdsPosition);
-        useFanAdNetwork = mCurrentAdsId.startsWith(AdsConstants.FAN_ID_PREFIX);
+        boolean useFanAdNetwork = mCurrentAdsId.startsWith(AdsConstants.FAN_ID_PREFIX);
 
-        // Destroy previous Ads instance
-        destroy();
+        if (this.useFanAdNetwork != useFanAdNetwork) {
+            // Destroy previous Ads instance
+            destroy();
+        }
+        this.useFanAdNetwork = useFanAdNetwork;
     }
 
     private void initAdmobAds(View giftView) {
