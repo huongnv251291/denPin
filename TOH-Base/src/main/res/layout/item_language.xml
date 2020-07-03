@@ -6,11 +6,11 @@
     android:layout_height="45dp"
     android:background="?android:attr/selectableItemBackground"
     android:foreground="?android:attr/selectableItemBackground"
-    android:gravity="center_vertical"
+    android:gravity="center_vertical|left"
     android:orientation="horizontal"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
-    tools:ignore="UnusedAttribute">
+    tools:ignore="RtlHardcoded,UnusedAttribute">
 
     <RadioButton
         android:id="@+id/radio_button"
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:ellipsize="end"
-        android:gravity="center_vertical"
+        android:gravity="center_vertical|left"
         android:maxLines="1"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"

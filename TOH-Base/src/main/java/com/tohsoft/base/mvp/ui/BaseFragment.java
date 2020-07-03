@@ -58,19 +58,11 @@ public abstract class BaseFragment<P extends MvpPresenter> extends Fragment impl
     }
 
     protected void showBannerEmptyScreen(ViewGroup container) {
-        if (!AdsConfig.getInstance().isFullVersion()) {
-            if (mActivity != null) {
-                mActivity.showBannerEmptyScreen(container);
-            }
-        } else if (container != null) {
-            container.setVisibility(View.GONE);
-        }
+        AdsModule.getInstance().showBannerEmptyScreen(container);
     }
 
     protected void showPromotionView(View viewPromotionAds) {
-        if (!AdsConfig.getInstance().isFullVersion()) {
-            AdsModule.getInstance().showPromotionAdsView(viewPromotionAds);
-        }
+        AdsModule.getInstance().showPromotionAdsView(viewPromotionAds);
     }
 
     protected void showPromotionAds() {

@@ -53,7 +53,7 @@ public class LocaleManager {
             }
         }
         Locale.setDefault(locale);
-        DebugLog.logd("Change language:\nlanguage: " + language + "\nlocale: " + locale.getLanguage());
+//        DebugLog.logd("Change language:\nlanguage: " + language + "\nlocale: " + locale.getLanguage());
 
         return updateResourcesLocaleLegacy(context, locale);
     }

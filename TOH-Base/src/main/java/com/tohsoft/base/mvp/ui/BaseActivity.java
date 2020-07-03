@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.tohsoft.ads.AdsConfig;
 import com.tohsoft.ads.AdsModule;
 import com.tohsoft.base.mvp.R;
 import com.tohsoft.base.mvp.ui.subview.BaseSubView;
@@ -104,8 +105,18 @@ public abstract class BaseActivity<P extends MvpPresenter> extends AppCompatActi
         AdsModule.getInstance().showBannerBottom(container);
     }
 
-    public void showBannerEmptyScreen(ViewGroup container) {
+    protected void showBannerEmptyScreen(ViewGroup container) {
         AdsModule.getInstance().showBannerEmptyScreen(container);
+    }
+
+    protected void showPromotionView(View viewPromotionAds) {
+        if (!AdsConfig.getInstance().isFullVersion()) {
+            AdsModule.getInstance().showPromotionAdsView(viewPromotionAds);
+        }
+    }
+
+    protected void showPromotionAds() {
+        AdsModule.getInstance().showPromotionAds();
     }
 
     @Override
