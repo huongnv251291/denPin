@@ -28,6 +28,7 @@ public class AdsConfig {
     private List<String> mTestDevices = new ArrayList<>();
     private boolean isFullVersion;
     private boolean isTestMode;
+    private boolean isShowLog;
 
     public static AdsConfig getInstance() {
         if (sAdsConfig == null) {
@@ -63,9 +64,15 @@ public class AdsConfig {
 
     public AdsConfig setTestMode(boolean testMode) {
         isTestMode = testMode;
-        if (isTestMode) {
+        if (isTestMode && isShowLog) {
             DebugLog.DEBUG = true;
         }
+        return sAdsConfig;
+    }
+
+    public AdsConfig setShowLog(boolean showLog) {
+        isShowLog = showLog;
+        DebugLog.DEBUG = showLog;
         return sAdsConfig;
     }
 
@@ -120,10 +127,10 @@ public class AdsConfig {
     }
 
     /*
-    * This method will check condition time with config FREQ_INTER_OPA_IN_MILLISECONDS
-    *
-    * return true if current time minus the latest time OPA displayed > FREQ_INTER_OPA_IN_MILLISECONDS has been set
-    * */
+     * This method will check condition time with config FREQ_INTER_OPA_IN_MILLISECONDS
+     *
+     * return true if current time minus the latest time OPA displayed > FREQ_INTER_OPA_IN_MILLISECONDS has been set
+     * */
     public boolean canShowOPA() {
         long freqInterOPAInMilliseconds = SharedPreference.getLong(mApplication, FREQ_INTER_OPA_IN_MILLISECONDS, DEFAULT_FREQ_CAP_INTER_OPA_IN_MS);
         if (freqInterOPAInMilliseconds == 0) {

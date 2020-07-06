@@ -75,10 +75,6 @@ public class AdsModule {
     }
 
     private AdsModule() {
-        DebugLog.DEBUG = BuildConfig.DEBUG;
-        if (AdsConfig.getInstance().isTestMode()) {
-            DebugLog.DEBUG = true;
-        }
     }
 
     /*
