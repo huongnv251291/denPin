@@ -15,12 +15,12 @@ import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.ads.MobileAds;
 import com.tohsoft.ads.models.AdsId;
 import com.tohsoft.ads.models.AdsType;
+import com.tohsoft.ads.utils.AdDebugLog;
 import com.tohsoft.ads.utils.AdsUtils;
 import com.tohsoft.ads.wrapper.AdViewWrapper;
 import com.tohsoft.ads.wrapper.InterstitialAdWrapper;
 import com.tohsoft.ads.wrapper.InterstitialOPAHelper;
 import com.tohsoft.ads.wrapper.NativeAdViewWrapper;
-import com.utility.DebugLog;
 import com.utility.SharedPreference;
 import com.utility.UtilsLib;
 
@@ -110,7 +110,7 @@ public class AdsModule {
     public AdsModule setAdsIdListConfig(String adsIdListConfig) {
         checkCondition();
         if (!TextUtils.isEmpty(adsIdListConfig)) {
-            DebugLog.logd("\n---------------\nadsIdListConfig: " + adsIdListConfig + "\n---------------");
+            AdDebugLog.logd("\n---------------\nadsIdListConfig: " + adsIdListConfig + "\n---------------");
             SharedPreference.setString(mApplication, GENERAL_CONFIG_ADS_ID_LIST, adsIdListConfig);
             mAdsIdConfigList = generateAdsIdListConfig(adsIdListConfig);
             if (mAdmobAdsId != null || mFanAdsId != null) {

@@ -15,7 +15,6 @@ import com.blankj.utilcode.util.GsonUtils;
 import com.tohsoft.ads.AdsConstants;
 import com.tohsoft.ads.models.AdsId;
 import com.tohsoft.ads.models.AdsType;
-import com.utility.DebugLog;
 import com.utility.UtilsLib;
 
 import java.util.ArrayList;
@@ -64,7 +63,7 @@ public class AdsUtils {
                 container.setVisibility(View.GONE);
             }
         } catch (Exception e) {
-            DebugLog.loge(e);
+            AdDebugLog.loge(e);
         }
     }
 
@@ -96,35 +95,35 @@ public class AdsUtils {
         if (!UtilsLib.isEmptyList(adsIdConfigList)) {
             AdsId adsId = new AdsId();
             // std_banner
-            DebugLog.logd("Mix std_banner");
+            AdDebugLog.logd("Mix std_banner");
             adsId.std_banner = mixAdsId(
                     admobIds != null ? admobIds.std_banner : null,
                     fanIds != null ? fanIds.std_banner : null,
                     adsIdConfigList
             );
             // banner_exit_dialog
-            DebugLog.logd("Mix banner_exit_dialog");
+            AdDebugLog.logd("Mix banner_exit_dialog");
             adsId.banner_exit_dialog = mixAdsId(
                     admobIds != null ? admobIds.banner_exit_dialog : null,
                     fanIds != null ? fanIds.banner_exit_dialog : null,
                     adsIdConfigList
             );
             // banner_empty_screen
-            DebugLog.logd("Mix banner_empty_screen");
+            AdDebugLog.logd("Mix banner_empty_screen");
             adsId.banner_empty_screen = mixAdsId(
                     admobIds != null ? admobIds.banner_empty_screen : null,
                     fanIds != null ? fanIds.banner_empty_screen : null,
                     adsIdConfigList
             );
             // interstitial_opa
-            DebugLog.logd("Mix interstitial_opa");
+            AdDebugLog.logd("Mix interstitial_opa");
             adsId.interstitial_opa = mixAdsId(
                     admobIds != null ? admobIds.interstitial_opa : null,
                     fanIds != null ? fanIds.interstitial_opa : null,
                     adsIdConfigList
             );
             // interstitial_gift
-            DebugLog.logd("Mix interstitial_gift");
+            AdDebugLog.logd("Mix interstitial_gift");
             adsId.interstitial_gift = mixAdsId(
                     admobIds != null ? admobIds.interstitial_gift : null,
                     fanIds != null ? fanIds.interstitial_gift : null,
@@ -145,7 +144,7 @@ public class AdsUtils {
                     // Lấy ra vị trí id cần lấy trong mảng
                     position = Integer.parseInt(adsConfig.split("-")[1].trim());
                 } catch (Exception e) {
-                    DebugLog.loge(e);
+                    AdDebugLog.loge(e);
                 }
 
                 // Kiểm tra xem position của id có trong mảng tương ứng không, nếu có thì thêm tiền tố tương ứng rồi add vào list
@@ -167,12 +166,12 @@ public class AdsUtils {
         for (String id : adsIdList) {
             builder.append("\n").append(id);
         }
-        DebugLog.logd("Ads id:" + builder.toString());
+        AdDebugLog.logd("Ads id:" + builder.toString());
     }
 
     public static void mixCustomAdsIdConfig(AdsId adsId, AdsId admobIds, AdsId fanIds, AdsType adsType, @NonNull List<String> adsIdConfigList) {
         if (adsId != null && adsType != null && !UtilsLib.isEmptyList(adsIdConfigList)) {
-            DebugLog.logd("mixCustomAdsIdConfig - " + adsType.getValue());
+            AdDebugLog.logd("mixCustomAdsIdConfig - " + adsType.getValue());
             if (adsType == AdsType.STD_BANNER) {
                 adsId.std_banner = mixAdsId(
                         admobIds != null ? admobIds.std_banner : null,

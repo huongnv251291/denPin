@@ -50,7 +50,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
     // Facebook Audience Network SDK
-    api 'com.facebook.android:audience-network-sdk:5.9.1'
+    api 'com.facebook.android:audience-network-sdk:5.10.0'
     // Google Ads
     api 'com.google.android.gms:play-services-ads:19.2.0'
     // Utility Library

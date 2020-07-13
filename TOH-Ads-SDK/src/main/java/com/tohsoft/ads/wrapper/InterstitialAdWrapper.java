@@ -15,7 +15,7 @@ import com.tohsoft.ads.AdsConfig;
 import com.tohsoft.ads.AdsConstants;
 import com.tohsoft.ads.admob.AdmobAdvertisements;
 import com.tohsoft.ads.fan.FanAdvertisements;
-import com.utility.DebugLog;
+import com.tohsoft.ads.utils.AdDebugLog;
 import com.utility.UtilsLib;
 
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class InterstitialAdWrapper {
     public void initAds(View giftView) {
         getAdsId();
         if (TextUtils.isEmpty(mCurrentAdsId)) {
-            DebugLog.loge("mCurrentAdsId is NULL");
+            AdDebugLog.loge("mCurrentAdsId is NULL");
             return;
         }
         if (useFanAdNetwork) {
@@ -74,7 +74,7 @@ public class InterstitialAdWrapper {
 
     private void getAdsId() {
         if (UtilsLib.isEmptyList(mAdsIds)) {
-            DebugLog.loge("mAdsIds is EMPTY");
+            AdDebugLog.loge("mAdsIds is EMPTY");
             return;
         }
         if (mAdsPosition >= mAdsIds.size()) {
@@ -103,7 +103,7 @@ public class InterstitialAdWrapper {
             if (mGiftView != null) {
                 if (mInterstitialAd.isLoaded()) {
                     mGiftView.setVisibility(View.VISIBLE);
-                    DebugLog.logd("Show Gift button");
+                    AdDebugLog.logd("Show Gift button");
                 } else {
                     mGiftView.setVisibility(View.GONE);
                 }
@@ -121,7 +121,7 @@ public class InterstitialAdWrapper {
                 super.onAdFailedToLoad(errorCode);
                 if (mGiftView != null) {
                     mGiftView.setVisibility(View.GONE);
-                    DebugLog.logd("Hide Gift button");
+                    AdDebugLog.logd("Hide Gift button");
                 }
                 mInterstitialAd = null;
                 if (mAdListener != null) {
@@ -131,7 +131,7 @@ public class InterstitialAdWrapper {
                     mTryReloadAds++;
                     mAdsPosition++;
                     initAds(mGiftView);
-                    DebugLog.logd("Try load InterstitialAd: " + mTryReloadAds);
+                    AdDebugLog.logd("Try load InterstitialAd: " + mTryReloadAds);
                 } else {
                     mTryReloadAds = 0;
                     mAdsPosition = 0;
@@ -143,7 +143,7 @@ public class InterstitialAdWrapper {
                 super.onAdLoaded();
                 mTryReloadAds = 0;
                 if (mGiftView != null) {
-                    DebugLog.logd("Show Gift button");
+                    AdDebugLog.logd("Show Gift button");
                     mGiftView.setVisibility(View.VISIBLE);
                 }
                 if (mAdListener != null) {
@@ -202,7 +202,7 @@ public class InterstitialAdWrapper {
             if (mGiftView != null) {
                 if (mFanInterstitialAd.isAdLoaded()) {
                     mGiftView.setVisibility(View.VISIBLE);
-                    DebugLog.logd("FAN - Show Gift button");
+                    AdDebugLog.logd("FAN - Show Gift button");
                 } else {
                     mGiftView.setVisibility(View.GONE);
                 }
@@ -236,7 +236,7 @@ public class InterstitialAdWrapper {
 
             @Override
             public void onError(Ad ad, AdError adError) {
-                DebugLog.logd("\n[FAN - Interstitial] PlacementId: " + ad.getPlacementId() + "\nErrorCode: "
+                AdDebugLog.logd("\n[FAN - Interstitial] PlacementId: " + ad.getPlacementId() + "\nErrorCode: "
                         + adError.getErrorCode() + "\nErrorMessage: " + adError.getErrorMessage());
                 if (mGiftView != null) {
                     mGiftView.setVisibility(View.GONE);
@@ -263,7 +263,7 @@ public class InterstitialAdWrapper {
             public void onAdLoaded(Ad ad) {
                 mTryReloadAds = 0;
                 if (mGiftView != null) {
-                    DebugLog.logd("FAN - Show Gift button");
+                    AdDebugLog.logd("FAN - Show Gift button");
                     mGiftView.setVisibility(View.VISIBLE);
                 }
                 if (mAdListener != null) {

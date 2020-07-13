@@ -2,7 +2,7 @@ package com.tohsoft.ads;
 
 import android.app.Application;
 
-import com.utility.DebugLog;
+import com.tohsoft.ads.utils.AdDebugLog;
 import com.utility.SharedPreference;
 
 import java.util.ArrayList;
@@ -65,14 +65,14 @@ public class AdsConfig {
     public AdsConfig setTestMode(boolean testMode) {
         isTestMode = testMode;
         if (isTestMode && isShowLog) {
-            DebugLog.DEBUG = true;
+            AdDebugLog.DEBUG_LOG = true;
         }
         return sAdsConfig;
     }
 
     public AdsConfig setShowLog(boolean showLog) {
         isShowLog = showLog;
-        DebugLog.DEBUG = showLog;
+        AdDebugLog.DEBUG_LOG = showLog;
         return sAdsConfig;
     }
 

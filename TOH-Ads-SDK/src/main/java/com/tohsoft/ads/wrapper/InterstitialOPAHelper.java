@@ -16,7 +16,7 @@ import com.tohsoft.ads.AdsConfig;
 import com.tohsoft.ads.AdsConstants;
 import com.tohsoft.ads.admob.AdmobAdvertisements;
 import com.tohsoft.ads.fan.FanAdvertisements;
-import com.utility.DebugLog;
+import com.tohsoft.ads.utils.AdDebugLog;
 import com.utility.UtilsLib;
 
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class InterstitialOPAHelper {
 
         DELAY_SPLASH = AdsConfig.getInstance().getSplashDelayInMs();
         DELAY_PROGRESS = AdsConfig.getInstance().getInterOPAProgressDelayInMs();
-        DebugLog.logd("\nDELAY_SPLASH: " + DELAY_SPLASH + " - DELAY_PROGRESS: " + DELAY_PROGRESS);
+        AdDebugLog.logd("\nDELAY_SPLASH: " + DELAY_SPLASH + " - DELAY_PROGRESS: " + DELAY_PROGRESS);
     }
 
     public void setAdsId(List<String> adsId) {
@@ -75,7 +75,7 @@ public class InterstitialOPAHelper {
     public void initInterstitialOpenApp() {
         getAdsId();
         if (TextUtils.isEmpty(mCurrentAdsId)) {
-            DebugLog.loge("mCurrentAdsId is NULL");
+            AdDebugLog.loge("mCurrentAdsId is NULL");
             onAdOPALoadingCounterFinish();
             return;
         }
@@ -89,7 +89,7 @@ public class InterstitialOPAHelper {
 
     private void getAdsId() {
         if (UtilsLib.isEmptyList(mAdsIds)) {
-            DebugLog.loge("mAdsIds is EMPTY");
+            AdDebugLog.loge("mAdsIds is EMPTY");
             return;
         }
         if (mAdsPosition >= mAdsIds.size()) {
@@ -112,7 +112,7 @@ public class InterstitialOPAHelper {
 
     private void initAdmobInterstitial() {
         if (!AdsConfig.getInstance().canShowOPA()) {
-            DebugLog.logd("RETURN when latest time OPA displayed < FREQ_INTER_OPA_IN_MILLISECONDS");
+            AdDebugLog.logd("RETURN when latest time OPA displayed < FREQ_INTER_OPA_IN_MILLISECONDS");
             return;
         }
         if (mInterstitialOpenApp != null && isCounting()) {
@@ -124,7 +124,7 @@ public class InterstitialOPAHelper {
             @Override
             public void onAdFailedToLoad(int errorCode) {
                 super.onAdFailedToLoad(errorCode);
-                DebugLog.logd("\n---\n[Admob - Interstitial OPA] adsId: " + mCurrentAdsId + "\nError Code: " + errorCode + "\n---");
+                AdDebugLog.logd("\n---\n[Admob - Interstitial OPA] adsId: " + mCurrentAdsId + "\nError Code: " + errorCode + "\n---");
                 if (mAdListener != null) {
                     mAdListener.onAdFailedToLoad(errorCode);
                 }
@@ -241,7 +241,7 @@ public class InterstitialOPAHelper {
 
             @Override
             public void onError(Ad ad, AdError adError) {
-                DebugLog.logd("\n[FAN - Interstitial OPA] PlacementId: " + ad.getPlacementId() + "\nErrorCode: "
+                AdDebugLog.logd("\n[FAN - Interstitial OPA] PlacementId: " + ad.getPlacementId() + "\nErrorCode: "
                         + adError.getErrorCode() + "\nErrorMessage: " + adError.getErrorMessage());
                 if (mAdListener != null) {
                     mAdListener.onAdFailedToLoad(adError.getErrorCode());

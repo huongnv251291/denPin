@@ -15,8 +15,8 @@ import com.tohsoft.ads.AdsConfig;
 import com.tohsoft.ads.AdsConstants;
 import com.tohsoft.ads.admob.AdmobAdvertisements;
 import com.tohsoft.ads.fan.FanAdvertisements;
+import com.tohsoft.ads.utils.AdDebugLog;
 import com.tohsoft.ads.utils.AdsUtils;
-import com.utility.DebugLog;
 import com.utility.UtilsLib;
 
 import java.util.ArrayList;
@@ -84,7 +84,7 @@ public class AdViewWrapper {
         mContainer = container;
         getAdsId();
         if (TextUtils.isEmpty(mCurrentAdsId)) {
-            DebugLog.loge("mCurrentAdsId is NULL");
+            AdDebugLog.loge("mCurrentAdsId is NULL");
             return;
         }
         if (useFanAdNetwork) {
@@ -102,7 +102,7 @@ public class AdViewWrapper {
     public void initMediumBanner() {
         getAdsId();
         if (TextUtils.isEmpty(mCurrentAdsId)) {
-            DebugLog.loge("mCurrentAdsId is NULL");
+            AdDebugLog.loge("mCurrentAdsId is NULL");
             return;
         }
         if (useFanAdNetwork) {
@@ -117,7 +117,7 @@ public class AdViewWrapper {
     * */
     private void getAdsId() {
         if (UtilsLib.isEmptyList(mAdsIds)) {
-            DebugLog.loge("mAdsIds is EMPTY");
+            AdDebugLog.loge("mAdsIds is EMPTY");
             return;
         }
         if (mAdsPosition >= mAdsIds.size()) {
@@ -159,7 +159,7 @@ public class AdViewWrapper {
             @Override
             public void onAdFailedToLoad(int code) {
                 super.onAdFailedToLoad(code);
-                DebugLog.logd("\n[Admob - NormalBanner] onAdFailedToLoad - Code: " + code + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
+                AdDebugLog.logd("\n[Admob - NormalBanner] onAdFailedToLoad - Code: " + code + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
                 if (mAdListener != null) {
                     mAdListener.onAdFailedToLoad(code);
                 }
@@ -205,7 +205,7 @@ public class AdViewWrapper {
                         AdsUtils.setHeightForContainer(viewGroup, mAdViewHeight);
                     }
                     AdsUtils.setHeightForContainer(container, mAdViewHeight);
-                    DebugLog.logd("onAdLoaded - Height: " + mAdViewHeight);
+                    AdDebugLog.logd("onAdLoaded - Height: " + mAdViewHeight);
                 }
 
                 if (container != null) {
@@ -258,7 +258,7 @@ public class AdViewWrapper {
             @Override
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
-                DebugLog.logd("\n[Admob - MediumBanner] onAdFailedToLoad - Code: " + i + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
+                AdDebugLog.logd("\n[Admob - MediumBanner] onAdFailedToLoad - Code: " + i + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
                 if (mAdListener != null) {
                     mAdListener.onAdFailedToLoad(i);
                 }
@@ -345,7 +345,7 @@ public class AdViewWrapper {
             @Override
             public void onError(Ad ad, AdError adError) {
                 int code = adError.getErrorCode();
-                DebugLog.logd("\n[FAN - NormalBanner] PlacementId: " + ad.getPlacementId() + "\nErrorCode: "
+                AdDebugLog.logd("\n[FAN - NormalBanner] PlacementId: " + ad.getPlacementId() + "\nErrorCode: "
                         + adError.getErrorCode() + "\nErrorMessage: " + adError.getErrorMessage());
                 if (mAdListener != null) {
                     mAdListener.onAdFailedToLoad(code);
@@ -392,7 +392,7 @@ public class AdViewWrapper {
                         AdsUtils.setHeightForContainer(viewGroup, mAdViewHeight);
                     }
                     AdsUtils.setHeightForContainer(container, mAdViewHeight);
-                    DebugLog.logd("FAN - onAdLoaded - Height: " + mAdViewHeight);
+                    AdDebugLog.logd("FAN - onAdLoaded - Height: " + mAdViewHeight);
                 }
                 if (container != null) {
                     container.setVisibility(View.VISIBLE);
@@ -435,7 +435,7 @@ public class AdViewWrapper {
             @Override
             public void onError(Ad ad, AdError adError) {
                 int code = adError.getErrorCode();
-                DebugLog.logd("\n[FAN - MediumBanner] PlacementId: " + ad.getPlacementId() + "\nErrorCode: "
+                AdDebugLog.logd("\n[FAN - MediumBanner] PlacementId: " + ad.getPlacementId() + "\nErrorCode: "
                         + adError.getErrorCode() + "\nErrorMessage: " + adError.getErrorMessage());
                 if (mAdListener != null) {
                     mAdListener.onAdFailedToLoad(code);

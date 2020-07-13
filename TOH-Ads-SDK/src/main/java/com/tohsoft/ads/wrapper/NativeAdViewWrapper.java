@@ -25,7 +25,7 @@ import com.google.android.gms.ads.formats.UnifiedNativeAdView;
 import com.tohsoft.ads.AdsConfig;
 import com.tohsoft.ads.AdsConstants;
 import com.tohsoft.ads.R;
-import com.utility.DebugLog;
+import com.tohsoft.ads.utils.AdDebugLog;
 import com.utility.UtilsLib;
 
 import java.util.List;
@@ -103,7 +103,7 @@ public class NativeAdViewWrapper {
         AdLoader adLoader = builder.withAdListener(new AdListener() {
             @Override
             public void onAdFailedToLoad(int errorCode) {
-                DebugLog.loge("Failed to load native ad: " + errorCode );
+                AdDebugLog.loge("Failed to load native ad: " + errorCode );
                 if (sTryLoadAds < 3) {
                     sTryLoadAds++;
                     sAdsPosition++;
@@ -229,7 +229,7 @@ public class NativeAdViewWrapper {
         // NativeAppInstallAd has a video asset.
         if (vc.hasVideoContent()) {
             mainImageView.setVisibility(View.GONE);
-            DebugLog.loge(String.format(Locale.getDefault(),
+            AdDebugLog.loge(String.format(Locale.getDefault(),
                     "Video status: Ad contains a %.2f:1 video asset.",
                     vc.getAspectRatio()));
 
@@ -240,7 +240,7 @@ public class NativeAdViewWrapper {
                 public void onVideoEnd() {
                     // Publishers should allow native ads to complete video playback before refreshing
                     // or replacing them with another ad in the same UI location.
-                    DebugLog.loge("Video status: Video playback has ended.");
+                    AdDebugLog.loge("Video status: Video playback has ended.");
                     super.onVideoEnd();
                 }
             });
@@ -256,7 +256,7 @@ public class NativeAdViewWrapper {
                 mainImageView.setVisibility(View.GONE);
             }
 
-            DebugLog.loge("Video status: Ad does not contain a video asset.");
+            AdDebugLog.loge("Video status: Ad does not contain a video asset.");
         }
     }
 
