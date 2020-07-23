@@ -33,6 +33,7 @@ public class SettingsFragment extends BaseFragment {
     @BindView(R.id.ll_get_pro_version) LinearLayout llGetProVersion;
 
     private Unbinder mUnbinder;
+    private ChangeLanguageHelper mChangeLanguageHelper;
 
     public static SettingsFragment newInstance() {
         Bundle args = new Bundle();
@@ -88,7 +89,10 @@ public class SettingsFragment extends BaseFragment {
         }
         switch (view.getId()) {
             case R.id.ll_language:
-                new ChangeLanguageHelper(mContext, null).changeLanguage(MainActivity.class);
+                if (mChangeLanguageHelper == null) {
+                    mChangeLanguageHelper = new ChangeLanguageHelper(mContext, null);
+                }
+                mChangeLanguageHelper.changeLanguage(MainActivity.class);
                 break;
             case R.id.ll_other_permissions:
                 Miui.openManagePermissionMui(mContext);
