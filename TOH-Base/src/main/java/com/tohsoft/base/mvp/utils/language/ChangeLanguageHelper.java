@@ -30,10 +30,10 @@ public class ChangeLanguageHelper {
     private static final String URL_GET_COUNTRY_CODE_BY_IP = "http://gsp1.apple.com/pep/gcc";
     private static final String DEFAULT_COUNTRY_CODE = "US";
     private static final String DEFAULT_LANGUAGE = "en";
-    public static final String RESTART_APP_TO_APPLY_LANGUAGE_CHANGED = "RESTART_APP_TO_APPLY_LANGUAGE_CHANGED";
     private final Context mContext;
     @Nullable
     private ChangeLanguageListener mListener;
+    private MaterialDialog mMaterialDialog;
 
     public interface ChangeLanguageListener {
         void onChangeLanguageSuccess();
@@ -44,8 +44,36 @@ public class ChangeLanguageHelper {
         this.mListener = listener;
     }
 
+    public boolean isDialogShowing() {
+        return mMaterialDialog != null && mMaterialDialog.isShowing();
+    }
+
+    public void dismissDialog() {
+        if (mMaterialDialog != null && mMaterialDialog.isShowing()) {
+            mMaterialDialog.dismiss();
+        }
+    }
+
+    private void showProgressDialog() {
+        dismissDialog();
+
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
+                .progress(true, 100)
+                .content(R.string.msg_please_wait);
+
+        mMaterialDialog = builder.build();
+        mMaterialDialog.show();
+    }
+
     @SuppressLint("CheckResult")
     public void changeLanguage(Class mainActivity) {
+        if (isDialogShowing()) {
+            return;
+        }
+        if (TextUtils.isEmpty(getCountryCode(mContext))) {
+            showProgressDialog();
+        }
+
         Observable.concat(getCountryBySim(), getCountryByIp())
                 .filter(s -> !TextUtils.isEmpty(s))
                 .first(DEFAULT_COUNTRY_CODE)
@@ -134,13 +162,22 @@ public class ChangeLanguageHelper {
     }
 
     private void showDialogSelectLanguage(Context context, List<String> languages, int selectedPos, MaterialDialog.SingleButtonCallback callbackDone) {
-        new MaterialDialog.Builder(context)
-                .title(R.string.lbl_select_language)
-                .adapter(new ItemLanguageAdapter(languages, selectedPos), new LinearLayoutManager(context))
-                .positiveText(R.string.action_done)
-                .onPositive(callbackDone)
-                .build()
-                .show();
+        if (context == null) {
+            return;
+        }
+        try {
+            dismissDialog();
+            MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
+                    .title(R.string.lbl_select_language)
+                    .adapter(new ItemLanguageAdapter(languages, selectedPos), new LinearLayoutManager(context))
+                    .positiveText(R.string.action_done)
+                    .onPositive(callbackDone);
+
+            mMaterialDialog = builder.build();
+            mMaterialDialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void restartToApplyLanguage(Class mainActivity) {
