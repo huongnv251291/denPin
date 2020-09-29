@@ -12,6 +12,7 @@ import com.facebook.ads.AdError;
 import com.facebook.ads.InterstitialAdListener;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.LoadAdError;
 import com.tohsoft.ads.AdsConfig;
 import com.tohsoft.ads.AdsConstants;
 import com.tohsoft.ads.admob.AdmobAdvertisements;
@@ -52,13 +53,9 @@ public class InterstitialOPAHelper {
     public InterstitialOPAHelper(@NonNull Context context, @NonNull List<String> adsId, View progressLoading, InterstitialOPAListener listener) {
         this.mContext = context;
         this.mAdsIds.addAll(adsId);
-
+        this.MAX_TRY_LOAD_ADS = mAdsIds.size();
         this.mProgressLoading = progressLoading;
         this.mListener = listener;
-
-        if (mAdsIds.size() > 3) {
-            MAX_TRY_LOAD_ADS = mAdsIds.size();
-        }
 
         DELAY_SPLASH = AdsConfig.getInstance().getSplashDelayInMs();
         DELAY_PROGRESS = AdsConfig.getInstance().getInterOPAProgressDelayInMs();
@@ -69,6 +66,7 @@ public class InterstitialOPAHelper {
         if (adsId != null) {
             this.mAdsIds.clear();
             this.mAdsIds.addAll(adsId);
+            this.MAX_TRY_LOAD_ADS = mAdsIds.size();
         }
     }
 
@@ -122,20 +120,29 @@ public class InterstitialOPAHelper {
         AdListener adListener = new AdListener() {
 
             @Override
-            public void onAdFailedToLoad(int errorCode) {
-                super.onAdFailedToLoad(errorCode);
-                AdDebugLog.logd("\n---\n[Admob - Interstitial OPA] adsId: " + mCurrentAdsId + "\nError Code: " + errorCode + "\n---");
-                if (mAdListener != null) {
-                    mAdListener.onAdFailedToLoad(errorCode);
+            public void onAdFailedToLoad(LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                int errorCode = 404;
+                String errorMessage = "";
+                if (loadAdError != null) {
+                    errorCode = loadAdError.getCode();
+                    errorMessage = loadAdError.getMessage();
+                    if (!TextUtils.isEmpty(errorMessage)) {
+                        errorMessage = "\nErrorMessage: " + errorMessage;
+                    }
                 }
+                AdDebugLog.logd("\n---\n[Admob - Interstitial OPA] adsId: " + mCurrentAdsId + "\nError Code: " + errorCode + errorMessage + "\n---");
                 mInterstitialOpenApp = null;
-                if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
+                if (mTryReloadAds < MAX_TRY_LOAD_ADS - 1) {
                     mTryReloadAds++;
                     mAdsPosition++;
                     initInterstitialOpenApp();
                 } else {
                     mTryReloadAds = 0; // Reset flag
                     mAdsPosition = 0; // Reset flag
+                    if (mAdListener != null) {
+                        mAdListener.onAdFailedToLoad(errorCode);
+                    }
                 }
             }
 
@@ -243,17 +250,17 @@ public class InterstitialOPAHelper {
             public void onError(Ad ad, AdError adError) {
                 AdDebugLog.logd("\n[FAN - Interstitial OPA] PlacementId: " + ad.getPlacementId() + "\nErrorCode: "
                         + adError.getErrorCode() + "\nErrorMessage: " + adError.getErrorMessage());
-                if (mAdListener != null) {
-                    mAdListener.onAdFailedToLoad(adError.getErrorCode());
-                }
                 mFanInterstitialOpenApp = null;
-                if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
+                if (mTryReloadAds < MAX_TRY_LOAD_ADS - 1) {
                     mTryReloadAds++;
                     mAdsPosition++;
                     initInterstitialOpenApp();
                 } else {
                     mTryReloadAds = 0; // Reset flag
                     mAdsPosition = 0; // Reset flag
+                    if (mAdListener != null) {
+                        mAdListener.onAdFailedToLoad(adError.getErrorCode());
+                    }
                 }
             }
 

@@ -45,9 +45,9 @@ public class AdsConfig {
     /*
      * Add device hashed ID for Test mode (FAN)
      * */
-    public AdsConfig addTestDevices(Collection<String> collection) {
-        if (collection != null) {
-            mTestDevices.addAll(collection);
+    public AdsConfig addTestDevices(Collection<String> devicesHash) {
+        if (devicesHash != null) {
+            mTestDevices.addAll(devicesHash);
         }
         return sAdsConfig;
     }

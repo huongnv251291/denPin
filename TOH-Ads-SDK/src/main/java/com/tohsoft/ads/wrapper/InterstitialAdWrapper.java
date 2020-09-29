@@ -11,6 +11,7 @@ import com.facebook.ads.AdError;
 import com.facebook.ads.InterstitialAdListener;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.LoadAdError;
 import com.tohsoft.ads.AdsConfig;
 import com.tohsoft.ads.AdsConstants;
 import com.tohsoft.ads.admob.AdmobAdvertisements;
@@ -42,16 +43,14 @@ public class InterstitialAdWrapper {
     public InterstitialAdWrapper(@NonNull Context context, @NonNull List<String> adsId) {
         this.mContext = context;
         this.mAdsIds.addAll(adsId);
-
-        if (mAdsIds.size() > 3) {
-            MAX_TRY_LOAD_ADS = mAdsIds.size();
-        }
+        this.MAX_TRY_LOAD_ADS = mAdsIds.size();
     }
 
     public void setAdsId(List<String> adsId) {
         if (adsId != null) {
             this.mAdsIds.clear();
             this.mAdsIds.addAll(adsId);
+            this.MAX_TRY_LOAD_ADS = mAdsIds.size();
         }
     }
 
@@ -117,17 +116,24 @@ public class InterstitialAdWrapper {
 
         AdListener adListener = new AdListener() {
             @Override
-            public void onAdFailedToLoad(int errorCode) {
-                super.onAdFailedToLoad(errorCode);
+            public void onAdFailedToLoad(LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                int errorCode = 404;
+                String errorMessage = "";
+                if (loadAdError != null) {
+                    errorCode = loadAdError.getCode();
+                    errorMessage = loadAdError.getMessage();
+                    if (!TextUtils.isEmpty(errorMessage)) {
+                        errorMessage = "\nErrorMessage: " + errorMessage;
+                    }
+                }
+                AdDebugLog.logd("\n---\n[Admob - Interstitial] adsId: " + mCurrentAdsId + "\nError Code: " + errorCode + errorMessage + "\n---");
                 if (mGiftView != null) {
                     mGiftView.setVisibility(View.GONE);
                     AdDebugLog.logd("Hide Gift button");
                 }
                 mInterstitialAd = null;
-                if (mAdListener != null) {
-                    mAdListener.onAdFailedToLoad(errorCode);
-                }
-                if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
+                if (mTryReloadAds < MAX_TRY_LOAD_ADS - 1) {
                     mTryReloadAds++;
                     mAdsPosition++;
                     initAds(mGiftView);
@@ -135,6 +141,9 @@ public class InterstitialAdWrapper {
                 } else {
                     mTryReloadAds = 0;
                     mAdsPosition = 0;
+                    if (mAdListener != null) {
+                        mAdListener.onAdFailedToLoad(errorCode);
+                    }
                 }
             }
 
@@ -245,17 +254,17 @@ public class InterstitialAdWrapper {
                     mFanInterstitialAd.destroy();
                     mFanInterstitialAd = null;
                 }
-                if (mAdListener != null) {
-                    mAdListener.onAdFailedToLoad(adError.getErrorCode());
-                }
 
-                if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
+                if (mTryReloadAds < MAX_TRY_LOAD_ADS - 1) {
                     mTryReloadAds++;
                     mAdsPosition++;
                     initAds(mGiftView);
                 } else {
                     mTryReloadAds = 0;
                     mAdsPosition = 0;
+                    if (mAdListener != null) {
+                        mAdListener.onAdFailedToLoad(adError.getErrorCode());
+                    }
                 }
             }
 

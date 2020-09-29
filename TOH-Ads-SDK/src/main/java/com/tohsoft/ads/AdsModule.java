@@ -43,10 +43,10 @@ public class AdsModule {
     private static final String GENERAL_CONFIG_ADS_ID_LIST = "ads_id_list";
 
     private static AdsModule sAdsModule;
-    public static AdViewWrapper sBannerBottom;
-    public static AdViewWrapper sBannerEmptyScreen;
-    public static NativeAdViewWrapper sNativeAdViewWrapper;
-    public static InterstitialAdWrapper sPromotionAds;
+    public AdViewWrapper mBannerBottom;
+    public AdViewWrapper mBannerEmptyScreen;
+    public NativeAdViewWrapper mNativeAdViewWrapper;
+    public InterstitialAdWrapper mPromotionAds;
     public AdViewWrapper mBannerExitDialog;
     public InterstitialOPAHelper mInterstitialOPAHelper;
 
@@ -199,14 +199,14 @@ public class AdsModule {
      * */
     private void refreshAdsIdIfNeeded() {
         if (mAdsId != null) {
-            if (sBannerBottom != null) {
-                sBannerBottom.setAdsId(mAdsId.std_banner);
+            if (mBannerBottom != null) {
+                mBannerBottom.setAdsId(mAdsId.std_banner);
             }
-            if (sBannerEmptyScreen != null) {
-                sBannerEmptyScreen.setAdsId(mAdsId.banner_empty_screen);
+            if (mBannerEmptyScreen != null) {
+                mBannerEmptyScreen.setAdsId(mAdsId.banner_empty_screen);
             }
-            if (sPromotionAds != null) {
-                sPromotionAds.setAdsId(mAdsId.interstitial_gift);
+            if (mPromotionAds != null) {
+                mPromotionAds.setAdsId(mAdsId.interstitial_gift);
             }
             if (mBannerExitDialog != null) {
                 mBannerExitDialog.setAdsId(mAdsId.banner_exit_dialog);
@@ -267,10 +267,10 @@ public class AdsModule {
      * */
     public void showBannerBottom(ViewGroup container) {
         if (!AdsConfig.getInstance().isFullVersion() && container != null && mAdsId != null && mAdsId.std_banner != null) {
-            if (sBannerBottom == null) {
-                sBannerBottom = new AdViewWrapper(mApplication, mAdsId.std_banner);
+            if (mBannerBottom == null) {
+                mBannerBottom = new AdViewWrapper(mApplication, mAdsId.std_banner);
             }
-            sBannerBottom.initBottomBanner(container);
+            mBannerBottom.initBottomBanner(container);
         } else if (container != null) {
             container.removeAllViews();
         }
@@ -285,10 +285,10 @@ public class AdsModule {
      * */
     public void showBannerEmptyScreen(ViewGroup container) {
         if (!AdsConfig.getInstance().isFullVersion() && container != null && mAdsId != null && mAdsId.banner_empty_screen != null) {
-            if (sBannerEmptyScreen == null) {
-                sBannerEmptyScreen = new AdViewWrapper(mApplication, mAdsId.banner_empty_screen);
+            if (mBannerEmptyScreen == null) {
+                mBannerEmptyScreen = new AdViewWrapper(mApplication, mAdsId.banner_empty_screen);
             }
-            sBannerEmptyScreen.initMediumBanner(container);
+            mBannerEmptyScreen.initMediumBanner(container);
         } else if (container != null) {
             container.removeAllViews();
         }
@@ -303,10 +303,10 @@ public class AdsModule {
      * */
     public void showNativeAdView(ViewGroup container, String[] adsId) {
         if (!AdsConfig.getInstance().isFullVersion() && container != null && adsId != null) {
-            if (sNativeAdViewWrapper == null) {
-                sNativeAdViewWrapper = new NativeAdViewWrapper(adsId);
+            if (mNativeAdViewWrapper == null) {
+                mNativeAdViewWrapper = new NativeAdViewWrapper(adsId);
             }
-            sNativeAdViewWrapper.refreshAd(mApplication, container);
+            mNativeAdViewWrapper.refreshAd(mApplication, container);
         } else if (container != null) {
             container.removeAllViews();
         }
@@ -321,10 +321,10 @@ public class AdsModule {
      * */
     public void showPromotionAdsView(View viewPromotionAds) {
         if (!AdsConfig.getInstance().isFullVersion() && mAdsId != null && mAdsId.interstitial_gift != null) {
-            if (sPromotionAds == null) {
-                sPromotionAds = new InterstitialAdWrapper(mApplication, mAdsId.interstitial_gift);
+            if (mPromotionAds == null) {
+                mPromotionAds = new InterstitialAdWrapper(mApplication, mAdsId.interstitial_gift);
             }
-            sPromotionAds.initAds(viewPromotionAds);
+            mPromotionAds.initAds(viewPromotionAds);
         } else if (viewPromotionAds != null) {
             viewPromotionAds.setVisibility(View.GONE);
         }
@@ -337,8 +337,8 @@ public class AdsModule {
      * After that, InterstitialAdWrapper (sPromotionAds instance) will auto reload Ads and show Gift icon when Ads is loaded
      * */
     public void showPromotionAds() {
-        if (sPromotionAds != null) {
-            sPromotionAds.show();
+        if (mPromotionAds != null) {
+            mPromotionAds.show();
         }
     }
 
@@ -354,17 +354,17 @@ public class AdsModule {
             mIgnoreDestroyStaticAd = false;
             return;
         }
-        if (sBannerBottom != null) {
-            sBannerBottom.destroy();
-            sBannerBottom = null;
+        if (mBannerBottom != null) {
+            mBannerBottom.destroy();
+            mBannerBottom = null;
         }
-        if (sBannerEmptyScreen != null) {
-            sBannerEmptyScreen.destroy();
-            sBannerEmptyScreen = null;
+        if (mBannerEmptyScreen != null) {
+            mBannerEmptyScreen.destroy();
+            mBannerEmptyScreen = null;
         }
-        if (sPromotionAds != null) {
-            sPromotionAds.destroy();
-            sPromotionAds = null;
+        if (mPromotionAds != null) {
+            mPromotionAds.destroy();
+            mPromotionAds = null;
         }
     }
 }

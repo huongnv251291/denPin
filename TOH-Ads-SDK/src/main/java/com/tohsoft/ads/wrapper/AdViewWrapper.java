@@ -11,6 +11,7 @@ import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
 import com.tohsoft.ads.AdsConfig;
 import com.tohsoft.ads.AdsConstants;
 import com.tohsoft.ads.admob.AdmobAdvertisements;
@@ -27,7 +28,7 @@ import java.util.List;
  */
 
 public class AdViewWrapper {
-    private int MAX_TRY_LOAD_ADS = 3;
+    private int MAX_TRY_LOAD_ADS;
     private int DEFAULT_CONTAINER_HEIGHT;
     private final List<String> mAdsIds = new ArrayList<>();
     private final Context mContext;
@@ -47,16 +48,14 @@ public class AdViewWrapper {
     public AdViewWrapper(@NonNull Context context, @NonNull List<String> adsId) {
         this.mContext = context;
         this.mAdsIds.addAll(adsId);
-
-        if (mAdsIds.size() > 3) {
-            MAX_TRY_LOAD_ADS = mAdsIds.size();
-        }
+        this.MAX_TRY_LOAD_ADS = mAdsIds.size();
     }
 
     public void setAdsId(List<String> adsId) {
         if (adsId != null) {
             this.mAdsIds.clear();
             this.mAdsIds.addAll(adsId);
+            this.MAX_TRY_LOAD_ADS = mAdsIds.size();
         }
     }
 
@@ -113,8 +112,8 @@ public class AdViewWrapper {
     }
 
     /*
-    * Get current Ads id in list and detect it is FAN id or Admob id
-    * */
+     * Get current Ads id in list and detect it is FAN id or Admob id
+     * */
     private void getAdsId() {
         if (UtilsLib.isEmptyList(mAdsIds)) {
             AdDebugLog.loge("mAdsIds is EMPTY");
@@ -151,18 +150,27 @@ public class AdViewWrapper {
             }
             AdsUtils.setHeightForContainer(container, height);
             AdsUtils.addAdsToContainer(container, mAdView);
+            if (mAdView.getVisibility() == View.VISIBLE && mAdListener != null) {
+                mAdListener.onAdLoaded();
+            }
             return;
         }
 
         // If AdView instance does not init -> Init AdView and add it to container
         AdListener adListener = new AdListener() {
             @Override
-            public void onAdFailedToLoad(int code) {
-                super.onAdFailedToLoad(code);
-                AdDebugLog.logd("\n[Admob - NormalBanner] onAdFailedToLoad - Code: " + code + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
-                if (mAdListener != null) {
-                    mAdListener.onAdFailedToLoad(code);
+            public void onAdFailedToLoad(LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                int errorCode = 404;
+                String errorMessage = "";
+                if (loadAdError != null) {
+                    errorCode = loadAdError.getCode();
+                    errorMessage = loadAdError.getMessage();
+                    if (!TextUtils.isEmpty(errorMessage)) {
+                        errorMessage = "\nErrorMessage: " + errorMessage;
+                    }
                 }
+                AdDebugLog.logd("\n[Admob - NormalBanner] onAdFailedToLoad - Code: " + errorCode + errorMessage + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
                 mAdViewHeight = 0;
                 AdsUtils.setHeightForContainer(container, 0);
 
@@ -178,22 +186,22 @@ public class AdViewWrapper {
                 }
 
                 // Try to reload Ads
-                if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
+                if (mTryReloadAds < MAX_TRY_LOAD_ADS - 1) {
                     mTryReloadAds++;
                     mAdsPosition++;
                     initBottomBanner(container);
                 } else {
                     mTryReloadAds = 0;
                     mAdsPosition = 0;
+                    if (mAdListener != null) {
+                        mAdListener.onAdFailedToLoad(errorCode);
+                    }
                 }
             }
 
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                if (mAdListener != null) {
-                    mAdListener.onAdLoaded();
-                }
                 mTryReloadAds = 0; // Reset flag
 
                 // Get Ads height and set for container
@@ -210,6 +218,9 @@ public class AdViewWrapper {
 
                 if (container != null) {
                     container.setVisibility(View.VISIBLE);
+                }
+                if (mAdListener != null) {
+                    mAdListener.onAdLoaded();
                 }
             }
 
@@ -251,17 +262,26 @@ public class AdViewWrapper {
         }
         if (mAdView != null && mContainer != null) {
             AdsUtils.addAdsToContainer(mContainer, mAdView);
+            if (mAdView.getVisibility() == View.VISIBLE && mAdListener != null) {
+                mAdListener.onAdLoaded();
+            }
             return;
         }
 
         AdListener adListener = new AdListener() {
             @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                AdDebugLog.logd("\n[Admob - MediumBanner] onAdFailedToLoad - Code: " + i + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
-                if (mAdListener != null) {
-                    mAdListener.onAdFailedToLoad(i);
+            public void onAdFailedToLoad(LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                int errorCode = 404;
+                String errorMessage = "";
+                if (loadAdError != null) {
+                    errorCode = loadAdError.getCode();
+                    errorMessage = loadAdError.getMessage();
+                    if (!TextUtils.isEmpty(errorMessage)) {
+                        errorMessage = "\nErrorMessage: " + errorMessage;
+                    }
                 }
+                AdDebugLog.logd("\n[Admob - MediumBanner] onAdFailedToLoad - Code: " + errorCode + errorMessage + "\nid: " + (mAdView != null ? mAdView.getAdUnitId() : ""));
 
                 // Destroy Ads instance when load failed
                 if (mAdView != null) {
@@ -273,22 +293,22 @@ public class AdViewWrapper {
                 }
 
                 // Try to reload Ads
-                if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
+                if (mTryReloadAds < MAX_TRY_LOAD_ADS - 1) {
                     mTryReloadAds++;
                     mAdsPosition++;
                     initMediumBanner(mContainer);
                 } else {
                     mTryReloadAds = 0;
                     mAdsPosition = 0;
+                    if (mAdListener != null) {
+                        mAdListener.onAdFailedToLoad(errorCode);
+                    }
                 }
             }
 
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                if (mAdListener != null) {
-                    mAdListener.onAdLoaded();
-                }
                 mTryReloadAds = 0; // Reset flag
 
                 if (mAdView != null) {
@@ -296,6 +316,9 @@ public class AdViewWrapper {
                 }
                 if (mContainer != null) {
                     mContainer.setVisibility(View.VISIBLE);
+                }
+                if (mAdListener != null) {
+                    mAdListener.onAdLoaded();
                 }
             }
 
@@ -338,6 +361,9 @@ public class AdViewWrapper {
             }
             AdsUtils.setHeightForContainer(container, height);
             AdsUtils.addAdsToContainer(container, mFanAdView);
+            if (mFanAdView.getVisibility() == View.VISIBLE && mAdListener != null) {
+                mAdListener.onAdLoaded();
+            }
             return;
         }
 
@@ -347,9 +373,6 @@ public class AdViewWrapper {
                 int code = adError.getErrorCode();
                 AdDebugLog.logd("\n[FAN - NormalBanner] PlacementId: " + ad.getPlacementId() + "\nErrorCode: "
                         + adError.getErrorCode() + "\nErrorMessage: " + adError.getErrorMessage());
-                if (mAdListener != null) {
-                    mAdListener.onAdFailedToLoad(code);
-                }
                 mAdViewHeight = 0;
                 AdsUtils.setHeightForContainer(container, 0);
 
@@ -366,21 +389,21 @@ public class AdViewWrapper {
                 }
 
                 // Try reload Ads
-                if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
+                if (mTryReloadAds < MAX_TRY_LOAD_ADS - 1) {
                     mTryReloadAds++;
                     mAdsPosition++;
                     initBottomBanner(container);
                 } else {
                     mTryReloadAds = 0;
                     mAdsPosition = 0;
+                    if (mAdListener != null) {
+                        mAdListener.onAdFailedToLoad(code);
+                    }
                 }
             }
 
             @Override
             public void onAdLoaded(Ad ad) {
-                if (mAdListener != null) {
-                    mAdListener.onAdLoaded();
-                }
                 mTryReloadAds = 0; // Reset flag
 
                 // Get Ads height and set for container
@@ -396,6 +419,9 @@ public class AdViewWrapper {
                 }
                 if (container != null) {
                     container.setVisibility(View.VISIBLE);
+                }
+                if (mAdListener != null) {
+                    mAdListener.onAdLoaded();
                 }
             }
 
@@ -427,6 +453,9 @@ public class AdViewWrapper {
         }
         if (mFanAdView != null && mContainer != null) {
             AdsUtils.addAdsToContainer(mContainer, mFanAdView);
+            if (mFanAdView.getVisibility() == View.VISIBLE && mAdListener != null) {
+                mAdListener.onAdLoaded();
+            }
             return;
         }
 
@@ -437,9 +466,6 @@ public class AdViewWrapper {
                 int code = adError.getErrorCode();
                 AdDebugLog.logd("\n[FAN - MediumBanner] PlacementId: " + ad.getPlacementId() + "\nErrorCode: "
                         + adError.getErrorCode() + "\nErrorMessage: " + adError.getErrorMessage());
-                if (mAdListener != null) {
-                    mAdListener.onAdFailedToLoad(code);
-                }
 
                 // Destroy Ads instance when load failed
                 if (mFanAdView != null) {
@@ -452,27 +478,30 @@ public class AdViewWrapper {
                 }
 
                 // Try to load Ads
-                if (mTryReloadAds < MAX_TRY_LOAD_ADS) {
+                if (mTryReloadAds < MAX_TRY_LOAD_ADS - 1) {
                     mTryReloadAds++;
                     mAdsPosition++;
                     initMediumBanner(mContainer);
                 } else {
                     mTryReloadAds = 0;
                     mAdsPosition = 0;
+                    if (mAdListener != null) {
+                        mAdListener.onAdFailedToLoad(code);
+                    }
                 }
             }
 
             @Override
             public void onAdLoaded(Ad ad) {
-                if (mAdListener != null) {
-                    mAdListener.onAdLoaded();
-                }
                 mTryReloadAds = 0; // Reset flag
                 if (mFanAdView != null) {
                     mFanAdView.setVisibility(View.VISIBLE);
                 }
                 if (mContainer != null) {
                     mContainer.setVisibility(View.VISIBLE);
+                }
+                if (mAdListener != null) {
+                    mAdListener.onAdLoaded();
                 }
             }
 
