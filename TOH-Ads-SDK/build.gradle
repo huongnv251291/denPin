@@ -10,12 +10,12 @@ buildscript {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
@@ -52,8 +52,10 @@ dependencies {
     // Facebook Audience Network SDK
     api 'com.facebook.android:audience-network-sdk:5.11.0'
     // Google Ads
-    api 'com.google.android.gms:play-services-ads:19.3.0'
+    api 'com.google.android.gms:play-services-ads:19.7.0'
+    // Material dialog
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     // Utility Library
-    implementation 'com.github.phongnx:Utility:1.2.0'
+    implementation 'com.github.phongnx:Utility:1.2.2'
     implementation 'com.blankj:utilcode:1.29.0'
 }

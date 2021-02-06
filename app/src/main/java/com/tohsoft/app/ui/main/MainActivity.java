@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -59,6 +60,8 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     private AdViewWrapper mAdViewWrapper;
     private AlertDialog mDialogExitApp;
     private MaterialDialog mDialogGetProVersion;
+
+    private static final int REQUEST_CODE_HISTORY = 1;
 
     @Override
     protected BasePresenter onRegisterPresenter() {
@@ -114,7 +117,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
 
     private void initInterstitialOPA() {
         if (BuildConfig.SHOW_AD) {
-            mInterstitialOPAHelper = AdsModule.getInstance().getInterstitialOPAHelper(llFakeProgress, this);
+            mInterstitialOPAHelper = AdsModule.getInstance().getInterstitialOPAHelper(this, this);
             if (mInterstitialOPAHelper != null) {
                 mInterstitialOPAHelper.initInterstitialOpenApp();
             } else {
@@ -293,6 +296,15 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_HISTORY && mInterstitialOPAHelper != null && mInterstitialOPAHelper.isLoaded()) {
+            mInterstitialOPAHelper.onResume();
+            mInterstitialOPAHelper.show();
+        }
+    }
+
+    @Override
     public void hideSplash() {
         if (frSplash != null) {
             frSplash.setVisibility(View.GONE);
@@ -364,7 +376,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
                         android.R.id.content, true, R.anim.fade_in, R.anim.fade_out);
                 break;
             case R.id.btn_history:
-                startActivity(new Intent(mContext, HistoryActivity.class));
+                startActivityForResult(new Intent(this, HistoryActivity.class), REQUEST_CODE_HISTORY);
                 break;
             case R.id.iv_warning:
                 AutoStartManagerUtil.showDialogEnableAutoStart(getContext(), enableAutoStartListener);

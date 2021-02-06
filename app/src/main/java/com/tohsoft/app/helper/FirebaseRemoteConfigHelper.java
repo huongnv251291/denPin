@@ -139,21 +139,27 @@ public class FirebaseRemoteConfigHelper {
         return SharedPreference.getString(mContext, REMOTE_CUSTOM_ADS_ID_LIST, "");
     }
 
-    private long getFreqInterOPAInMs() {
+    public long getFreqInterOPAInMs() {
         if (mFirebaseRemoteConfig != null) {
             return mFirebaseRemoteConfig.getLong(REMOTE_FREQ_CAP_INTER_OPA_IN_MINUTE) * 60 * 1000;
         }
         return DEFAULT_FREQ_CAP_INTER_OPA_IN_MS;
     }
 
-    private long getSplashDelayInMs() {
+    public long getSplashDelayInMs() {
+        if (BuildConfig.DEBUG) {
+            return 10;
+        }
         if (mFirebaseRemoteConfig != null) {
             return mFirebaseRemoteConfig.getLong(REMOTE_SPLASH_DELAY_IN_MS);
         }
         return DEFAULT_SPLASH_DELAY_IN_MS;
     }
 
-    private long getInterOPAProgressDelayInMs() {
+    public long getInterOPAProgressDelayInMs() {
+        if (BuildConfig.DEBUG) {
+            return 10;
+        }
         if (mFirebaseRemoteConfig != null) {
             return mFirebaseRemoteConfig.getLong(REMOTE_INTER_OPA_PROGRESS_DELAY_IN_MS);
         }

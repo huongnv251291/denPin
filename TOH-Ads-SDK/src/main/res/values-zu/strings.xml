@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<string name="msg_dialog_please_wait">Ngicela ulinde…</string>
+	<string name="msg_dialog_loading_data">Ilayisha idatha ...</string>
+</resources>

@@ -50,6 +50,9 @@ public class BaseApplication extends MultiDexApplication {
         AdsConfig.getInstance().init(this)
                 .setFullVersion(BuildConfig.FULL_VERSION)
                 .setTestMode(BuildConfig.TEST_AD)
+                .setFreqInterOPAInMs(FirebaseRemoteConfigHelper.getInstance().getFreqInterOPAInMs())
+                .setSplashDelayInMs(FirebaseRemoteConfigHelper.getInstance().getSplashDelayInMs())
+                .setInterOPAProgressDelayInMs(FirebaseRemoteConfigHelper.getInstance().getInterOPAProgressDelayInMs())
                 .addTestDevices("0ca1bc4f-365d-4303-9312-1324d43e329c");
         // Init Ads module
         AdsModule.getInstance().init(this)

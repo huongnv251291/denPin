@@ -1,9 +1,9 @@
 package com.tohsoft.ads.wrapper;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 
@@ -15,9 +15,11 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.LoadAdError;
 import com.tohsoft.ads.AdsConfig;
 import com.tohsoft.ads.AdsConstants;
+import com.tohsoft.ads.R;
 import com.tohsoft.ads.admob.AdmobAdvertisements;
 import com.tohsoft.ads.fan.FanAdvertisements;
 import com.tohsoft.ads.utils.AdDebugLog;
+import com.utility.DebugLog;
 import com.utility.UtilsLib;
 
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ public class InterstitialOPAHelper {
     private InterstitialAd mInterstitialOpenApp;
     private com.facebook.ads.InterstitialAd mFanInterstitialOpenApp;
     private CountDownTimer mCounter;
-    private View mProgressLoading;
+    private ProgressDialog mOPAProgressDialog;
 
     private long DELAY_SPLASH; // Splash timeout
     private long DELAY_PROGRESS; // Fake progress timeout
@@ -50,11 +52,10 @@ public class InterstitialOPAHelper {
     private int mAdsPosition = 0;
     private int mTryReloadAds = 0;
 
-    public InterstitialOPAHelper(@NonNull Context context, @NonNull List<String> adsId, View progressLoading, InterstitialOPAListener listener) {
+    public InterstitialOPAHelper(@NonNull Context context, @NonNull List<String> adsId, InterstitialOPAListener listener) {
         this.mContext = context;
         this.mAdsIds.addAll(adsId);
         this.MAX_TRY_LOAD_ADS = mAdsIds.size();
-        this.mProgressLoading = progressLoading;
         this.mListener = listener;
 
         DELAY_SPLASH = AdsConfig.getInstance().getSplashDelayInMs();
@@ -180,6 +181,7 @@ public class InterstitialOPAHelper {
                         mListener.showExitDialog();
                     }
                 }
+                dismissLoadingProgress();
             }
 
             @Override
@@ -193,10 +195,8 @@ public class InterstitialOPAHelper {
                     if (mListener != null) {
                         mListener.onAdOPACompleted();
                     }
-                    if (mProgressLoading != null) {
-                        mProgressLoading.setVisibility(View.GONE);
-                    }
                 }
+                dismissLoadingProgress();
             }
         };
 
@@ -228,6 +228,7 @@ public class InterstitialOPAHelper {
                         mListener.showExitDialog();
                     }
                 }
+                dismissLoadingProgress();
             }
 
             @Override
@@ -240,10 +241,8 @@ public class InterstitialOPAHelper {
                     if (mListener != null) {
                         mListener.onAdOPACompleted();
                     }
-                    if (mProgressLoading != null) {
-                        mProgressLoading.setVisibility(View.GONE);
-                    }
                 }
+                dismissLoadingProgress();
             }
 
             @Override
@@ -292,13 +291,10 @@ public class InterstitialOPAHelper {
         if (mIsCounting) {
             return;
         }
-        if (mProgressLoading != null) {
-            mProgressLoading.setVisibility(View.VISIBLE);
-        }
 
         mIsCounting = true;
         final long checkInterval = 100;
-        final long counterTimeout = DELAY_SPLASH + (mProgressLoading != null ? DELAY_PROGRESS : 0);
+        final long counterTimeout = DELAY_SPLASH + DELAY_PROGRESS;
         mCounter = new CountDownTimer(counterTimeout, checkInterval) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -316,6 +312,7 @@ public class InterstitialOPAHelper {
                     if (mListener != null) {
                         mListener.hideSplash();
                     }
+                    showOPAProgressDialog();
                 }
             }
 
@@ -334,9 +331,7 @@ public class InterstitialOPAHelper {
             if (mListener != null) {
                 mListener.onAdOPACompleted();
             }
-            if (mProgressLoading != null) {
-                mProgressLoading.setVisibility(View.GONE);
-            }
+            dismissLoadingProgress();
         }
 
         // Stop splash
@@ -367,6 +362,7 @@ public class InterstitialOPAHelper {
     public boolean show() {
         try {
             if (isLoaded() && AdsConfig.getInstance().canShowOPA() && !mIsPause) {
+                showOPAProgressDialog();
                 if (useFanAdNetwork) {
                     mFanInterstitialOpenApp.show();
                 } else {
@@ -377,8 +373,32 @@ public class InterstitialOPAHelper {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            dismissLoadingProgress();
         }
         return false;
+    }
+
+    private void dismissLoadingProgress() {
+        if (mOPAProgressDialog != null && mOPAProgressDialog.isShowing()) {
+            mOPAProgressDialog.dismiss();
+            mOPAProgressDialog = null;
+        }
+    }
+
+    private void showOPAProgressDialog() {
+        try {
+            if (mOPAProgressDialog != null && mOPAProgressDialog.isShowing()) {
+                return;
+            }
+            mOPAProgressDialog = new ProgressDialog(mContext);
+            mOPAProgressDialog.setTitle(mContext.getString(R.string.msg_dialog_please_wait));
+            mOPAProgressDialog.setMessage(mContext.getString(R.string.msg_dialog_loading_data));
+            mOPAProgressDialog.setCancelable(false);
+            mOPAProgressDialog.setCanceledOnTouchOutside(false);
+            mOPAProgressDialog.show();
+        } catch (Exception e) {
+            DebugLog.loge(e);
+        }
     }
 
     public void onResume() {

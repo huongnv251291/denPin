@@ -1,6 +1,7 @@
 package com.tohsoft.ads;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
@@ -250,9 +251,9 @@ public class AdsModule {
      * View progressLoading: fake progress loading view
      * InterstitialOPAListener listener: Call back for each state of the OPA flow
      * */
-    public InterstitialOPAHelper getInterstitialOPAHelper(View progressLoading, InterstitialOPAHelper.InterstitialOPAListener listener) {
+    public InterstitialOPAHelper getInterstitialOPAHelper(Activity activity, InterstitialOPAHelper.InterstitialOPAListener listener) {
         if (mAdsId != null && mAdsId.interstitial_opa != null) {
-            mInterstitialOPAHelper = new InterstitialOPAHelper(mApplication, mAdsId.interstitial_opa, progressLoading, listener);
+            mInterstitialOPAHelper = new InterstitialOPAHelper(activity, mAdsId.interstitial_opa, listener);
             return mInterstitialOPAHelper;
         }
         return null;
