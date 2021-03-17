@@ -1,25 +1,23 @@
 package com.tohsoft.base.mvp.ui;
 
-import android.view.View;
-
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewbinding.ViewBinding;
 
 /**
  * Created by Phong on 12/13/2017.
  */
 
-public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
+public abstract class BaseViewHolder<T extends ViewBinding> extends RecyclerView.ViewHolder {
     private int mCurrentPosition;
+    protected T mBinding;
 
-    public BaseViewHolder(View itemView) {
-        super(itemView);
+    public BaseViewHolder(T viewBinding) {
+        super(viewBinding.getRoot());
+        mBinding = viewBinding;
     }
-
-    protected abstract void clear();
 
     public void onBind(int position) {
         mCurrentPosition = position;
-        clear();
     }
 
     public int getCurrentPosition() {

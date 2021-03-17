@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 
 import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.R;
+import com.tohsoft.app.databinding.FragmentSettingsBinding;
 import com.tohsoft.app.helper.FirebaseRemoteConfigHelper;
 import com.tohsoft.app.ui.main.MainActivity;
 import com.tohsoft.app.utils.Utils;
@@ -21,18 +20,8 @@ import com.tohsoft.base.mvp.ui.BasePresenter;
 import com.tohsoft.base.mvp.utils.language.ChangeLanguageHelper;
 import com.tohsoft.base.mvp.utils.xiaomi.Miui;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-
-public class SettingsFragment extends BaseFragment {
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.ll_promotion_ads) LinearLayout llPromotionAds;
-    @BindView(R.id.ll_other_permissions) LinearLayout llOtherPermissions;
-    @BindView(R.id.ll_get_pro_version) LinearLayout llGetProVersion;
-
-    private Unbinder mUnbinder;
+public class SettingsFragment extends BaseFragment implements View.OnClickListener {
+    private FragmentSettingsBinding mBinding;
     private ChangeLanguageHelper mChangeLanguageHelper;
 
     public static SettingsFragment newInstance() {
@@ -50,9 +39,8 @@ public class SettingsFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        mUnbinder = ButterKnife.bind(this, view);
-        return view;
+        mBinding = FragmentSettingsBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
@@ -60,34 +48,42 @@ public class SettingsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         if (!Miui.needManagePermissionMui()) {
-            llOtherPermissions.setVisibility(View.GONE);
+            mBinding.llOtherPermissions.setVisibility(View.GONE);
         }
         if (!BuildConfig.FULL_VERSION && FirebaseRemoteConfigHelper.getInstance().getProVersionEnable()) {
-            llGetProVersion.setVisibility(View.VISIBLE);
+            mBinding.llGetProVersion.setVisibility(View.VISIBLE);
         } else {
-            llGetProVersion.setVisibility(View.GONE);
+            mBinding.llGetProVersion.setVisibility(View.GONE);
         }
 
-        toolbar.setNavigationOnClickListener(v -> {
+        mBinding.toolbar.setNavigationOnClickListener(v -> {
             if (getActivity() != null) {
                 getActivity().onBackPressed();
             }
         });
+
+        mBinding.llLanguage.setOnClickListener(this);
+        mBinding.llOtherPermissions.setOnClickListener(this);
+        mBinding.llGetProVersion.setOnClickListener(this);
+        mBinding.llReportProblem.setOnClickListener(this);
+        mBinding.llRateUs.setOnClickListener(this);
+        mBinding.llMoreApps.setOnClickListener(this);
+        mBinding.llShareApp.setOnClickListener(this);
+        mBinding.llPromotionAds.setOnClickListener(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        showPromotionView(llPromotionAds);
+        showPromotionView(mBinding.llPromotionAds);
     }
 
-    @OnClick({R.id.ll_language, R.id.ll_report_problem, R.id.ll_rate_us, R.id.ll_more_apps, R.id.ll_share_app, R.id.ll_promotion_ads,
-            R.id.ll_other_permissions, R.id.ll_get_pro_version})
-    public void onViewClicked(View view) {
+    @Override
+    public void onClick(View v) {
         if (!Utils.isAvailableClick()) {
             return;
         }
-        switch (view.getId()) {
+        switch (v.getId()) {
             case R.id.ll_language:
                 if (mChangeLanguageHelper == null) {
                     mChangeLanguageHelper = new ChangeLanguageHelper(mContext, null);
@@ -116,11 +112,5 @@ public class SettingsFragment extends BaseFragment {
                 showPromotionAds();
                 break;
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mUnbinder.unbind();
     }
 }

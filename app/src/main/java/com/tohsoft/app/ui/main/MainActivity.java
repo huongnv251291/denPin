@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +28,7 @@ import com.tohsoft.app.BaseApplication;
 import com.tohsoft.app.BuildConfig;
 import com.tohsoft.app.R;
 import com.tohsoft.app.data.ApplicationModules;
+import com.tohsoft.app.databinding.ActivityMainBinding;
 import com.tohsoft.app.helper.FirebaseRemoteConfigHelper;
 import com.tohsoft.app.services.BackgroundService;
 import com.tohsoft.app.ui.history.HistoryActivity;
@@ -43,19 +43,9 @@ import com.tohsoft.lib.AppSelfLib;
 import com.utility.DebugLog;
 import com.utility.RuntimePermissions;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-
-public class MainActivity extends BaseActivity<MainMvpPresenter> implements MainMvpView {
-    @BindView(R.id.fr_bottom_banner) FrameLayout frBottomBanner;
-    @BindView(R.id.fr_native_adview) ViewGroup frNativeAdView;
-    @BindView(R.id.fr_splash) View frSplash;
-    @BindView(R.id.iv_splash) ImageView ivSplash;
-    @BindView(R.id.ll_fake_progress) View llFakeProgress;
-    @BindView(R.id.iv_warning) View ivWarning;
-
+public class MainActivity extends BaseActivity<MainMvpPresenter> implements MainMvpView, View.OnClickListener {
+    private ActivityMainBinding mBinding;
     private InterstitialOPAHelper mInterstitialOPAHelper;
     private AdViewWrapper mAdViewWrapper;
     private AlertDialog mDialogExitApp;
@@ -70,18 +60,19 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
 
     @Override
     protected ViewGroup getBottomAdsContainer() {
-        return frBottomBanner;
+        return mBinding.frBottomBanner;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppSelfLib.language = LocaleManager.getLocale(getResources()).getLanguage();
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        mBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
 
         FirebaseRemoteConfigHelper.getInstance().fetchRemoteData(mContext);
 
+        initViews();
         setSplashMargin();
         initAds();
 
@@ -89,7 +80,13 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
 
         checkStartInBackgroundPermission();
 
-        AdsModule.getInstance().showNativeAdView(frNativeAdView, new String[]{"native_adview_id"});
+        AdsModule.getInstance().showNativeAdView(mBinding.frNativeAdview, new String[]{"native_adview_id"});
+    }
+
+    private void initViews() {
+        mBinding.contentMain.btnHistory.setOnClickListener(this);
+        mBinding.contentMain.btnSettings.setOnClickListener(this);
+        mBinding.contentMain.ivWarning.setOnClickListener(this);
     }
 
     /*
@@ -97,7 +94,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
      * */
     private void initAds() {
         if (BuildConfig.SHOW_AD) {
-            frSplash.setVisibility(View.VISIBLE);
+            mBinding.frSplash.setVisibility(View.VISIBLE);
 
             // Initialize Ads
             MobileAds.initialize(mContext);
@@ -139,14 +136,12 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
      * Fix lỗi co kéo ảnh splash so với ảnh window background
      */
     private void setSplashMargin() {
-        if (ivSplash != null) {
-            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) ivSplash.getLayoutParams();
-            layoutParams.topMargin = -BarUtils.getStatusBarHeight();
-            if (BarUtils.isSupportNavBar()) {
-                layoutParams.bottomMargin = -BarUtils.getNavBarHeight();
-            }
-            ivSplash.setLayoutParams(layoutParams);
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mBinding.ivSplash.getLayoutParams();
+        layoutParams.topMargin = -BarUtils.getStatusBarHeight();
+        if (BarUtils.isSupportNavBar()) {
+            layoutParams.bottomMargin = -BarUtils.getNavBarHeight();
         }
+        mBinding.ivSplash.setLayoutParams(layoutParams);
     }
 
     /**
@@ -156,14 +151,14 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
      */
     private void checkAutoStartManager() {
         if (AutoStartManagerUtil.shouldShowEnableAutoStart(getContext(), BackgroundService.class)) {
-            ivWarning.setVisibility(View.VISIBLE);
+            mBinding.contentMain.ivWarning.setVisibility(View.VISIBLE);
             /*if (AutoStartManagerUtil.canShowWarningIcon(getContext())) {
                 // Hiển thị icon warning
             } else {
                 // Ẩn icon warning và hiển thị chỗ khác
             }*/
         } else {
-            ivWarning.setVisibility(View.GONE);
+            mBinding.contentMain.ivWarning.setVisibility(View.GONE);
         }
     }
 
@@ -207,9 +202,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     private MaterialDialog.SingleButtonCallback enableAutoStartListener = new MaterialDialog.SingleButtonCallback() {
         @Override
         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-            if (ivWarning != null) {
-                ivWarning.setVisibility(View.GONE);
-            }
+            mBinding.contentMain.ivWarning.setVisibility(View.GONE);
         }
     };
 
@@ -219,9 +212,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
     @SuppressLint("CheckResult")
     private void checkPermissions() {
         hideSplash();
-        if (llFakeProgress != null) {
-            llFakeProgress.setVisibility(View.GONE);
-        }
+        mBinding.llFakeProgress.setVisibility(View.GONE);
 
         // Check permission & request
         if (RuntimePermissions.checkAccessStoragePermission(mContext)) {
@@ -306,9 +297,7 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
 
     @Override
     public void hideSplash() {
-        if (frSplash != null) {
-            frSplash.setVisibility(View.GONE);
-        }
+        mBinding.frSplash.setVisibility(View.GONE);
     }
 
     @Override
@@ -368,8 +357,8 @@ public class MainActivity extends BaseActivity<MainMvpPresenter> implements Main
         }
     }
 
-    @OnClick({R.id.btn_settings, R.id.btn_history, R.id.iv_warning})
-    public void onViewClicked(View view) {
+    @Override
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_settings:
                 FragmentUtils.add(getSupportFragmentManager(), SettingsFragment.newInstance(),

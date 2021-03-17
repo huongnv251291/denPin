@@ -50,6 +50,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
     dexOptions {
         javaMaxHeapSize "4g"
     }
@@ -125,13 +129,13 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:1.2.0"
-    implementation "com.google.android.material:material:1.3.0-rc01"
+    implementation "com.google.android.material:material:1.4.0-alpha01"
     implementation 'androidx.multidex:multidex:2.0.1'
     // Firebase
     implementation 'com.google.firebase:firebase-core:18.0.2'
-    implementation 'com.google.firebase:firebase-config:20.0.3'
+    implementation 'com.google.firebase:firebase-config:20.0.4'
     implementation 'com.google.firebase:firebase-analytics:18.0.2'
-    implementation 'com.google.firebase:firebase-crashlytics:17.3.1'
+    implementation 'com.google.firebase:firebase-crashlytics:17.4.0'
     // Setup Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
@@ -140,9 +144,6 @@ dependencies {
     // Glide image loader
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-    // Bind view Library
-    implementation 'com.jakewharton:butterknife:10.2.3'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     // Event Bus
     implementation 'org.greenrobot:eventbus:3.2.0'
     // GSon
