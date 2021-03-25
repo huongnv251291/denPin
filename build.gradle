@@ -1,12 +1,101 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext.kotlin_version = '1.4.31'
+
+    ext {
+        // local variables (use def)
+        def annotations_version = '1.1.0'
+        def appcompat_version = '1.1.0'
+        def coroutines_android_version = '1.4.2'
+        def glide_version = '4.10.0'
+        def firebase_version = '18.0.2'
+        def gson_version = '2.8.6'
+        def lifecycle_version = '2.1.0'
+        def livedata_version = '2.2.0-rc02'
+        def material_version = '1.1.0-alpha09'
+        def retrofit_version = '2.6.2'
+        def room_version = '2.2.1'
+        def work_version = '2.2.0'
+        def paging_version = "2.1.2"
+
+        libraries = [
+                // Kotlin standard library
+                "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+
+                // Coroutines
+                "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_android_version",
+                "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines_android_version}",
+
+                // Android UI and appcompat
+                "com.google.android.material:material:$material_version",
+                "androidx.appcompat:appcompat:$appcompat_version",
+                "androidx.fragment:fragment-ktx:1.1.0",
+                "androidx.multidex:multidex:2.0.1",
+
+                // Glide
+                "com.github.bumptech.glide:glide:$glide_version",
+
+                // Firebase
+                "com.google.firebase:firebase-core:$firebase_version",
+                "com.google.firebase:firebase-config:20.0.4",
+                "com.google.firebase:firebase-analytics:$firebase_version",
+                "com.google.firebase:firebase-crashlytics:17.4.0",
+
+                // Event Bus
+                "org.greenrobot:eventbus:3.2.0",
+
+                // ViewModel and LiveData
+                "androidx.lifecycle:lifecycle-extensions:$lifecycle_version",
+                "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_version",
+                "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version",
+
+                // network & serialization
+                "com.google.code.gson:gson:$gson_version",
+                "com.squareup.retrofit2:converter-gson:2.6.2",
+                "com.squareup.retrofit2:retrofit:$retrofit_version",
+                "com.squareup.retrofit2:adapter-rxjava2:2.9.0",
+                "com.squareup.okhttp3:logging-interceptor:4.7.2",
+
+                // Material dialog
+                "com.afollestad.material-dialogs:core:0.9.6.0",
+
+                // RxAndroid
+                'io.reactivex.rxjava2:rxandroid:2.1.1',
+                'io.reactivex.rxjava2:rxjava:2.2.19',
+                "io.reactivex.rxjava2:rxkotlin:2.4.0",
+
+                // threading
+                "androidx.annotation:annotation:$annotations_version",
+        ]
+
+        arch_libraries = [
+                "androidx.work:work-runtime-ktx:$work_version",
+
+                // Room for database
+                "androidx.room:room-ktx:$room_version",
+                "androidx.room:room-runtime:$room_version",
+
+                // Paging data
+                "android.arch.paging:runtime:1.0.1",
+                "androidx.paging:paging-runtime:$paging_version",
+                "androidx.paging:paging-runtime-ktx:$paging_version"
+        ]
+
+        librariesKapt = [
+                "androidx.room:room-compiler:$room_version",
+                "com.github.bumptech.glide:compiler:$glide_version",
+                "android.arch.lifecycle:compiler:1.0.0"
+        ]
+    }
+
     repositories {
         jcenter()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath 'com.android.tools.build:gradle:4.1.3'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // Google Services Gradle plugin
         classpath 'com.google.gms:google-services:4.3.5'
