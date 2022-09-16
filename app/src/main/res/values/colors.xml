@@ -14,10 +14,25 @@
     <color name="dim_blue">#81BEF7</color>
     <color name="red">#FF0000</color>
     <color name="orange">#fc7821</color>
-    <color name="green">#00FF00</color>
     <color name="yellow">#FFB000</color>
     <color name="black_gray">#9E9FA0</color>
     <color name="bounded_grey">#717075</color>
     <color name="brown">#6C492E</color>
     <color name="dark">#FF424242</color>
+    <color name="gray">#818181</color>
+    <color name="gray_dark">#949292</color>
+    <color name="gray_white">#f2f2f2</color>
+    <color name="green">#ef9636</color>
+    <color name="green_center">#39d5ae</color>
+    <color name="green_end">#77f0d1</color>
+    <color name="colorGradientCenter">#10000000</color>
+    <color name="colorGradientEnd">#20000000</color>
+    <color name="colorGradientStart">#00000000</color>
+    <color name="color_compass_common">#949292</color>
+    <color name="color_compass_main_off">#686868</color>
+    <color name="color_compass_main_on">#ffff00</color>
+    <color name="color_compass_north_off">#686868</color>
+    <color name="color_compass_north_on">#e05442</color>
+    <color name="color_compass_off">#686868</color>
+    <color name="color_compass_on">#e05442</color>
 </resources>

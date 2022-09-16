@@ -7,6 +7,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 29
@@ -105,9 +106,9 @@ android {
 
     // Tự động đổi tên apk và mapping file
     android.applicationVariants.all { variant ->
-        def namePrefix = "Project_Template"
+        def namePrefix = "flash_light"
         if (getName().startsWith("pro")) {
-            namePrefix = "Project_Template_Pro"
+            namePrefix = "flash_light_Pro"
         }
 
         def apkName = namePrefix + "_v${variant.versionName}"
@@ -143,4 +144,7 @@ dependencies {
     // Modules
     implementation project(':toh_rate_lib')
     implementation project(':TOH-Base')
+    implementation 'com.github.zagum:Android-SwitchIcon:1.4.0'
+    implementation 'com.github.warkiz.widget:indicatorseekbar:2.1.2'
+    implementation 'com.github.beksomega:loopinglayout:0.4.1'
 }

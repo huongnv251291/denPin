@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/ivBeam"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dimen_20dp"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_flashlight_light" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="@dimen/dimen200dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/ic_main_flashlight_top" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3.5">
+
+            <View
+                android:layout_width="@dimen/dimen200dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/ic_main_flashlight_center_1" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="@dimen/dimen195dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/dimen200dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_main_flashlight_center_2" />
+
+            <ImageView
+                android:id="@+id/ivTriangle"
+                android:layout_width="@dimen/dimen20dp"
+                android:layout_height="@dimen/dimen20dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_triangle" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="5">
+
+        <View
+            android:id="@+id/viewBottom"
+            android:layout_width="@dimen/dimen200dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_main_flashlight_bottom" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardCompass"
+            android:layout_width="@dimen/dimen70dp"
+            android:layout_height="@dimen/dimen70dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dimen20dp"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="@dimen/dimen35dp">
+
+            <ImageView
+                android:id="@+id/needle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dimen4dp"
+                app:srcCompat="@drawable/ic_compass" />
+        </androidx.cardview.widget.CardView>
+
+        <Switch
+            android:id="@+id/switch_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cardCompass"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dimen50dp"
+            android:rotation="270"
+            android:thumb="@drawable/bg_selector_state_flashlight"
+            android:track="@drawable/bg_index_item" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen100dp"
+            android:layout_toStartOf="@+id/viewBottom"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/frameShare"
+                android:layout_width="@dimen/dimen40dp"
+                android:layout_height="@dimen/dimen40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_arc_button_white_selector">
+
+                <com.github.zagum.switchicon.SwitchIconView
+                    android:id="@+id/btnShare"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dimen5dp"
+                    android:src="@drawable/ic_share"
+                    app:si_animation_duration="500"
+                    app:si_disabled_alpha="0.3"
+                    app:si_disabled_color="@color/green"
+                    app:si_enabled="true"
+                    app:si_no_dash="true"
+                    app:si_tint_color="@color/yellow" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frameVolume"
+                android:layout_width="@dimen/dimen40dp"
+                android:layout_height="@dimen/dimen40dp"
+                android:layout_marginTop="@dimen/dimen40dp"
+                android:background="@drawable/bg_arc_button_white_selector">
+
+                <com.github.zagum.switchicon.SwitchIconView
+                    android:id="@+id/btnVolume"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dimen5dp"
+                    android:src="@drawable/ic_volume_on"
+                    app:si_animation_duration="500"
+                    app:si_disabled_alpha="0.3"
+                    app:si_disabled_color="@color/green"
+                    app:si_enabled="false"
+                    app:si_no_dash="true"
+                    app:si_tint_color="@color/yellow" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen100dp"
+            android:layout_toEndOf="@+id/viewBottom"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/frameRateStar"
+                android:layout_width="@dimen/dimen40dp"
+                android:layout_height="@dimen/dimen40dp"
+                android:background="@drawable/bg_arc_button_white_selector">
+
+                <com.github.zagum.switchicon.SwitchIconView
+                    android:id="@+id/btnRateStar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dimen5dp"
+                    android:src="@drawable/ic_rate_us"
+                    app:si_animation_duration="500"
+                    app:si_disabled_alpha="0.3"
+                    app:si_disabled_color="@color/green"
+                    app:si_enabled="true"
+                    app:si_no_dash="true"
+                    app:si_tint_color="@color/yellow" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frameBrightness"
+                android:layout_width="@dimen/dimen40dp"
+                android:layout_height="@dimen/dimen40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen40dp"
+                android:background="@drawable/bg_arc_button_white_selector">
+
+                <com.github.zagum.switchicon.SwitchIconView
+                    android:id="@+id/btnBrightness"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dimen5dp"
+                    android:src="@drawable/ic_adjust_brightness"
+                    app:si_animation_duration="500"
+                    app:si_disabled_alpha="0.3"
+                    app:si_disabled_color="@color/green"
+                    app:si_enabled="true"
+                    app:si_no_dash="true"
+                    app:si_tint_color="@color/yellow" />
+            </FrameLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

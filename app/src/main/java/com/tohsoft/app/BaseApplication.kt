@@ -8,12 +8,14 @@ import android.os.Process
 import androidx.multidex.MultiDexApplication
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.CrashUtils
+import com.blankj.utilcode.util.FlashlightUtils.destroy
 import com.blankj.utilcode.util.Utils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.tohsoft.ads.AdsConfig
 import com.tohsoft.ads.AdsModule
 import com.tohsoft.app.data.ApplicationModules
 import com.tohsoft.app.helper.FirebaseRemoteConfigHelper
+import com.tohsoft.app.ui.helpers.AudioUlti
 import com.tohsoft.app.ui.main.MainActivity
 import com.utility.DebugLog
 import com.utility.SharedPreference
@@ -30,24 +32,25 @@ class BaseApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        DebugLog.DEBUG = BuildConfig.DEBUG || BuildConfig.TEST_AD // Đặt flag cho DebugLog (Chỉ hiển thị log trong bản build Debug | TEST_AD)
+        DebugLog.DEBUG =
+            BuildConfig.DEBUG || BuildConfig.TEST_AD // Đặt flag cho DebugLog (Chỉ hiển thị log trong bản build Debug | TEST_AD)
         ApplicationModules.instant.initModules(this)
         FirebaseRemoteConfigHelper.instance.fetchRemoteData(this)
         Utils.init(this)
 
         // Init AdsConfigs
         AdsConfig.getInstance().init(this)
-                .setFullVersion(BuildConfig.FULL_VERSION)
-                .setTestMode(BuildConfig.TEST_AD)
-                .setFreqInterOPAInMs(FirebaseRemoteConfigHelper.instance.freqInterOPAInMs)
-                .setSplashDelayInMs(FirebaseRemoteConfigHelper.instance.splashDelayInMs)
-                .setInterOPAProgressDelayInMs(FirebaseRemoteConfigHelper.instance.interOPAProgressDelayInMs)
-                .addTestDevices("0ca1bc4f-365d-4303-9312-1324d43e329c")
+            .setFullVersion(BuildConfig.FULL_VERSION)
+            .setTestMode(BuildConfig.TEST_AD)
+            .setFreqInterOPAInMs(FirebaseRemoteConfigHelper.instance.freqInterOPAInMs)
+            .setSplashDelayInMs(FirebaseRemoteConfigHelper.instance.splashDelayInMs)
+            .setInterOPAProgressDelayInMs(FirebaseRemoteConfigHelper.instance.interOPAProgressDelayInMs)
+            .addTestDevices("0ca1bc4f-365d-4303-9312-1324d43e329c")
         // Init Ads module
         AdsModule.getInstance().init(this)
-                .setResourceAdsId("admob_ids.json", null)
-                .setAdsIdListConfig(FirebaseRemoteConfigHelper.instance.adsIdList)
-                .setCustomAdsIdListConfig(FirebaseRemoteConfigHelper.instance.customAdsIdList)
+            .setResourceAdsId("admob_ids.json", null)
+            .setAdsIdListConfig(FirebaseRemoteConfigHelper.instance.adsIdList)
+            .setCustomAdsIdListConfig(FirebaseRemoteConfigHelper.instance.customAdsIdList)
         if (!BuildConfig.DEBUG) {
             initCrash()
         }
@@ -96,6 +99,7 @@ class BaseApplication : MultiDexApplication() {
     }
 
     private fun killApp() {
+        AudioUlti.destroy()
         ActivityUtils.finishAllActivities()
         Process.killProcess(Process.myPid())
         exitProcess(1)

@@ -95,11 +95,11 @@ class PreferencesHelper(context: Context) {
         }
     }
 
-    private fun getBoolean(key: String, defValue: Boolean): Boolean {
+     fun getBoolean(key: String, defValue: Boolean): Boolean {
         return mSharedPreferences.getBoolean(key, defValue)
     }
 
-    private fun setBoolean(key: String, value: Boolean) {
+     fun setBoolean(key: String, value: Boolean) {
         mSharedPreferences.edit().apply {
             putBoolean(key, value)
             apply()

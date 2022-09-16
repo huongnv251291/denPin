@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.warkiz.widget.IndicatorSeekBar
+        android:id="@+id/seekbarBrightness"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:splitTrack="false"
+        app:isb_max="10"
+        app:isb_progress="5"
+        app:isb_show_indicator="none"
+        app:isb_thumb_color="@color/color_thumb"
+        app:isb_thumb_size="@dimen/margin_20"
+        app:isb_track_background_color="@color/gray_white"
+        app:isb_track_progress_color="@color/green"
+        app:isb_user_seekable="true" />
+
+</RelativeLayout>

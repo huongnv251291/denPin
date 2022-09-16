@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TOH BaseProject</string>
+    <string name="app_name">FlashLight</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
@@ -42,5 +42,8 @@
     <string name="lbl_get_pro_version_title">Buy a professional version to remove ads and motivate us to work hard to improve the product better.</string>
     <string name="msg_empty_data">No data!</string>
     <string name="lbl_history">History</string>
+    <string name="camera_error">Camera Error</string>
+    <string name="brightness">"Screen brightness "</string>
+    <string name="close">Close</string>
 
 </resources>
